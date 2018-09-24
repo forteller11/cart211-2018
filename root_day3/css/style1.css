@@ -1,0 +1,83 @@
+/* == CSS RESET === */
+
+* {
+margin:0;
+padding: 0;
+box-sizing: border-box;
+}
+
+header {
+  border:solid 1px rgba(0,0,0,.2);
+}
+
+body {
+  background-color: rgb(220,225,230);
+  font-family:arial,monospace;
+  margin-left:3%;
+  margin-right:3%;
+}
+
+nav,header,article {
+  margin-bottom:2%;
+}
+ /* === NAV INFO === */
+nav {
+background-color:rgb(70,70,70);
+padding:1% 4% 2%;
+text-align:right;
+
+}
+
+a:link {
+  text-align:center;
+  background-color:rgb(255,100,100);
+  color:white;
+  font-size:20px;
+  text-transform:uppercase;
+  padding-left: 4%;
+  display:inline-block;
+  text-decoration: none;
+}
+a:visited {
+  color:lightgrey;
+}
+a:hover {
+  color:black;
+  background-color:rgb(255,255,255);
+}
+a:active {
+  color:white
+
+}
+
+header{
+  background:rgb(70,70,70);
+  padding-left: 2%;
+  font-color:white;
+  font-size:20px;
+}
+h1{
+  background-color:rgb(255,100,100);
+}
+h2{
+  font-style:normal;
+  color:lightgrey;
+  font-size:16px;
+  text-align:right;
+  margin-right:4%;
+}
+
+body{
+
+}
+h3{
+  margin-left:3%;
+}
+article p {
+
+  color:rgba(0,0,0,.8);
+  line-height:20px;
+  margin-left:2%;
+  margin-right:6%;
+  text-align:center;
+}
