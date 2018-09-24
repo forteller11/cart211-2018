@@ -93,25 +93,14 @@ a:active {
 
 
 }
-/*
+
 a.home {
     background-color:rgb(255,255,255);
     color:white;
 }
-a.readings {
-    background-color:rgb(255,255,255);
-    color:white;
-}
-a.practice {
-    background-color:rgb(255,255,255);
-    color:white;
-}
-a.projects {
-    background-color:rgb(255,255,255);
-    color:white;
-}
 
- */
+
+ 
  .grid {
   display: flex;
   flex-wrap: wrap;
