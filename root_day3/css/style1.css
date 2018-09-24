@@ -4,75 +4,87 @@
 margin:0;
 padding: 0;
 box-sizing: border-box;
+font-family:verdana,helvetica,arial,monospace;
 }
 
-header {
-  border:solid 1px rgba(0,0,0,.2);
-}
 
-body {
-  background-color: rgb(220,225,230);
-  font-family:arial,monospace;
-  margin-left:3%;
-  margin-right:3%;
-}
 
-nav,header,article {
-  margin-bottom:2%;
-}
- /* === NAV INFO === */
-nav {
-background-color:rgb(70,70,70);
-padding:1% 4% 2%;
-text-align:right;
+body{
 
 }
 
-a:link {
-  text-align:center;
-  background-color:rgb(255,100,100);
-  color:white;
-  font-size:20px;
-  text-transform:uppercase;
-  padding-left: 4%;
-  display:inline-block;
-  text-decoration: none;
-}
-a:visited {
-  color:lightgrey;
-}
-a:hover {
-  color:black;
-  background-color:rgb(255,255,255);
-}
-a:active {
-  color:white
-
-}
 
 header{
   background:rgb(70,70,70);
-  padding-left: 2%;
   font-color:white;
-  font-size:20px;
+  font-size:14px;
 }
 h1{
+
+  color: rgba(255,255,255,.6);
+  margin-left:80px;
+  margin-right:40px;
+  padding-left:40px;
+  padding-bottom:5px;
+  padding-top:0px;
   background-color:rgb(255,100,100);
 }
 h2{
   font-style:normal;
   color:lightgrey;
-  font-size:16px;
+  font-size:0px;
   text-align:right;
-  margin-right:4%;
+
+  margin-right:80px;
+  margin-top:3px;
 }
 
-body{
+
+ /* === NAV INFO === */
+nav {
+background-color:rgb(70,70,70);
+padding:3px 40px 0px 0px;
+text-align:right;
+
 
 }
-h3{
-  margin-left:3%;
+
+a:link {
+  font-size:30px;
+  text-align:center;
+  background-color:rgb(255,100,100);
+  padding: 3px 15px 3px 15px;
+  color:white;
+  font-size:20px;
+  text-transform:uppercase;
+  margin-left: 0%;
+  display:inline-block;
+  text-decoration: none;
 }
+a:visited {
+  color: rgba(255,255,255,0);
+  background-color:rgb(70,70,70);
+  border-width:4px;
+  border-color:white;
+  border-style:solid;
+}
+a:hover {
+  color:black;
+  background-color:rgb(255,255,255);
+
+}
+a:active {
+  color:rgb(255,255,255);
+  background-color:rgb(70,70,70);
+    outline: 4px solid white;
+    outline-offset: -3px;
+
+
+}
+
+
+
+
 article p {
 
   color:rgba(0,0,0,.8);
@@ -80,4 +92,11 @@ article p {
   margin-left:2%;
   margin-right:6%;
   text-align:center;
+}
+
+article {
+  background-color: rgb(255,255,255);
+  font-family:arial;
+  margin-left:3%;
+  margin-right:3%;
 }
