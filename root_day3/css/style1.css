@@ -63,7 +63,7 @@ a:link {
 }
 a:visited {
   color: rgba(255,255,255,0);
-  background-color:rgb(70,70,70);
+
   border-width:4px;
   border-color:white;
   border-style:solid;
@@ -75,13 +75,31 @@ a:hover {
 }
 a:active {
   color:rgb(255,255,255);
-  background-color:rgb(70,70,70);
-    outline: 4px solid white;
+  background-color:rgb(255,255,255);
+
     outline-offset: -3px;
 
 
 }
+/*
+a.home {
+    background-color:rgb(255,255,255);
+    color:white;
+}
+a.readings {
+    background-color:rgb(255,255,255);
+    color:white;
+}
+a.practice {
+    background-color:rgb(255,255,255);
+    color:white;
+}
+a.projects {
+    background-color:rgb(255,255,255);
+    color:white;
+}
 
+ */
 
 
 
