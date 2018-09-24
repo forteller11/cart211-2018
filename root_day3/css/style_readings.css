@@ -8,10 +8,10 @@ font-family:verdana,helvetica,arial,monospace;
 }
 
 :root {
-    --highlight_color: rgb(255,100,100);
+    --highlight_color: rgb(75,150,180);
 }
 :root {
-    --background_color: rgb(70,70,70);
+    --background_color: rgb(50,70,90);
 }
 :root {
     --white_color: rgb(255,255,255);
@@ -109,7 +109,7 @@ a.readings {
 }
 .grid {
   display:grid;
-  grid-template-columns: 600px 8% 300px;
+  grid-template-columns: 800px 8% 300px;
 }
 
 
@@ -118,11 +118,14 @@ a.readings {
    font-family:arial;
    margin-left:80px;
    margin-right:00px;
+    padding-bottom:60px;
  }
 h3 {
+  font-style:normal;
   margin-top:40px;
   margin-bottom:10px;
 }
+
 div2{
   background-color:var(--highlight_color);
   margin-top: 72px;
@@ -132,6 +135,9 @@ article p {
 
   color:rgba(0,0,0,.8);
 
+}
 
 
+p{
+  text-indent:30px;
 }

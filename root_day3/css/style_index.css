@@ -8,7 +8,7 @@ font-family:verdana,helvetica,arial,monospace;
 }
 
 :root {
-    --highlight_color: rgb(255,100,100);
+    --highlight_color: rgb(214, 197, 115);
 }
 :root {
     --background_color: rgb(70,70,70);
@@ -31,7 +31,7 @@ header{
 }
 h1{
 
-  color: rgba(255,255,255,.6);
+  color: rgba(255,255,255,.9);
   margin-left:80px;
   margin-right:40px;
   padding-left:40px;
@@ -100,7 +100,7 @@ a.home {
 }
 
 
- 
+
  .grid {
   display: flex;
   flex-wrap: wrap;
@@ -117,6 +117,7 @@ a.home {
    font-family:arial;
    margin-left:80px;
    margin-right:00px;
+   padding-bottom:60px;
  }
 h3 {
   margin-top:40px;
