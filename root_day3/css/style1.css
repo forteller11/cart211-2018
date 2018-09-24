@@ -7,7 +7,15 @@ box-sizing: border-box;
 font-family:verdana,helvetica,arial,monospace;
 }
 
-
+:root {
+    --highlight_color: rgb(255,100,100);
+}
+:root {
+    --background_color: rgb(70,70,70);
+}
+:root {
+    --white_color: rgb(255,255,255);
+}
 
 
 body{
@@ -17,7 +25,7 @@ body{
 
 header{
 
-  background:rgb(70,70,70);
+  background:var(--background_color);
   font-color:white;
   font-size:14px;
 }
@@ -28,8 +36,8 @@ h1{
   margin-right:40px;
   padding-left:40px;
   padding-bottom:5px;
-  padding-top:0px;
-  background-color:rgb(255,100,100);
+  padding-top:2px;
+  background-color:var(--highlight_color);
 }
 h2{
 
@@ -46,7 +54,7 @@ h2{
  /* === NAV INFO === */
 nav {
 
-background-color:rgb(70,70,70);
+background-color:var(--background_color);
 padding:3px 40px 0px 0px;
 text-align:right;
 
@@ -56,7 +64,7 @@ text-align:right;
 a:link {
   font-size:30px;
   text-align:center;
-  background-color:rgb(255,100,100);
+  background-color:var(--highlight_color);
   padding: 3px 15px 3px 15px;
   color:white;
   font-size:20px;
@@ -66,7 +74,7 @@ a:link {
   text-decoration: none;
 }
 a:visited {
-  color: rgba(255,255,255,0);
+  color: var(--white_color);
 
   border-width:4px;
   border-color:white;
@@ -74,12 +82,12 @@ a:visited {
 }
 a:hover {
   color:black;
-  background-color:rgb(255,255,255);
+  background-color:var(--white_color);
 
 }
 a:active {
-  color:rgb(255,255,255);
-  background-color:rgb(255,255,255);
+  color:var(--white_color);
+  background-color:var(--white_color);
 
     outline-offset: -3px;
 
@@ -104,9 +112,19 @@ a.projects {
 }
 
  */
+ .grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+.grid {
+  display:grid;
+  grid-template-columns: 600px 8% 300px;
+}
+
 
  article {
-   background-color: rgb(255,255,255);
+   background-color: var(--white_color);
    font-family:arial;
    margin-left:80px;
    margin-right:00px;
@@ -116,8 +134,9 @@ h3 {
   margin-bottom:10px;
 }
 div2{
+  background-color:var(--highlight_color);
   margin-top: 72px;
-  margin-left:30px;
+  margin-left:20px;
 }
 article p {
 
