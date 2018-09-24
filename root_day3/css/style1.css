@@ -9,6 +9,7 @@ font-family:verdana,helvetica,arial,monospace;
 
 
 
+
 body{
 
 }
@@ -108,17 +109,20 @@ a.projects {
    background-color: rgb(255,255,255);
    font-family:arial;
    margin-left:80px;
-   margin-right:400px;
+   margin-right:00px;
  }
 h3 {
   margin-top:40px;
   margin-bottom:10px;
 }
+div2{
+  margin-top: 72px;
+  margin-left:30px;
+}
 article p {
 
   color:rgba(0,0,0,.8);
-  line-height:20px;
-  margin-left:20px;
-  margin-right:6%;
-  text-align:left;
+
+
+
 }
