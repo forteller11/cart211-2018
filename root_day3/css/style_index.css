@@ -24,7 +24,6 @@ body{
 
 
 header{
-
   background:var(--background_color);
   font-color:white;
   font-size:14px;
@@ -52,10 +51,9 @@ h2{
 
  /* === NAV INFO === */
 nav {
-
-background-color:var(--background_color);
-padding:3px 40px 0px 0px;
-text-align:right;
+  background-color:var(--background_color);
+  padding:3px 40px 0px 0px;
+  text-align:right;
 
 
 }
