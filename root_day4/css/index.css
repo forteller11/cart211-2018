@@ -28,14 +28,16 @@ header {
 }
 
 #s1 hgroup {
-width:200px;
-height:60px;
-text-align:left;
-background-color:black;
-padding:0px;
+width:300px;
+height:300px;
+text-align:center;
+background-color:grey;
+padding-top:200px;
 position: absolute;
-bottom:40px;
-right:20px;
+top:65px;
+left:65px;
+bottom:0;
+right:0;
 }
 
 #s2 {
@@ -49,15 +51,18 @@ right:20px;
   position:relative;
 }
 #s2 hgroup {
-width:300px;
-height:60px;
+width:100px;
+height:100%;
 color: black;
-text-align:right;
-background-color:white;
-padding:0px;
+text-align:center;
+color: white;
+background-color:black;
+padding-top:10%;
 position: absolute;
-bottom:40px;
-right:20px;
+top:50%;
+left:90%;
+bottom:0;
+right:65px;
 }
 
 #s3 {
@@ -72,12 +77,14 @@ right:20px;
 }
 
 #s3 hgroup {
-width:300px;
-height:300px;
-text-align:left;
+width:250px;
+height:50%;
+text-align:center;
 background-color:grey;
-padding:0px;
+padding:20px;
 position: absolute;
-bottom:40px;
-right:90%;
+top:50%;
+left:10%;
+bottom:0;
+right:0;
 }
