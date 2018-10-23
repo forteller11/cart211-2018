@@ -94,15 +94,20 @@ a:active {}
 
 a.home {}
 
+.p5{
+  height:100%;
+  /* border: blue dotted; */
+}
 article {
   background-color: var(--background_color);
   color: var(--white_color);
   font-family: 'PT Sans', sans-serif;
   height: 100%;
-  width: 400px;
+  width: auto;
+  max-width:500px;
   padding: 20px;
   padding-top: 70px;
-  border: dotted green;
+  /* border: dotted green; */
 }
 
 article:hover{
