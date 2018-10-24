@@ -1,0 +1,132 @@
+/* == CSS RESET === */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'PT Sans', sans-serif;
+}
+
+:root {
+  --highlight_color: rgb(60, 60, 60);
+  --background_color: black;
+  --font_color: white;
+  --white_color: rgb(230, 230, 230);
+}
+
+body {
+  background-color: var(--white_color);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  position: relative;
+}
+
+header {
+  margin-left: 60px;
+  margin-top: 60px;
+  text-align: left;
+  color: var(--background_color);
+}
+
+h1 {
+  font-size: 48px;
+  /* border-bottom:3px solid currentColor; */
+}
+
+h2 {
+  padding-left: 8px;
+  text-decoration: underline;
+  /* border-bottom:3px solid currentColor; */
+}
+
+section {
+  margin-left: 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+nav {
+  background-color: var(--white_color);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+a {
+  width: 100px;
+  height: 100px;
+  margin-top: 40px;
+  background-color: var(--white_color);
+  transition-duration: .2s;
+  transition-property: width;
+  transition-timing-function: ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-decoration: overline;
+}
+
+a:link {
+  font-size: 20px;
+  text-align: center;
+  color: var(--font_color);
+  background-color: var(--background_color);
+}
+
+a:visited {
+  color: var(--font_color);
+  background-color: var(--background_color);
+}
+
+a:hover {
+  width: 150px;
+  background-color: var(--font_color);
+  color: var(--background_color);
+}
+
+a.home:link {
+  background-color: var(--font_color);
+}
+
+a.home:visited {
+  background-color: var(--font_color);
+}
+
+a.home:hover {
+  width: 100px;
+  color: var(--font_color);
+}
+
+article {
+  margin-top: 40px;
+  color: var(--font_color);
+  background-color: var(--background_color);
+  flex-grow: 1;
+  max-width: 500px;
+  /* border:blue dotted; */
+  padding: 20px 40px;
+  margin-left: 60px;
+}
+
+.filler {
+  margin-left: 0px;
+  width: 100px;
+  background-color: var(--white_color);
+  flex-grow: 0;
+  /* border:purple dotted; */
+}
+
+.p5 {
+  flex-grow: 1;
+  background-color: var(--white_color);
+}
