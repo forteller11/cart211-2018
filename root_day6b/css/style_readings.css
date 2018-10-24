@@ -27,17 +27,22 @@ header {
   margin-left:60px;
   margin-top:60px;
   text-align:left;
-  color: var(--background_color);
+
+  max-width:1450px;
 }
 h1 {
   font-size:48px;
+  color:var(--background_color);
+  background-color:var(--font_color);
 
 /* border-bottom:3px solid currentColor; */
 }
 h2 {
+  color: var(--font_color);
   font-size:30px;
   padding-left:8px;
   text-decoration:underline;
+  background-color:var(--background_color);
 /* border-bottom:3px solid currentColor; */
 }
 
@@ -91,13 +96,20 @@ a:hover {
   width: 150px;
   color: var(--background_color);
   background-color: var(--font_color);
-
+}
+a.readings:link{
+  background-color: var(--font_color);
+}
+a.readings:visited {
+  background-color: var(--font_color);
+}
+a.readings:hover{
+  width:100px;
+  color:var(--font_color);
 }
 
 
-a:active {
 
-}
 
 
   .filler{
@@ -112,6 +124,7 @@ article{
   background-color:var(--white_color);
   flex-grow:2;
   min-width:200px;
+  max-width:1000px;
   /* border:blue dotted; */
   display:flex;
   flex-direction:column;
@@ -121,34 +134,104 @@ article{
 a.week2{
   font-size:50px;
   text-decoration:none;
-  color:var(--font_color);
-  text-shadow: 2px 2px lightgrey;
+  color:var(--background_color);
   width:100%;
   transition-duration: .2s;
   transition-property: height;
   transition-timing-function: ease-in-out;
-  background-image:url(../png/week2.png);
-  background-size: cover;
-  background-position:center;
+  background-color:var(--font_color);
 
 }
 a.week2:hover{
 color:rgba(0,0,0,0);
 text-shadow: none;
 height:300px;
+background-image:url(../png/week2.png);
+background-size: cover;
+background-position:center;
 
 }
+
 a.week3{
+  font-size:50px;
+  text-decoration:none;
+  color:var(--background_color);
   width:100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color:var(--font_color);
+
 }
+a.week3:hover{
+color:rgba(0,0,0,0);
+text-shadow: none;
+height:300px;
+background-image:url(../png/week2.png);
+background-size: cover;
+background-position:center;
+
+}
+
 a.week5{
+  font-size:50px;
+  text-decoration:none;
+  color:var(--background_color);
   width:100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color:var(--font_color);
+
+}
+a.week5:hover{
+color:rgba(0,0,0,0);
+text-shadow: none;
+height:300px;
+background-image:url(../png/week2.png);
+background-size: cover;
+background-position:center;
+
 }
 a.week6{
+  font-size:50px;
+  text-decoration:none;
+  color:var(--background_color);
   width:100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color:var(--font_color);
+
+}
+a.week6:hover{
+color:rgba(0,0,0,0);
+text-shadow: none;
+height:300px;
+background-image:url(../png/week2.png);
+background-size: cover;
+background-position:center;
+
 }
 a.week8{
+  font-size:50px;
+  text-decoration:none;
+  color:var(--background_color);
   width:100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color:var(--font_color);
+
+}
+a.week8:hover{
+color:rgba(0,0,0,0);
+text-shadow: none;
+height:300px;
+background-image:url(../png/week2.png);
+background-size: cover;
+background-position:center;
+
 }
 
 

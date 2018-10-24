@@ -87,13 +87,19 @@ a:hover {
   width: 150px;
   background-color: var(--font_color);
   color: var(--background_color);
-
+}
+a.home:link{
+  background-color: var(--font_color);
+}
+a.home:visited {
+  background-color: var(--font_color);
+}
+a.home:hover{
+  width:100px;
+  color:var(--font_color);
 }
 
 
-a:active {}
-
-a.home {}
 article{
   margin-top:40px;
   color:var(--font_color);
