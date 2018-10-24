@@ -79,7 +79,10 @@ a:link {
   color: var(--font_color);
   background-color: var(--background_color);
 }
-
+a:visited {
+  color: var(--font_color);
+  background-color: var(--background_color);
+}
 a:hover {
   width: 150px;
   background-color: var(--font_color);
@@ -87,11 +90,6 @@ a:hover {
 
 }
 
-
-
-a:visited {
-  color: white;
-}
 
 a:active {}
 
