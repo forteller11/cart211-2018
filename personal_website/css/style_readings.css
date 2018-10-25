@@ -24,31 +24,14 @@ body {
   position: relative;
 }
 
-header {
-  margin-left: 60px;
-  margin-top: 60px;
-  text-align: left;
-  max-width: 1450px;
-}
 
-h1 {
-  padding-left: 10px;
-  font-size: 48px;
-  color: var(--background_color);
-  background-color: #17bfbb;
-  /* border-bottom:3px solid currentColor; */
-}
 
-h2 {
-  color: var(--background_color);
-  font-size: 30px;
-  padding-left: 18px;
-  /* text-decoration:underline; */
-  background-color: #006e90;
-  /* border-bottom:3px solid currentColor; */
-}
+
+
+
 
 section {
+  margin-top:10px;
   margin-left: 60px;
   display: flex;
   flex-direction: row;
@@ -58,6 +41,7 @@ section {
 }
 
 nav {
+  margin-top:100px;
   background-color: var(--white_color);
   display: flex;
   flex-direction: column;
@@ -70,7 +54,7 @@ nav {
 a {
   width: 100px;
   height: 100px;
-  margin-top: 40px;
+  margin-top: 10px;
   background-color: var(--white_color);
   transition-duration: .2s;
   transition-property: width;
@@ -141,6 +125,21 @@ a.week2 {
   transition-property: height;
   transition-timing-function: ease-in-out;
   background-color: #f46036;
+}
+
+h1 {
+  text-align:center;
+  height:100px;
+  font-size: 115px;
+  width:100%;
+  color: var(--background_color);
+  background-color: var(--font_color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* text-decoration: underline; */
+
 }
 
 a.week2:hover {
