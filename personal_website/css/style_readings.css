@@ -179,7 +179,7 @@ a.week5 {
   transition-duration: .2s;
   transition-property: height;
   transition-timing-function: ease-in-out;
-  background-color: #55EF17;
+  background-color: #3baf54;
 }
 
 a.week5:hover {
