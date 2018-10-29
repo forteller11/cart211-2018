@@ -109,6 +109,7 @@ section{
   justify-content: center;
 }
 a.one{
+  margin-bottom:48px;
   display:flex;
   flex-direction:column;
   justify-content: center;
@@ -123,8 +124,152 @@ a.one{
 a.one:hover{
   color:white;
   text-shadow: rgba(0,0,0,.2) 2px 3px;
-
 }
+a.one{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/1.png) no-repeat center center;
+  background-size:contain;
+}
+a.one:hover{
+  color:white;
+  border: black solid;
+  text-shadow: rgba(0,0,0,.2) 2px 3px;
+}
+
+a.two{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/2.png) no-repeat center center;
+  background-size:contain;
+}
+a.two:hover{
+  color:black;
+  border: black solid;
+  text-shadow: rgba(255,255,255,.5) 2px 3px;
+}
+
+a.three{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/3.png) no-repeat center center;
+  background-size:contain;
+}
+a.three:hover{
+  color:black;
+  border: black solid;
+  text-shadow: rgba(255,255,255,.5) 2px 3px;
+}
+
+a.four{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/4.png) no-repeat center center;
+  background-size:contain;
+}
+a.four:hover{
+  color:white;
+  border: black solid;
+  text-shadow: rgba(0,0,0,.2) 2px 3px;
+}
+
+a.five{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/5.jpg) no-repeat center center;
+  background-size:contain;
+}
+a.five:hover{
+  color:black;
+  border: black solid;
+  text-shadow: rgba(255,255,255,.5) 4px 5px;
+}
+
+a.six{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/6.png) no-repeat center center;
+  background-size:contain;
+}
+a.six:hover{
+  color:black;
+  border: black solid;
+  text-shadow: rgba(255,255,255,.5) 2px 3px;
+}
+
+a.seven{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/7.jpg) no-repeat center center;
+  background-size:contain;
+}
+a.seven:hover{
+  color:white;
+  border: black solid;
+  text-shadow: rgba(0,0,0,.2) 2px 3px;
+}
+
+a.eight{
+  display:flex;
+  flex-direction:column;
+  justify-content: center;
+  font-size:48px;
+  font-weight: bolder;
+  color: rgba(0,0,0,0);
+  width:700px;
+  height:700px;
+  background: url(../assets/moodboard/8.png) no-repeat center center;
+  background-size:contain;
+}
+a.eight:hover{
+  color:black;
+  border: black solid;
+  text-shadow: rgba(255,255,255,.5) 2px 3px;
+}
+
+
 
 
 h4{
