@@ -1,0 +1,18 @@
+/* Mobile first design, then tablet, then desktop */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* overflow-y:hidden; */
+}
+p {
+  /* overflow-wrap:break-word; */
+  height:100px;
+  width:50%;
+  overflow-x:scroll;
+  overflow-y: hidden;
+  font-size:40px;
+}
+#yo{
+  color:red;
+}
