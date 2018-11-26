@@ -1,0 +1,238 @@
+/* == CSS RESET === */
+@import url('https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'PT Sans', sans-serif;
+}
+
+:root {
+  --highlight_color: rgb(60, 60, 60);
+  --background_color: white;
+  --font_color: black;
+  --white_color: #ffc914;
+}
+
+body {
+  background-color: var(--white_color);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 100%;
+  position: relative;
+}
+
+
+
+
+
+
+
+section {
+  margin-top:10px;
+  margin-left: 60px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  height: 100%;
+}
+
+nav {
+  margin-top:100px;
+  background-color: var(--white_color);
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-around;
+  height: 100%;
+}
+
+a {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  background-color: var(--white_color);
+  transition-duration: .2s;
+  transition-property: width;
+  transition-timing-function: ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-decoration: overline;
+}
+
+a:link {
+  font-size: 20px;
+  text-align: center;
+  color: var(--font_color);
+  background-color: var(--background_color);
+}
+
+a:visited {
+  color: var(--font_color);
+  background-color: var(--background_color);
+}
+
+a:hover {
+  width: 150px;
+  color: var(--background_color);
+  background-color: var(--font_color);
+}
+
+a.readings:link {
+  background-color: var(--font_color);
+}
+
+a.readings:visited {
+  background-color: var(--font_color);
+}
+
+a.readings:hover {
+  width: 100px;
+  color: var(--font_color);
+}
+
+.filler {
+  margin-left: 0px;
+  min-width: 5%;
+  background-color: var(--white_color);
+  flex-grow: 0;
+  /* border:purple dotted; */
+}
+
+article {
+  background-color: var(--white_color);
+  flex-grow: 2;
+  min-width: 200px;
+  max-width: 1000px;
+  /* border:blue dotted; */
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+a.week2 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #f46036;
+}
+
+h1 {
+  text-align:center;
+  height:100px;
+  font-size: 115px;
+  width:100%;
+  color: var(--background_color);
+  background-color: var(--font_color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* text-decoration: underline; */
+
+}
+
+a.week2:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week2.png);
+  background-size: cover;
+  background-position: center;
+}
+
+a.week3 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #d7262d;
+}
+
+a.week3:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week3.png);
+  background-size: cover;
+  background-position: center;
+}
+
+a.week5 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #3baf54;
+}
+
+a.week5:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week5.png);
+  background-size: cover;
+  background-position: center;
+}
+
+a.week6 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #17bfbb;
+}
+
+a.week6:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week6.png);
+  background-size: cover;
+  background-position: center;
+}
+
+a.week8 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #006e90;
+}
+
+a.week8:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week8.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.p5 {
+  flex-grow: 1;
+  width: 20%;
+  background-color: var(--white_color);
+}
