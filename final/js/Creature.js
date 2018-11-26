@@ -5,10 +5,10 @@ class Creature {
     this.noiseXIndex = random(1000);
     this.noiseYIndex = random(1000);
     this.noiseIncrement = random(.01);
-    this.xVec;
-    this.yVec;
+    this.xVec = 1;
+    this.yVec = 0;
     this.angularAcceleration = 4;
-    this.acceleration;
+    this.acceleration = 1;
     this.xTarget;
     this.yTarget;
     this.minMaxRange = 10;
@@ -58,12 +58,17 @@ class Creature {
     const xVecToTarget = this.xTarget-this.x;
     const yVecToTarget = this.yTarget-this.y;
     const angleToTarget = atan2(yVecToTarget,xVecToTarget);
-    const currentAngle = atan2(this.xVec,this.yVec);
+    const currentAngle = atan2(this.yVec,this.xVec);
+    console.log(currentAngle);
     const desiredChangeInAngle = angleToTarget-currentAngle;
     const newAngle = currentAngle + (desiredChangeInAngle/20);
 
     this.xVec = cos(newAngle) * this.acceleration;
     this.yVec = sin(newAngle) * this.acceleration;
+
+    // this.xVec = xVecToTarget;
+    // this.yVec = yVecToTarget;
+    // console.log();
     //calc vector, normalize vector, recalc vecs
 
   }
