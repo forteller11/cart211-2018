@@ -8,7 +8,7 @@ class Creature {
     this.xVec = 1;
     this.yVec = 0;
     this.angle = atan2(this.yVec,this.xVec);
-    this.angularAcceleration = .1;
+    this.angularAcceleration = random(.01,.1);
     this.maxAcceleration = random(.2,3);
     this.minAcceleration = .01;
     this.acceleration = this.maxAcceleration;
@@ -60,7 +60,6 @@ class Creature {
     // this.yTarget = mouseY;
   }
   updateVectors(){
-    const steeringCorrection = 20; //1 = perfect correction every frame so vecs pointed towards target
     //find diff in angle between two vecs (via division)
     //based on this new angle, calc vectors using a normalized magnitude
 
