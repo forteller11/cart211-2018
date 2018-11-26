@@ -8,7 +8,7 @@ class Creature {
     this.xVec = 1;
     this.yVec = 0;
     this.angularAcceleration = 4;
-    this.acceleration = 1;
+    this.acceleration = random(3);
     this.xTarget;
     this.yTarget;
     this.minMaxRange = 10;
@@ -42,8 +42,16 @@ class Creature {
     this.y = noise(this.noiseYIndex) * windowHeight;
   }
   updateTarget(){
-    this.xTarget = mouseX;
-    this.yTarget = mouseY;
+    this.noiseXIndex += this.noiseIncrement;
+    this.noiseYIndex += this.noiseIncrement;
+    const xT1 = noise(this.noiseXIndex) * windowWidth;;
+    const yT1 = noise(this.noiseYIndex) * windowHeight;
+
+    const xT2 = mouseX;
+    const yT2 = mouseY;
+
+    this.xTarget = (xT1+xT2)/2;
+    this.yTarget = (yT1+yT2)/2;
   }
   updateVectors(){
     const steeringCorrection = 20; //1 = perfect correction every frame so vecs pointed towards target
@@ -59,7 +67,7 @@ class Creature {
     const yVecToTarget = this.yTarget-this.y;
     const angleToTarget = atan2(yVecToTarget,xVecToTarget);
     const currentAngle = atan2(this.yVec,this.xVec);
-    console.log(currentAngle);
+    // console.log(currentAngle);
     const desiredChangeInAngle = angleToTarget-currentAngle;
     const newAngle = currentAngle + (desiredChangeInAngle/20);
 
