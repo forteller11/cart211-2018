@@ -8,10 +8,11 @@ function setup(){
 function draw(){
   for (let i = 0; i < creature.length; i ++){
     // creature[i].updateNoise();
-    creature[i].updateTarget();
-    creature[i].updateVectors();
-    creature[i].updatePositionBasedOnVectors();
-    creature[i].display();
+    creature[i].update();
+    // creature[i].updateTarget();
+    // creature[i].updateVectors();
+    // creature[i].updatePositionBasedOnVectors();
+    // creature[i].display();
     // console.log("hey");
   }
 }

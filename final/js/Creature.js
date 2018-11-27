@@ -19,6 +19,7 @@ class Creature {
     this.sliderHeight = this.size/10;
     this.radioRadius = this.size/6;
     this.nameSize = this.size/2;
+    this.nameID = random(1);
     this.radioAliveDead = random(1);
 
     // this.radio.style('position', 'fixed');
@@ -27,32 +28,40 @@ class Creature {
     // this.radio.style('width', 100+"%");
     // this.radio.style('height', this.size+"px");
     // this.radio.style('transform', "scale("+this.size/40+")");
-    this.divID = random(1); //set random divID
-    this.div = this.createDiv(this.div);
+    const divID = random(1); //set random divID
+    const nameID = random(1);
+    const sliderHorzID = random(1);
+    const sliderVertID = random(1);
+    const radioGroupID = random(1);
+    this.div = this.createDiv(divID,'bod');
 
-    this.sliderHorz = this.createSlider(this.sliderHorz,0);
-    this.sliderVert = this.createSlider(this.sliderVert,90);
-    this.radioDead = this.createRadio('dead',this.radioAliveDead,"dead");
-    this.radioAlive = this.createRadio('alive',this.radioAliveDead,"alive");
-    this.name = this.createText(this.name,'todd');
+    this.sliderHorz = this.createSlider(sliderHorzID,0);
+    this.sliderVert = this.createSlider(sliderVertID,90);
+    this.radioDead = this.createRadio('dead',radioGroupID,"dead");
+    this.radioAlive = this.createRadio('alive',radioGroupID,"alive");
+    this.name = this.createText(nameID,'todd');
   }
-  createDiv(divID){
-    divID = document.createElement("div");
-    divID.setAttribute("id",this.divID);
-    let body = document.getElementById('bod');
-    body.appendChild(divID);
-    divID.style.position = "absolute";
-    divID.style.width = "auto";
-    divID.style.height = "auto";
-    divID.style.left = this.x;
-    divID.style.top = this.y;
-    this.transformDiv(divID);
-    console.log(divID);
-    return divID;
+  createDiv(divID,parentID){
+    //parentID where to appendto
+    let divPointer = document.createElement("div");
+    divPointer.setAttribute("id",divID);
+    let body = document.getElementById(parentID);
+    body.appendChild(divPointer);
+    divPointer.style.position = "absolute";
+    divPointer.style.width = "auto";
+    divPointer.style.height = "auto";
+    this.transformElement(divPointer,this.x,this.y,"px");
+    console.log(divPointer);
+    return divPointer;
   }
-  transformDiv(divID){
-  divID.style.left = this.x+"px";
-  divID.style.top = this.y+"px";
+
+  transformElement(elementPointer,xTransform,yTransform,transformType){
+    //element pointer is what html elemnt to change style of
+    //x transform changes left: positions
+    //y transform changes top: position
+    //transfform type will be either "px" or "%" etc. based on what kind of transformation user wants to occur
+  elementPointer.style.left = xTransform+transformType;
+  elementPointer.style.top = yTransform+transformType;
   }
   createSlider(name,rotate){
     name = document.createElement("INPUT");
@@ -61,8 +70,7 @@ class Creature {
     name.setAttribute("max", 1 );
     name.setAttribute("step", 2/this.size );
     name.textContent = 'ah';
-    let div = document.getElementById(this.divID);
-    div.appendChild(name);
+    this.div.appendChild(name);
     name.style.position = "absolute";
     this.transformSlider(name);
     name.style.width = this.size+"px";
@@ -77,7 +85,7 @@ class Creature {
     name.setAttribute("name", name);
     name.setAttribute("value", value);
     let div = document.getElementById(this.divID);
-    div.appendChild(name);
+    this.div.appendChild(name);
     name.style.position = "absolute";
     this.transformText(name);
     name.style.fontSize = this.size/10+"px";
@@ -95,7 +103,7 @@ class Creature {
     id.setAttribute("checked", true);
 
     let div = document.getElementById(this.divID);
-    div.appendChild(id);
+    this.div.appendChild(id);
     id.style.position = "absolute";
     this.transformRadio(id);
     id.style.width = this.radioRadius*2+"px";
@@ -104,9 +112,9 @@ class Creature {
     // console.log(id);
     return id;
   }
-  transformText(id){
-    id.style.left = (this.nameSize/2)+"px";
-    id.style.top = -this.size/3+"px";
+  transformText(elementPointer){
+    elementPointer.style.left = (this.nameSize/2)+"px";
+    elementPointer.style.top = -this.size/3+"px";
   }
   transformRadio(id,xOff,yOff){
     id.style.left = xOff+(this.size/2)-this.radioRadius+"px";
@@ -116,12 +124,7 @@ class Creature {
     name.style.left = 0+"px";
     name.style.top = 0+(this.sliderHeight*1.5)+"px"
   }
-  updateNoise(){
-    this.noiseXIndex += this.noiseIncrement;
-    this.noiseYIndex += this.noiseIncrement;
-    this.x = noise(this.noiseXIndex) * windowWidth;
-    this.y = noise(this.noiseYIndex) * windowHeight;
-  }
+
   updateTarget(){
     this.noiseXIndex += this.noiseIncrement;
     this.noiseYIndex += this.noiseIncrement;
@@ -178,32 +181,43 @@ class Creature {
     this.sliderVert.value = sin(newAngle);
 
   }
-  updateAcceleration(){
-    //slows it down once past radius
-    // xVecToTarget = this.x-
-    // distFromTarget = sqrt(sq(xVecToTarget)+sq(yVecToTarget));
-  }
+
   updatePositionBasedOnVectors(){
     this.x += this.xVec;
     this.y += this.yVec;
 
-    // if (this.radio.value() === true){
-    //   this.radio.style("display","none");
-    // }
-
   }
-  display(){
-    let xOffset = this.size/4;
-    let yOffset = this.size/4;
-    this.transformDiv(this.div);
-    this.transformText(this.name);
-    this.transformRadio(this.radioAlive,xOffset,-yOffset);
-    this.transformRadio(this.radioDead,xOffset,yOffset);
-    this.transformSlider(this.sliderHorz);
-    this.transformSlider(this.sliderVert);
 
-    // this.radio.style('left', this.x-btnRadius+"px");
-    // this.radio.style('top', this.y+16+btnRadius+"px");
+  transformText(elementPointer){
+    elementPointer.style.left = (this.nameSize/2)+"px";
+    elementPointer.style.top = -this.size/3+"px";
+  }
+  transformRadio(id,xOff,yOff){
+    id.style.left = xOff+(this.size/2)-this.radioRadius+"px";
+    id.style.top = yOff+"px";
+  }
+  transformSlider(name,xOff,yOff){
+    name.style.left = 0+"px";
+    name.style.top = 0+(this.sliderHeight*1.5)+"px"
+  }
+  updatePositionOfElements(){
+    let xOffset = this.size/1.7;
+    let yOffset = this.size/4;
+    this.transformElement(this.div,this.x,this.y,"px");
+      this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
+      this.transformElement(this.radioAlive,xOffset,-yOffset,"px");
+      this.transformElement(this.radioDead,xOffset,yOffset,"px");
+      this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
+      // this.transformRadio(this.radioAlive,xOffset,-yOffset);
+      // this.transformRadio(this.radioDead,xOffset,yOffset);
+      // this.transformSlider(this.sliderHorz);
+      // this.transformSlider(this.sliderVert);
+  }
+  update(){
+    this.updateTarget();
+    this.updateVectors();
+    this.updatePositionBasedOnVectors();
+    this.updatePositionOfElements();
   }
 
 }
