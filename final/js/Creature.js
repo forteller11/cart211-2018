@@ -2,18 +2,7 @@ class Creature {
   constructor(){
     this.x = random(windowWidth);
     this.y = random(windowHeight);
-    this.noiseXIndex = random(1000);
-    this.noiseYIndex = random(1000);
-    this.noiseIncrement = random(.01);
-    this.xVec = 1;
-    this.yVec = 0;
-    this.angle = atan2(this.yVec,this.xVec);
-    this.angularAcceleration = random(.01,.1);
-    this.maxAcceleration = random(.05,1);
-    this.minAcceleration = .01;
-    this.acceleration = this.maxAcceleration;
-    this.xTarget;
-    this.yTarget;
+
     this.minMaxRange = 10;
     this.size = random(60,100);
     this.sliderHeight = this.size/10;
@@ -21,6 +10,11 @@ class Creature {
     this.nameSize = this.size/2;
     this.nameID = random(1);
     this.radioAliveDead = random(1);
+
+    this.velocity = createVector(0,0); //vector to be used as velocity.
+    this.velocityMax = 5; //max mag of velocity vec
+    this.desiredVelocity = []; //an array of desired velocities to be added to velocity
+    this.desiredVelocityWeight = []; //the weights of the desired velocities to change how they're added together
 
     // this.radio.style('position', 'fixed');
     // this.radio.style('left', this.x+"px");
@@ -46,7 +40,6 @@ class Creature {
         this.name = this.createElement("INPUT",nameID,this.div);
         this.radioAliveContainer = this.createElement("div",divID,this.div);
           // this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
-          // console.log(this.radioAlive);
           this.radioAliveContainer.innerHTML = "alive";
         this.radioDeadContainer = this.createElement("div",divID,this.div);
           // this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
@@ -88,7 +81,7 @@ class Creature {
       //aliveRadio divider
       this.radioAliveContainer.style.width = "auto";
       this.radioAliveContainer.style.height = "auto";
-      this.transformElement(this.radioAliveContainer,this.size,-this.size/4,"px");
+      this.transformElement(this.radioAliveContainer,this.size,-this.size/6,"px");
 
         //radioALive
         this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
@@ -102,7 +95,7 @@ class Creature {
       //RadioDeadContianer
       this.radioDeadContainer.style.width = "auto";
       this.radioDeadContainer.style.height = "auto";
-      this.transformElement(this.radioDeadContainer,this.size,this.size/4 + this.fontSize,"px");
+      this.transformElement(this.radioDeadContainer,this.size,this.size/2.8,"px");
 
         //radioDead
         this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
@@ -147,66 +140,25 @@ class Creature {
   elementPointer.style.height = height+sizeType;
   }
 
-  updateTarget(){
-    this.noiseXIndex += this.noiseIncrement;
-    this.noiseYIndex += this.noiseIncrement;
-    const xT1 = noise(this.noiseXIndex) * windowWidth;
-    const yT1 = noise(this.noiseYIndex) * windowHeight;
+  seek(){ //travel towards point
+    const targetX = mouseX;
+    const targetY = mouseY;
+    let vectorToTarget = createVector(targetX-this.x,targetY-this.y);
 
-    const xT2 = mouseX;
-    const yT2 = mouseY;
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+    // console.log(desiredChangeInVelocity);
 
-    this.xTarget = (xT1+xT2)/2;
-    this.yTarget = (yT1+yT2)/2;
-    // this.xTarget = mouseX;
-    // this.yTarget = mouseY;
-    // this.xTarget = xT1;
-    // this.yTarget = yT1;
-  }
-  updateVectors(){
-    //find diff in angle between two vecs (via division)
-    //based on this new angle, calc vectors using a normalized magnitude
-
-    //angle of vec to target
-    //current angle
-    //difference in angles,
-    //new angle
-    //new vectors based on vector and mag
-    const xVecToTarget = this.xTarget-this.x;
-    const yVecToTarget = this.yTarget-this.y;
-    const distFromTarget = sqrt(sq(xVecToTarget)+sq(yVecToTarget));
-    const maxAccelerationDist = 20;
-    //if dist is larger than threshold acceleration is maxed
-    if (distFromTarget > maxAccelerationDist){
-      this.acceleration = this.maxAcceleration;
-    } else { //otherwise it is maxed at outter ring of threshold and 0 when dist = 0
-      this.acceleration = (distFromTarget/maxAccelerationDist);
-      this.acceleration = constrain(this.acceleration,this.minAcceleration,this.maxAcceleration);
-    }
-
-    const angleToTarget = atan2(yVecToTarget,xVecToTarget);
-    this.angle = atan2(this.yVec,this.xVec);
-    // console.log(currentAngle);
-    let desiredChangeInAngle;
-    if (abs(angleToTarget-this.angle) < PI) {
-      desiredChangeInAngle = angleToTarget-this.angle;
-    } else { //makes sure if rotating counterclockwise is shortest way to achieve desired angle
-        desiredChangeInAngle = -(angleToTarget-this.angle);
-    }
-    const newAngle = this.angle + (desiredChangeInAngle*this.angularAcceleration);
-
-    //correct the angle when
-
-    this.xVec = cos(newAngle) * this.acceleration;
-    this.yVec = sin(newAngle) * this.acceleration;
-    this.sliderHorz.value = cos(newAngle);
-    this.sliderVert.value = sin(newAngle);
+    let addToVelocity = desiredChangeInVelocity.limit(1); //
+    this.velocity.add(addToVelocity);
 
   }
-
-  updatePositionBasedOnVectors(){
-    this.x += this.xVec;
-    this.y += this.yVec;
+  addVelocityToPosition(){
+    this.velocity.limit(this.velocityMax);
+    this.x += this.velocity.x;
+    this.y += this.velocity.y;
+  }
+  seperate(){
 
   }
 
@@ -214,12 +166,12 @@ class Creature {
     let xOffset = this.size/1.7;
     let yOffset = this.size/4;
     this.transformElement(this.div, this.x, this.y, "px");
-
   }
+
   update(){
-    this.updateTarget();
-    this.updateVectors();
-    this.updatePositionBasedOnVectors();
+    this.seek();
+    this.addVelocityToPosition();
+
     this.updatePositionOfElements();
   }
 
