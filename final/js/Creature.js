@@ -13,15 +13,9 @@ class Creature {
 
     this.velocity = createVector(0,0); //vector to be used as velocity.
     this.velocityMax = 5; //max mag of velocity vec
-    this.desiredVelocity = []; //an array of desired velocities to be added to velocity
-    this.desiredVelocityWeight = []; //the weights of the desired velocities to change how they're added together
+    this.velocityWeight;
+    this.velocityWeightConstant = 1; //dna of weight
 
-    // this.radio.style('position', 'fixed');
-    // this.radio.style('left', this.x+"px");
-    // this.radio.style('top', this.y+"px");
-    // this.radio.style('width', 100+"%");
-    // this.radio.style('height', this.size+"px");
-    // this.radio.style('transform', "scale("+this.size/40+")");
     const divID = random(1); //set random divID
     const nameID = random(1);
     const sliderHorzID = random(1);
@@ -148,19 +142,54 @@ class Creature {
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
     // console.log(desiredChangeInVelocity);
+    const distToTarget = vectorToTarget.mag();
+    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
+    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
+    this.velocityWeight = .001;
+    // console.log(this.velocityWeight);
+    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
-    let addToVelocity = desiredChangeInVelocity.limit(1); //
+    let addToVelocity = desiredChangeInVelocity.mult(this.velocityWeight); //
+    // addToVelocity.mult(this.velocityWeight);
+    // console.log(addToVelocity);
     this.velocity.add(addToVelocity);
-
   }
+
+  seperate(){
+
+let vectorToAllCreatures = createVector(0,0);
+    for (let i = 0; i < creature.length; i ++){
+      //summ of velocities from all creatures, then deivide by creature length
+      const vectorToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
+      vectorToAllCreatures.add(vectorToCreature);
+    }
+    vectorToAllCreatures.div(creature.length);
+
+
+    let vectorToTarget = vectorToAllCreatures;
+
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+
+    const distToTarget = vectorToTarget.mag();
+    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
+    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
+    this.velocityWeight = .001;
+    // console.log(this.velocityWeight);
+    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
+
+    let addToVelocity = desiredChangeInVelocity.mult(this.velocityWeight); //
+    // addToVelocity.mult(this.velocityWeight);
+    // console.log(addToVelocity);
+    this.velocity.add(addToVelocity);
+  }
+
   addVelocityToPosition(){
     this.velocity.limit(this.velocityMax);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
-  seperate(){
 
-  }
 
   updatePositionOfElements(){
     let xOffset = this.size/1.7;
@@ -169,7 +198,8 @@ class Creature {
   }
 
   update(){
-    this.seek();
+    // this.seek();
+    this.seperate();
     this.addVelocityToPosition();
 
     this.updatePositionOfElements();
