@@ -33,7 +33,67 @@ class Creature {
     const sliderHorzID = random(1);
     const sliderVertID = random(1);
     const radioGroupID = random(1);
-    this.div = this.createDiv(divID,'bod');
+    const radioAliveContainerID = random(1);
+    const radioAliveID = random(1);
+    const radioDeadContainerID = random(1);
+    const radioDeadID = random(1);
+
+    //this is more or less creating html elements in js
+    let bodyPointer = document.getElementById("bod");
+      this.div = this.createElement("div",divID,bodyPointer);
+        this.sliderHorz = this.createElement("INPUT",sliderHorzID,this.div);
+        this.sliderVert = this.createElement("INPUT",sliderHorzID,this.div);
+        this.name = this.createElement("INPUT",nameID,this.div);
+        this.radioAliveContainer = this.createElement("div",divID,bodyPointer);
+          this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
+          this.radioAliveContainer.innerHTML("ALIVE");
+        this.radioDeadContainer = this.createElement("div",divID,bodyPointer);
+          this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
+          this.radioDeadContainer.innerHTML("DEAD");
+
+    // this is basically styling those html elements in css using js
+    //divider containing all entity elements
+    this.div.style.width = "auto";
+    this.div.style.height = "auto";
+    this.transformElement(this.div,this.x,this.y,"px");
+
+      //horizontal slider
+      this.sliderHorz.setAttribute("type", "range");
+      this.sliderHorz.setAttribute("min", -1 );
+      this.sliderHorz.setAttribute("max", 1 );
+      this.sliderHorz.setAttribute("step", 2/this.size);
+      this.sizeElement(this.sliderHorz,this.size,this.sliderHeight,"px");
+      this.transformElement(this.sliderHorz,0,(this.sliderHeight*1.5),"px");
+      this.sliderHorz.style.transform = "rotate("+0+"deg)";
+
+      //vertical slider
+      this.sliderVert.setAttribute("type", "range");
+      this.sliderVert.setAttribute("min", -1 );
+      this.sliderVert.setAttribute("max", 1 );
+      this.sliderVert.setAttribute("step", 2/this.size);
+      this.sizeElement(this.sliderVert,this.size,this.sliderHeight,"px");
+      this.transformElement(this.sliderVert,0,(this.sliderHeight*1.5),"px");
+      this.sliderVert.style.transform = "rotate("+90+"deg)";
+
+      //name (text input)
+      this.name.setAttribute("type", "text");
+      this.name.setAttribute("name", nameID);
+      name.setAttribute("value", "bobby");
+      this.sizeElement(this.name,this.nameSize,this.nameSize/2.5,"px");
+      this.transformElement(this.name,this.nameSize,this.nameSize/2.5,"px");
+      this.name.style.fontSize = this.size/10+"px";
+      //
+      this.sizeElement(this.radioAliveContainer
+
+
+      let div = document.getElementById(this.divID);
+      this.div.appendChild(name);
+      name.style.position = "absolute";
+      this.transformText(name);
+      name.style.fontSize = this.size/10+"px";
+      name.style.width = this.nameSize+"px";
+      name.style.height = this.nameSize/2.5+"px";
+
 
     this.sliderHorz = this.createSlider(sliderHorzID,0);
     this.sliderVert = this.createSlider(sliderVertID,90);
@@ -41,18 +101,17 @@ class Creature {
     this.radioAlive = this.createRadio('alive',radioGroupID,"alive");
     this.name = this.createText(nameID,'todd');
   }
-  createDiv(divID,parentID){
+  createElement(typeOfElement, id,pointerOfParent){
     //parentID where to appendto
-    let divPointer = document.createElement("div");
-    divPointer.setAttribute("id",divID);
-    let body = document.getElementById(parentID);
-    body.appendChild(divPointer);
-    divPointer.style.position = "absolute";
-    divPointer.style.width = "auto";
-    divPointer.style.height = "auto";
-    this.transformElement(divPointer,this.x,this.y,"px");
-    console.log(divPointer);
-    return divPointer;
+    let elementPointer = document.createElement(typeOfElement);
+    elementPointer.setAttribute("id",id);
+    pointerOfParent.appendChild(elementPointer);
+    elementPointer.style.position = "absolute";
+    // divPointer.style.width = "auto";
+    // divPointer.style.height = "auto";
+    // this.transformElement(divPointer,this.x,this.y,"px");
+    // console.log(divPointer);
+    return elementPointer;
   }
 
   transformElement(elementPointer,xTransform,yTransform,transformType){
@@ -62,6 +121,14 @@ class Creature {
     //transfform type will be either "px" or "%" etc. based on what kind of transformation user wants to occur
   elementPointer.style.left = xTransform+transformType;
   elementPointer.style.top = yTransform+transformType;
+  }
+  sizeElement(elementPointer,width,height,sizeType){
+    //element pointer is what html elemnt to change style of
+    //x transform changes left: positions
+    //y transform changes top: position
+    //transfform type will be either "px" or "%" etc. based on what kind of transformation user wants to occur
+  elementPointer.style.width = width+sizeType;
+  elementPointer.style.height = height+sizeType;
   }
   createSlider(name,rotate){
     name = document.createElement("INPUT");
