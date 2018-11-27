@@ -46,10 +46,10 @@ class Creature {
         this.name = this.createElement("INPUT",nameID,this.div);
         this.radioAliveContainer = this.createElement("div",divID,bodyPointer);
           this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
-          this.radioAliveContainer.innerHTML("ALIVE");
+          this.radioAliveContainer.innerHTML = "ALIVE";
         this.radioDeadContainer = this.createElement("div",divID,bodyPointer);
           this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
-          this.radioDeadContainer.innerHTML("DEAD");
+          this.radioDeadContainer.innerHTML = "DEAD";
 
     // this is basically styling those html elements in css using js
     //divider containing all entity elements
@@ -78,7 +78,7 @@ class Creature {
       //name (text input)
       this.name.setAttribute("type", "text");
       this.name.setAttribute("name", nameID);
-      name.setAttribute("value", "bobby");
+      this.name.setAttribute("value", "bobby");
       this.sizeElement(this.name,this.nameSize,this.nameSize/2.5,"px");
       this.transformElement(this.name,this.nameSize,this.nameSize/2.5,"px");
       this.name.style.fontSize = this.size/10+"px";
@@ -89,7 +89,7 @@ class Creature {
       this.transformElement(this.radioAliveContainer,this.size/2-this.radioRadius+this.size/1.7,this.size/4,"px");
 
         //radioALive
-        this.transformeElement(this.radioDead,0,0,"px");
+        this.transformElement(this.radioDead,0,0,"px");
         this.sizeElement(this.radioAlive,this.radioRadius*2,this.radioRadius*2,"px");
         this.radioAlive.setAttribute("type", "radio");
         this.radioAlive.setAttribute("name", radioGroupID);
@@ -103,7 +103,7 @@ class Creature {
       this.transformElement(this.radioDeadContainer,this.size/2-this.radioRadius+this.size/1.7,-this.size/4,"px");
 
           //radioDead
-        this.transformeElement(this.radioDead,0,0,"px");
+        this.transformElement(this.radioDead,0,0,"px");
         this.sizeElement(this.radioDead,this.radioRadius*2,this.radioRadius*2,"px")
         this.radioDead.setAttribute("type", "radio");
         this.radioDead.setAttribute("name", radioGroupID);
@@ -111,20 +111,8 @@ class Creature {
         // this.radioDead.setAttribute("value", name);
         this.radioDead.setAttribute("checked", false);
 
-        id = document.createElement("INPUT");
-        id.setAttribute("type", "radio");
-        id.setAttribute("name", name);
-        id.setAttribute("id", id);
-        id.setAttribute("value", name);
-        id.setAttribute("checked", true);
-
-        let div = document.getElementById(this.divID);
-        this.div.appendChild(id);
-        id.style.position = "absolute";
-        this.transformRadio(id);
-        id.style.width = this.radioRadius*2+"px";
-        id.style.height = this.radioRadius*2+"px";
   }
+
   createElement(typeOfElement, id,pointerOfParent){
     //parentID where to appendto
     let elementPointer = document.createElement(typeOfElement);
@@ -146,6 +134,7 @@ class Creature {
   elementPointer.style.left = xTransform+transformType;
   elementPointer.style.top = yTransform+transformType;
   }
+
   sizeElement(elementPointer,width,height,sizeType){
     //element pointer is what html elemnt to change style of
     //x transform changes left: positions
@@ -154,67 +143,68 @@ class Creature {
   elementPointer.style.width = width+sizeType;
   elementPointer.style.height = height+sizeType;
   }
-  createSlider(name,rotate){
-    name = document.createElement("INPUT");
-    name.setAttribute("type", "range");
-    name.setAttribute("min", -1 );
-    name.setAttribute("max", 1 );
-    name.setAttribute("step", 2/this.size );
-    name.textContent = 'ah';
-    this.div.appendChild(name);
-    name.style.position = "absolute";
-    this.transformSlider(name);
-    name.style.width = this.size+"px";
-    name.style.height = this.sliderHeight+"px";
-    name.style.transform = "rotate("+rotate+"deg)";
-      // console.log(name);
-    return name;
-  }
-  createText(name,value){
-    name = document.createElement("INPUT");
-    name.setAttribute("type", "text");
-    name.setAttribute("name", name);
-    name.setAttribute("value", value);
-    let div = document.getElementById(this.divID);
-    this.div.appendChild(name);
-    name.style.position = "absolute";
-    this.transformText(name);
-    name.style.fontSize = this.size/10+"px";
-    name.style.width = this.nameSize+"px";
-    name.style.height = this.nameSize/2.5+"px";
-    return name;
-  }
-
-  createRadio(id, name, value){
-    id = document.createElement("INPUT");
-    id.setAttribute("type", "radio");
-    id.setAttribute("name", name);
-    id.setAttribute("id", id);
-    id.setAttribute("value", name);
-    id.setAttribute("checked", true);
-
-    let div = document.getElementById(this.divID);
-    this.div.appendChild(id);
-    id.style.position = "absolute";
-    this.transformRadio(id);
-    id.style.width = this.radioRadius*2+"px";
-    id.style.height = this.radioRadius*2+"px";
-        id.innerHTML = "aDQWDWQDWQQWDSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWDQh";
-    // console.log(id);
-    return id;
-  }
-  transformText(elementPointer){
-    elementPointer.style.left = (this.nameSize/2)+"px";
-    elementPointer.style.top = -this.size/3+"px";
-  }
-  transformRadio(id,xOff,yOff){
-    id.style.left = xOff+(this.size/2)-this.radioRadius+"px";
-    id.style.top = yOff+"px";
-  }
-  transformSlider(name,xOff,yOff){
-    name.style.left = 0+"px";
-    name.style.top = 0+(this.sliderHeight*1.5)+"px"
-  }
+                      // }
+                      // createSlider(name,rotate){
+                      //   name = document.createElement("INPUT");
+                      //   name.setAttribute("type", "range");
+                      //   name.setAttribute("min", -1 );
+                      //   name.setAttribute("max", 1 );
+                      //   name.setAttribute("step", 2/this.size );
+                      //   name.textContent = 'ah';
+                      //   this.div.appendChild(name);
+                      //   name.style.position = "absolute";
+                      //   this.transformSlider(name);
+                      //   name.style.width = this.size+"px";
+                      //   name.style.height = this.sliderHeight+"px";
+                      //   name.style.transform = "rotate("+rotate+"deg)";
+                      //     // console.log(name);
+                      //   return name;
+                      // }
+                      // createText(name,value){
+                      //   name = document.createElement("INPUT");
+                      //   name.setAttribute("type", "text");
+                      //   name.setAttribute("name", name);
+                      //   name.setAttribute("value", value);
+                      //   let div = document.getElementById(this.divID);
+                      //   this.div.appendChild(name);
+                      //   name.style.position = "absolute";
+                      //   this.transformText(name);
+                      //   name.style.fontSize = this.size/10+"px";
+                      //   name.style.width = this.nameSize+"px";
+                      //   name.style.height = this.nameSize/2.5+"px";
+                      //   return name;
+                      // }
+                      //
+                      // createRadio(id, name, value){
+                      //   id = document.createElement("INPUT");
+                      //   id.setAttribute("type", "radio");
+                      //   id.setAttribute("name", name);
+                      //   id.setAttribute("id", id);
+                      //   id.setAttribute("value", name);
+                      //   id.setAttribute("checked", true);
+                      //
+                      //   let div = document.getElementById(this.divID);
+                      //   this.div.appendChild(id);
+                      //   id.style.position = "absolute";
+                      //   this.transformRadio(id);
+                      //   id.style.width = this.radioRadius*2+"px";
+                      //   id.style.height = this.radioRadius*2+"px";
+                      //       id.innerHTML = "aDQWDWQDWQQWDSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWDQh";
+                      //   // console.log(id);
+                      //   return id;
+                      // }
+                      // transformText(elementPointer){
+                      //   elementPointer.style.left = (this.nameSize/2)+"px";
+                      //   elementPointer.style.top = -this.size/3+"px";
+                      // }
+                      // transformRadio(id,xOff,yOff){
+                      //   id.style.left = xOff+(this.size/2)-this.radioRadius+"px";
+                      //   id.style.top = yOff+"px";
+                      // }
+                      // transformSlider(name,xOff,yOff){
+                      //   name.style.left = 0+"px";
+                      //   name.style.top = 0+(this.sliderHeight*1.5)+"px"
+                      // }
 
   updateTarget(){
     this.noiseXIndex += this.noiseIncrement;
@@ -294,11 +284,11 @@ class Creature {
   updatePositionOfElements(){
     let xOffset = this.size/1.7;
     let yOffset = this.size/4;
-    this.transformElement(this.div,this.x,this.y,"px");
-      this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
-      this.transformElement(this.radioAlive,xOffset,-yOffset,"px");
-      this.transformElement(this.radioDead,xOffset,yOffset,"px");
-      this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
+    this.transformElement(this.div, this.x, this.y, "px");
+//   this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
+//   this.transformElement(this.radioAlive,xOffset,-yOffset,"px");
+//   this.transformElement(this.radioDead,xOffset,yOffset,"px");
+//   this.transformElement(this.name,(this.nameSize/2),-this.size/3,"px");
       // this.transformRadio(this.radioAlive,xOffset,-yOffset);
       // this.transformRadio(this.radioDead,xOffset,yOffset);
       // this.transformSlider(this.sliderHorz);
