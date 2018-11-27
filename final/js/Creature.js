@@ -82,24 +82,48 @@ class Creature {
       this.sizeElement(this.name,this.nameSize,this.nameSize/2.5,"px");
       this.transformElement(this.name,this.nameSize,this.nameSize/2.5,"px");
       this.name.style.fontSize = this.size/10+"px";
-      //
-      this.sizeElement(this.radioAliveContainer
 
+      //aliveRadio divider
+      this.radioAliveContainer.style.width = "auto";
+      this.radioAliveContainer.style.height = "auto";
+      this.transformElement(this.radioAliveContainer,this.size/2-this.radioRadius+this.size/1.7,this.size/4,"px");
 
-      let div = document.getElementById(this.divID);
-      this.div.appendChild(name);
-      name.style.position = "absolute";
-      this.transformText(name);
-      name.style.fontSize = this.size/10+"px";
-      name.style.width = this.nameSize+"px";
-      name.style.height = this.nameSize/2.5+"px";
+        //radioALive
+        this.transformeElement(this.radioDead,0,0,"px");
+        this.sizeElement(this.radioAlive,this.radioRadius*2,this.radioRadius*2,"px");
+        this.radioAlive.setAttribute("type", "radio");
+        this.radioAlive.setAttribute("name", radioGroupID);
+        this.radioAlive.setAttribute("id", radioAliveID);
+        // this.radioDead.setAttribute("value", name);
+        this.radioAlive.setAttribute("checked", true);
 
+      //RadioDeadContianer
+      this.radioDeadContainer.style.width = "auto";
+      this.radioDeadContainer.style.height = "auto";
+      this.transformElement(this.radioDeadContainer,this.size/2-this.radioRadius+this.size/1.7,-this.size/4,"px");
 
-    this.sliderHorz = this.createSlider(sliderHorzID,0);
-    this.sliderVert = this.createSlider(sliderVertID,90);
-    this.radioDead = this.createRadio('dead',radioGroupID,"dead");
-    this.radioAlive = this.createRadio('alive',radioGroupID,"alive");
-    this.name = this.createText(nameID,'todd');
+          //radioDead
+        this.transformeElement(this.radioDead,0,0,"px");
+        this.sizeElement(this.radioDead,this.radioRadius*2,this.radioRadius*2,"px")
+        this.radioDead.setAttribute("type", "radio");
+        this.radioDead.setAttribute("name", radioGroupID);
+        this.radioDead.setAttribute("id", radioDeadID);
+        // this.radioDead.setAttribute("value", name);
+        this.radioDead.setAttribute("checked", false);
+
+        id = document.createElement("INPUT");
+        id.setAttribute("type", "radio");
+        id.setAttribute("name", name);
+        id.setAttribute("id", id);
+        id.setAttribute("value", name);
+        id.setAttribute("checked", true);
+
+        let div = document.getElementById(this.divID);
+        this.div.appendChild(id);
+        id.style.position = "absolute";
+        this.transformRadio(id);
+        id.style.width = this.radioRadius*2+"px";
+        id.style.height = this.radioRadius*2+"px";
   }
   createElement(typeOfElement, id,pointerOfParent){
     //parentID where to appendto
