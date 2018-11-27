@@ -19,7 +19,7 @@ class Creature {
     this.sliderHeight = this.size/10;
     this.radioRadius = this.size/6;
     this.nameSize = this.size/2;
-    this.radioAliveDead = random(1000000);
+    this.radioAliveDead = random(1);
 
     // this.radio.style('position', 'fixed');
     // this.radio.style('left', this.x+"px");
@@ -27,7 +27,7 @@ class Creature {
     // this.radio.style('width', 100+"%");
     // this.radio.style('height', this.size+"px");
     // this.radio.style('transform', "scale("+this.size/40+")");
-    this.divID = random(100000);
+    this.divID = random(1); //set random divID
     this.div = this.createDiv(this.div);
 
     this.sliderHorz = this.createSlider(this.sliderHorz,0);
@@ -93,7 +93,6 @@ class Creature {
     id.setAttribute("id", id);
     id.setAttribute("value", name);
     id.setAttribute("checked", true);
-    id.innerHTML = value;
 
     let div = document.getElementById(this.divID);
     div.appendChild(id);
@@ -101,6 +100,7 @@ class Creature {
     this.transformRadio(id);
     id.style.width = this.radioRadius*2+"px";
     id.style.height = this.radioRadius*2+"px";
+        id.innerHTML = "aDQWDWQDWQQWDSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADWDQh";
     // console.log(id);
     return id;
   }
