@@ -1,4 +1,5 @@
 let creature = [];
+'use strict'
 function setup(){
   for (let i = 0; i < 20; i ++){
     creature[i] = new Creature();
