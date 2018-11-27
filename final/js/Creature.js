@@ -18,6 +18,7 @@ class Creature {
     this.size = random(20,100);
     this.sliderHeight = this.size/10;
     this.radioRadius = this.size/6;
+    this.nameSize = this.size/2;
     this.radioAliveDead = random(1000000);
 
     // this.radio.style('position', 'fixed');
@@ -26,12 +27,26 @@ class Creature {
     // this.radio.style('width', 100+"%");
     // this.radio.style('height', this.size+"px");
     // this.radio.style('transform', "scale("+this.size/40+")");
-
+    // this.div = this.createDiv();
+    this.name = this.createText(this.name,'todd');
     this.sliderHorz = this.createSlider(this.sliderHorz,0);
     this.sliderVert = this.createSlider(this.sliderVert,90);
-
-    this.radioAlive = this.createRadio('alive',this.radioAliveDead,"alive");
     this.radioDead = this.createRadio('dead',this.radioAliveDead,"dead");
+    this.radioAlive = this.createRadio('alive',this.radioAliveDead,"alive");
+  }
+  createDiv(){
+    let divID = document.createElement("div");
+    divID.setAttribute("id",divID);
+    let body = document.getElementById('bod');
+    body.appendChild(divID);
+    divID.style.position = "absolute";
+    divID.style.width = "100%";
+    divID.style.height = "100%";
+    this.transformDiv(divID);
+  }
+  transformDiv(divID){
+  divID.style.left = this.x;
+  divID.style.top = this.y;
   }
   createSlider(name,rotate){
     name = document.createElement("INPUT");
@@ -50,13 +65,32 @@ class Creature {
       // console.log(name);
     return name;
   }
+  createText(name,value){
+    name = document.createElement("INPUT");
+    name.setAttribute("type", "text");
+    name.setAttribute("name", name);
+    name.setAttribute("value", value);
+    let body = document.getElementById('bod');
+    body.appendChild(name);
+    name.style.position = "absolute";
+    this.transformText(name);
+    name.style.fontSize = this.size/10+"px";
+    name.style.width = this.nameSize+"px";
+    name.style.height = this.nameSize/2.5+"px";
+    return name;
+  }
+  transformText(id){
+    id.style.left = this.x+(this.nameSize/2)+"px";
+    id.style.top = this.y-this.size/2+"px";
+  }
   createRadio(id, name, value){
     id = document.createElement("INPUT");
     id.setAttribute("type", "radio");
     id.setAttribute("name", name);
     id.setAttribute("id", id);
     id.setAttribute("value", name);
-    id.textContent = value;
+    id.setAttribute("checked", true);
+    id.innerHTML = value;
 
     let body = document.getElementById('bod');
     body.appendChild(id);
@@ -84,7 +118,7 @@ class Creature {
   updateTarget(){
     this.noiseXIndex += this.noiseIncrement;
     this.noiseYIndex += this.noiseIncrement;
-    const xT1 = noise(this.noiseXIndex) * windowWidth;;
+    const xT1 = noise(this.noiseXIndex) * windowWidth;
     const yT1 = noise(this.noiseYIndex) * windowHeight;
 
     const xT2 = mouseX;
@@ -92,10 +126,10 @@ class Creature {
 
     this.xTarget = (xT1+xT2)/2;
     this.yTarget = (yT1+yT2)/2;
-    this.xTarget = mouseX;
-    this.yTarget = mouseY;
-    this.xTarget = xT1;
-    this.yTarget = yT1;
+    // this.xTarget = mouseX;
+    // this.yTarget = mouseY;
+    // this.xTarget = xT1;
+    // this.yTarget = yT1;
   }
   updateVectors(){
     //find diff in angle between two vecs (via division)
@@ -154,8 +188,9 @@ class Creature {
   display(){
     let xOffset = this.size/4;
     let yOffset = this.size/4;
-    this.transformRadio(this.radioAlive,xOffset,yOffset);
-    this.transformRadio(this.radioDead,xOffset,-yOffset);
+    this.transformText(this.name);
+    this.transformRadio(this.radioAlive,xOffset,-yOffset);
+    this.transformRadio(this.radioDead,xOffset,yOffset);
     this.transformSlider(this.sliderHorz);
     this.transformSlider(this.sliderVert);
 
