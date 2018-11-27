@@ -27,26 +27,32 @@ class Creature {
     // this.radio.style('width', 100+"%");
     // this.radio.style('height', this.size+"px");
     // this.radio.style('transform', "scale("+this.size/40+")");
-    // this.div = this.createDiv();
-    this.name = this.createText(this.name,'todd');
+    this.divID = random(100000);
+    this.div = this.createDiv(this.div);
+
     this.sliderHorz = this.createSlider(this.sliderHorz,0);
     this.sliderVert = this.createSlider(this.sliderVert,90);
     this.radioDead = this.createRadio('dead',this.radioAliveDead,"dead");
     this.radioAlive = this.createRadio('alive',this.radioAliveDead,"alive");
+    this.name = this.createText(this.name,'todd');
   }
-  createDiv(){
-    let divID = document.createElement("div");
-    divID.setAttribute("id",divID);
+  createDiv(divID){
+    divID = document.createElement("div");
+    divID.setAttribute("id",this.divID);
     let body = document.getElementById('bod');
     body.appendChild(divID);
     divID.style.position = "absolute";
-    divID.style.width = "100%";
-    divID.style.height = "100%";
+    divID.style.width = "auto";
+    divID.style.height = "auto";
+    divID.style.left = this.x;
+    divID.style.top = this.y;
     this.transformDiv(divID);
+    console.log(divID);
+    return divID;
   }
   transformDiv(divID){
-  divID.style.left = this.x;
-  divID.style.top = this.y;
+  divID.style.left = this.x+"px";
+  divID.style.top = this.y+"px";
   }
   createSlider(name,rotate){
     name = document.createElement("INPUT");
@@ -55,8 +61,8 @@ class Creature {
     name.setAttribute("max", 1 );
     name.setAttribute("step", 2/this.size );
     name.textContent = 'ah';
-    let body = document.getElementById('bod');
-    body.appendChild(name);
+    let div = document.getElementById(this.divID);
+    div.appendChild(name);
     name.style.position = "absolute";
     this.transformSlider(name);
     name.style.width = this.size+"px";
@@ -70,8 +76,8 @@ class Creature {
     name.setAttribute("type", "text");
     name.setAttribute("name", name);
     name.setAttribute("value", value);
-    let body = document.getElementById('bod');
-    body.appendChild(name);
+    let div = document.getElementById(this.divID);
+    div.appendChild(name);
     name.style.position = "absolute";
     this.transformText(name);
     name.style.fontSize = this.size/10+"px";
@@ -79,10 +85,7 @@ class Creature {
     name.style.height = this.nameSize/2.5+"px";
     return name;
   }
-  transformText(id){
-    id.style.left = this.x+(this.nameSize/2)+"px";
-    id.style.top = this.y-this.size/2+"px";
-  }
+
   createRadio(id, name, value){
     id = document.createElement("INPUT");
     id.setAttribute("type", "radio");
@@ -92,22 +95,26 @@ class Creature {
     id.setAttribute("checked", true);
     id.innerHTML = value;
 
-    let body = document.getElementById('bod');
-    body.appendChild(id);
+    let div = document.getElementById(this.divID);
+    div.appendChild(id);
     id.style.position = "absolute";
     this.transformRadio(id);
     id.style.width = this.radioRadius*2+"px";
     id.style.height = this.radioRadius*2+"px";
-    console.log(id);
+    // console.log(id);
     return id;
   }
+  transformText(id){
+    id.style.left = (this.nameSize/2)+"px";
+    id.style.top = -this.size/3+"px";
+  }
   transformRadio(id,xOff,yOff){
-    id.style.left = xOff+this.x+(this.size/2)-this.radioRadius+"px";
-    id.style.top = yOff+this.y+"px";
+    id.style.left = xOff+(this.size/2)-this.radioRadius+"px";
+    id.style.top = yOff+"px";
   }
   transformSlider(name,xOff,yOff){
-    name.style.left = this.x+"px";
-    name.style.top = this.y+(this.sliderHeight*1.5)+"px"
+    name.style.left = 0+"px";
+    name.style.top = 0+(this.sliderHeight*1.5)+"px"
   }
   updateNoise(){
     this.noiseXIndex += this.noiseIncrement;
@@ -188,6 +195,7 @@ class Creature {
   display(){
     let xOffset = this.size/4;
     let yOffset = this.size/4;
+    this.transformDiv(this.div);
     this.transformText(this.name);
     this.transformRadio(this.radioAlive,xOffset,-yOffset);
     this.transformRadio(this.radioDead,xOffset,yOffset);
