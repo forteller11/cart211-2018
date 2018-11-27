@@ -9,35 +9,71 @@ class Creature {
     this.yVec = 0;
     this.angle = atan2(this.yVec,this.xVec);
     this.angularAcceleration = random(.01,.1);
-    this.maxAcceleration = random(.2,3);
+    this.maxAcceleration = random(.05,1);
     this.minAcceleration = .01;
     this.acceleration = this.maxAcceleration;
     this.xTarget;
     this.yTarget;
     this.minMaxRange = 10;
     this.size = random(20,100);
+    this.sliderHeight = this.size/10;
+    this.radioRadius = this.size/6;
+    this.radioAliveDead = random(1000000);
 
-    let mM = this.minMaxRange;
-    this.xSlider = createSlider(-PI, PI, 0, TWO_PI/60);
-    this.xSlider.style('position', 'fixed');
-    this.xSlider.style('width', this.size+'px');
-    // this.xSlider.style('display',"none");
-
-    this.ySlider = createSlider(-mM, mM, lerp(-mM,mM,.5), mM/50);
-    this.ySlider.style('position', 'fixed');
-    this.ySlider.style('width', this.size+'px');
-    this.ySlider.style('height', this.size+'px');
-    this.ySlider.style('display',"none");
-
-    this.radio = createRadio();
-    this.radio.option('');
-
-    this.radio.style('position', 'fixed');
-    this.radio.style('left', this.x+"px");
-    this.radio.style('top', this.y+"px");
-    this.radio.style('width', 100+"%");
-    this.radio.style('height', this.size+"px");
+    // this.radio.style('position', 'fixed');
+    // this.radio.style('left', this.x+"px");
+    // this.radio.style('top', this.y+"px");
+    // this.radio.style('width', 100+"%");
+    // this.radio.style('height', this.size+"px");
     // this.radio.style('transform', "scale("+this.size/40+")");
+
+    this.sliderHorz = this.createSlider(this.sliderHorz,0);
+    this.sliderVert = this.createSlider(this.sliderVert,90);
+
+    this.radioAlive = this.createRadio('alive',this.radioAliveDead,"alive");
+    this.radioDead = this.createRadio('dead',this.radioAliveDead,"dead");
+  }
+  createSlider(name,rotate){
+    name = document.createElement("INPUT");
+    name.setAttribute("type", "range");
+    name.setAttribute("min", -1 );
+    name.setAttribute("max", 1 );
+    name.setAttribute("step", 2/this.size );
+    name.textContent = 'ah';
+    let body = document.getElementById('bod');
+    body.appendChild(name);
+    name.style.position = "absolute";
+    this.transformSlider(name);
+    name.style.width = this.size+"px";
+    name.style.height = this.sliderHeight+"px";
+    name.style.transform = "rotate("+rotate+"deg)";
+      // console.log(name);
+    return name;
+  }
+  createRadio(id, name, value){
+    id = document.createElement("INPUT");
+    id.setAttribute("type", "radio");
+    id.setAttribute("name", name);
+    id.setAttribute("id", id);
+    id.setAttribute("value", name);
+    id.textContent = value;
+
+    let body = document.getElementById('bod');
+    body.appendChild(id);
+    id.style.position = "absolute";
+    this.transformRadio(id);
+    id.style.width = this.radioRadius*2+"px";
+    id.style.height = this.radioRadius*2+"px";
+    console.log(id);
+    return id;
+  }
+  transformRadio(id,xOff,yOff){
+    id.style.left = xOff+this.x+(this.size/2)-this.radioRadius+"px";
+    id.style.top = yOff+this.y+"px";
+  }
+  transformSlider(name,xOff,yOff){
+    name.style.left = this.x+"px";
+    name.style.top = this.y+(this.sliderHeight*1.5)+"px"
   }
   updateNoise(){
     this.noiseXIndex += this.noiseIncrement;
@@ -56,8 +92,10 @@ class Creature {
 
     this.xTarget = (xT1+xT2)/2;
     this.yTarget = (yT1+yT2)/2;
-    // this.xTarget = mouseX;
-    // this.yTarget = mouseY;
+    this.xTarget = mouseX;
+    this.yTarget = mouseY;
+    this.xTarget = xT1;
+    this.yTarget = yT1;
   }
   updateVectors(){
     //find diff in angle between two vecs (via division)
@@ -95,11 +133,8 @@ class Creature {
 
     this.xVec = cos(newAngle) * this.acceleration;
     this.yVec = sin(newAngle) * this.acceleration;
-
-    // this.xVec = xVecToTarget;
-    // this.yVec = yVecToTarget;
-    // console.log();
-    //calc vector, normalize vector, recalc vecs
+    this.sliderHorz.value = cos(newAngle);
+    this.sliderVert.value = sin(newAngle);
 
   }
   updateAcceleration(){
@@ -111,22 +146,21 @@ class Creature {
     this.x += this.xVec;
     this.y += this.yVec;
 
-    if (this.radio.value() === true){
-      this.radio.style("display","none");
-    }
+    // if (this.radio.value() === true){
+    //   this.radio.style("display","none");
+    // }
 
   }
   display(){
-    // const sliderXValue = map(this.x,0,windowWidth,-this.minMaxRange,this.minMaxRange);
-    const btnRadius = 4;
-    this.xSlider.value(this.angle);
-    this.xSlider.style('left', this.x-btnRadius-this.size/2+"px");
-    this.xSlider.style('top', this.y+38+"px");
+    let xOffset = this.size/4;
+    let yOffset = this.size/4;
+    this.transformRadio(this.radioAlive,xOffset,yOffset);
+    this.transformRadio(this.radioDead,xOffset,-yOffset);
+    this.transformSlider(this.sliderHorz);
+    this.transformSlider(this.sliderVert);
 
-    this.ySlider.style('left', this.x+"px");
-    this.ySlider.style('top', this.y+"px");
-    this.radio.style('left', this.x-btnRadius+"px");
-    this.radio.style('top', this.y+16+btnRadius+"px");
+    // this.radio.style('left', this.x-btnRadius+"px");
+    // this.radio.style('top', this.y+16+btnRadius+"px");
   }
 
 }
