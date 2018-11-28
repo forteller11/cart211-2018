@@ -10,9 +10,9 @@ class Creature {
     this.nameSize = this.size/2;
     this.nameID = random(1);
     this.radioAliveDead = random(1);
-
+this.distToMaintain = random(100,250);
     this.velocity = createVector(0,0); //vector to be used as velocity.
-    this.velocityMax = 5; //max mag of velocity vec
+    this.velocityMax = this.size/20; //max mag of velocity vec
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
 
@@ -47,8 +47,8 @@ class Creature {
 
       //horizontal slider
       this.sliderHorz.setAttribute("type", "range");
-      this.sliderHorz.setAttribute("min", -1 );
-      this.sliderHorz.setAttribute("max", 1 );
+      this.sliderHorz.setAttribute("min", -this.velocityMax );
+      this.sliderHorz.setAttribute("max", this.velocityMax );
       this.sliderHorz.setAttribute("step", 2/this.size);
       this.sizeElement(this.sliderHorz,this.size,this.sliderHeight,"px");
       this.transformElement(this.sliderHorz,0,(this.sliderHeight*1.5),"px");
@@ -56,8 +56,8 @@ class Creature {
 
       //vertical slider
       this.sliderVert.setAttribute("type", "range");
-      this.sliderVert.setAttribute("min", -1 );
-      this.sliderVert.setAttribute("max", 1 );
+      this.sliderVert.setAttribute("min", -this.velocityMax );
+      this.sliderVert.setAttribute("max", this.velocityMax );
       this.sliderVert.setAttribute("step", 2/this.size);
       this.sizeElement(this.sliderVert,this.size,this.sliderHeight,"px");
       this.transformElement(this.sliderVert,0,(this.sliderHeight*1.5),"px");
@@ -85,6 +85,7 @@ class Creature {
         this.radioAlive.checked = true;
         this.transformElement(this.radioAlive,-this.fontSize*4,-this.fontSize,"px");
         this.sizeElement(this.radioAlive,this.radioRadius*2,this.radioRadius*2,"px");
+        this.radioAlive.style.border = "2px dotted";
 
       //RadioDeadContianer
       this.radioDeadContainer.style.width = "auto";
@@ -155,13 +156,17 @@ class Creature {
     this.velocity.add(addToVelocity);
   }
 
-  seperate(){
+  maintainDistance(distToBeMaintained){
 
 let vectorToAllCreatures = createVector(0,0);
     for (let i = 0; i < creature.length; i ++){
       //summ of velocities from all creatures, then deivide by creature length
       const vectorToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
-      vectorToAllCreatures.add(vectorToCreature);
+        if (vectorToCreature.mag() < 600){
+        const weight = map(vectorToCreature.mag(),0,distToBeMaintained,1,0);
+        vectorToCreature.mult(weight)
+        vectorToAllCreatures.add(vectorToCreature);
+      }
     }
     vectorToAllCreatures.div(creature.length);
 
@@ -174,7 +179,7 @@ let vectorToAllCreatures = createVector(0,0);
     const distToTarget = vectorToTarget.mag();
     // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
     // this.velocityWeight = constrain(this.velocityWeight,0,.01);
-    this.velocityWeight = .001;
+    this.velocityWeight = .01;
     // console.log(this.velocityWeight);
     // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
@@ -182,14 +187,22 @@ let vectorToAllCreatures = createVector(0,0);
     // addToVelocity.mult(this.velocityWeight);
     // console.log(addToVelocity);
     this.velocity.add(addToVelocity);
+
+    this.sliderHorz.value += addToVelocity.x;
+    this.sliderVert.value += addToVelocity.y;
   }
 
   addVelocityToPosition(){
     this.velocity.limit(this.velocityMax);
+
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
 
+  updateSliders(){
+    this.sliderHorz.value = this.velocity.x;
+    this.sliderVert.value = this.velocity.y;
+  }
 
   updatePositionOfElements(){
     let xOffset = this.size/1.7;
@@ -199,10 +212,10 @@ let vectorToAllCreatures = createVector(0,0);
 
   update(){
     // this.seek();
-    this.seperate();
+    this.maintainDistance(this.distToMaintain);
     this.addVelocityToPosition();
-
     this.updatePositionOfElements();
+    this.updateSliders();
   }
 
 }
