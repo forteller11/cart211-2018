@@ -10,7 +10,7 @@ class Creature {
     this.nameSize = this.size/2;
     this.nameID = random(1);
     this.radioAliveDead = random(1);
-this.distToMaintain = random(100,250);
+    this.distToMaintain = random(100,250);
     this.velocity = createVector(0,0); //vector to be used as velocity.
     this.velocityMax = this.size/20; //max mag of velocity vec
     this.velocityWeight;
@@ -135,6 +135,19 @@ this.distToMaintain = random(100,250);
   elementPointer.style.height = height+sizeType;
   }
 
+  screenWrap(){
+    if (this.x-this.size > windowWidth){
+      this.x = -this.size;
+    } else if (this.x+this.size < 0){
+      this.x=windowWidth+this.size;
+    }
+    if (this.y-this.size > windowHeight){
+      this.y = -this.size;
+    } else if (this.y+this.size < 0){
+      this.y=windowHeight+this.size;
+    }
+  }
+
   seek(){ //travel towards point
     const targetX = mouseX;
     const targetY = mouseY;
@@ -214,6 +227,7 @@ let vectorToAllCreatures = createVector(0,0);
     // this.seek();
     this.maintainDistance(this.distToMaintain);
     this.addVelocityToPosition();
+    this.screenWrap();
     this.updatePositionOfElements();
     this.updateSliders();
   }
