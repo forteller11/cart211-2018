@@ -223,12 +223,12 @@ class Creature {
   seperate(weight){
     let sumDistToCreatures = createVector(0,0);
     let creaturesWithinRadius = 0;
-    const seperationThreshold = this.size*3;
+    const seperationThreshold = this.size*2;
     for (let i = 0; i < creature.length; i ++){
       const distToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
       if (distToCreature.mag() < seperationThreshold){ //if within radius, record it, add to summ
         creaturesWithinRadius++;
-        const magBasedOnDist = map(distToCreature.mag(),0,seperationThreshold,100,0);
+        const magBasedOnDist = map(distToCreature.mag(),0,seperationThreshold,250,0);
         distToCreature.normalize();
         const addToSum = distToCreature.mult(magBasedOnDist);
         sumDistToCreatures.add(distToCreature);
@@ -243,6 +243,9 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(0,0,255,40);
+    noFill();
+    ellipse(this.x,this.y,this.size*2);
     stroke(0,0,255);
     line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
 
@@ -255,7 +258,7 @@ class Creature {
     let creaturesWithinRadius = 0;
     for (let i = 0; i < creature.length; i ++){
       const distToCreature = createVector(creature[i].x-this.x,creature[i].y-this.y);
-      if (distToCreature.mag() < 600){ //if within radius, record it, add to summ
+      if (distToCreature.mag() < this.size*4){ //if within radius, record it, add to summ
         creaturesWithinRadius++;
         sumDistToCreatures.add(distToCreature);
       }
@@ -269,6 +272,9 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(0,255,255,40);
+    noFill();
+    ellipse(this.x,this.y,this.size*4);
     stroke(0,255,255);
     line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
 
