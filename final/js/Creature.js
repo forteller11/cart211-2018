@@ -220,11 +220,58 @@ class Creature {
 
     this.velocity.add(addToVelocity);
   }
-  clump(){
+  seperate(weight){
+    let vectorToCurrentClosest = createVector(100000000000000,100000000000000);
+    for (let i = 0; i < creature.length; i ++){
+      const vectorToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
+      //if make sure vectoToClosest is always actually the closest && not self
+      const distToCreature = vectorToCreature.mag();
+      const distToClosestCreature = vectorToCreature.mag();
+        if ((vectorToCreature.mag() < vectorToCurrentClosest.mag()) && (vectorToCreature.mag() > 1) ) {
+        vectorToCurrentClosest = vectorToCreature;
+      }
+    }
+
+
+    let vectorToTarget = vectorToCurrentClosest;
+
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+
+    const distToTarget = vectorToTarget.mag();
+
+    let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(0,255,255);
+    line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
+
+    this.velocity.add(addToVelocity);
 //away from neighby x/y positions
   }
-  seperate(){
-    //away from nearby x/y positions
+
+  clump(weight){
+    let sumDistToCreatures = createVector(0,0);
+    let creaturesWithinRadius = 0;
+    for (let i = 0; i < creature.length; i ++){
+      const distToCreature = createVector(creature[i].x-this.x,creature[i].y-this.y);
+      if (distToCreature.mag() < 600){ //if within radius, record it, add to summ
+        creaturesWithinRadius++;
+        sumDistToCreatures.add(distToCreature);
+      }
+    }
+    const avgDistToCreatures = sumDistToCreatures.div(1);
+    let vectorToTarget = avgDistToCreatures;
+
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+
+    const distToTarget = vectorToTarget.mag();
+
+    let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(0,255,255);
+    line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
+
+    this.velocity.add(addToVelocity);
+//away from neighby x/y positions
   }
 
   addVelocityToPosition(){
@@ -245,12 +292,12 @@ class Creature {
   }
 
   update(){
-    this.seekMouse(0.001);
+    // this.seekMouse(0.001);
     // this.align(1);
-    this.clump(1);
-    this.seperate(1);
+    this.clump(.1);
+    // this.seperate(1);
 
-    this.maintainDistance(.01,this.distToMaintain);
+    // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
     this.updatePositionOfElements();
