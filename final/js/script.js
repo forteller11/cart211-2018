@@ -1,4 +1,6 @@
 let creature = [];
+let style = true;
+let debugDisplay = false;
 'use strict'
 function setup(){
   createCanvas(windowWidth,windowHeight);

@@ -53,7 +53,7 @@ class Creature {
     this.sizeElement(this.sliderHorz, this.size, this.sliderHeight, "px");
     this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
     this.sliderHorz.style.transform = "rotate(" + 0 + "deg)";
-    this.sliderHorz.style.display = "none";
+    if (style === false){this.sliderHorz.style.display = "none";}
 
     //vertical slider
     this.sliderVert.setAttribute("type", "range");
@@ -63,7 +63,7 @@ class Creature {
     this.sizeElement(this.sliderVert, this.size, this.sliderHeight, "px");
     this.transformElement(this.sliderVert, 0, (this.sliderHeight * 1.5), "px");
     this.sliderVert.style.transform = "rotate(" + 90 + "deg)";
-    this.sliderVert.style.display = "none";
+    if (style === false){this.sliderVert.style.display = "none";}
 
     //name (text input)
     this.name.setAttribute("type", "text");
@@ -73,13 +73,13 @@ class Creature {
     this.transformElement(this.name, this.nameSize / 2, -this.size / 1.8, "px");
     this.name.style.fontSize = this.fontSize + "px";
     this.name.style.textAlign = "center";
-    this.name.style.display = "none";
+    if (style === false){this.name.style.display = "none";}
 
     //aliveRadio divider
     this.radioAliveContainer.style.width = "auto";
     this.radioAliveContainer.style.height = "auto";
     this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
-    this.radioAliveContainer.style.display = "none";
+    if (style === false){this.radioAliveContainer.style.display = "none";}
 
     //radioALive
     this.radioAlive = this.createElement("INPUT", radioAliveID, this.radioAliveContainer);
@@ -89,13 +89,13 @@ class Creature {
     this.radioAlive.checked = true;
     this.transformElement(this.radioAlive, -this.fontSize * 4, -this.fontSize, "px");
     this.sizeElement(this.radioAlive, this.radioRadius * 2, this.radioRadius * 2, "px");
-    this.radioAlive.style.display = "none";
+    if (style === false){this.radioAlive.style.display = "none";}
 
     //RadioDeadContianer
     this.radioDeadContainer.style.width = "auto";
     this.radioDeadContainer.style.height = "auto";
     this.transformElement(this.radioDeadContainer, this.size, this.size / 2.8, "px");
-    this.radioDeadContainer.style.display = "none";
+    if (style === false){this.radioDeadContainer.style.display = "none";}
 
     //radioDead
     this.radioDead = this.createElement("INPUT", radioAliveID, this.radioDeadContainer);
@@ -106,7 +106,7 @@ class Creature {
     this.radioDead.checked = false;
     this.transformElement(this.radioDead, -this.fontSize * 4, -this.fontSize / 2, "px");
     this.sizeElement(this.radioDead, this.radioRadius * 2, this.radioRadius * 2, "px");
-    this.radioDead.style.display = "none";
+    if (style === false) {this.radioDead.style.display = "none";}
 
   }
 
@@ -227,12 +227,14 @@ class Creature {
 
     const distToTarget = vectorToTarget.mag();
 
-    let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    stroke(255, 50, 50, 40);
-    noFill();
-    ellipse(this.x, this.y, radiusThreshold);
-    stroke(255, 50, 50);
-    line(this.x, this.y, this.x + addToVelocity.x*100, this.y + addToVelocity.y*100);
+    let addToVelocity = desiredChangeInVelocity.mult(weight);
+    if (debugDisplay === true){
+      stroke(255, 50, 50, 40);
+      noFill();
+      ellipse(this.x, this.y, radiusThreshold);
+      stroke(255, 50, 50);
+      line(this.x, this.y, this.x + addToVelocity.x*100, this.y + addToVelocity.y*100);
+    }
 
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
@@ -259,12 +261,14 @@ class Creature {
 
     const distToTarget = vectorToTarget.mag();
 
-    let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    stroke(0, 0, 255, 40);
-    noFill();
-    ellipse(this.x, this.y, seperationThreshold);
-    stroke(0, 0, 255);
-    line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    let addToVelocity = desiredChangeInVelocity.mult(weight);
+    if (debugDisplay === true){
+      stroke(0, 0, 255, 40);
+      noFill();
+      ellipse(this.x, this.y, seperationThreshold);
+      stroke(0, 0, 255);
+      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    }
 
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
@@ -290,12 +294,13 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    stroke(0, 255, 255, 40);
-    noFill();
-    ellipse(this.x, this.y, radiusThreshold);
-    stroke(0, 255, 255);
-    line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
-
+    if (debugDisplay === true){
+      stroke(0, 255, 255, 40);
+      noFill();
+      ellipse(this.x, this.y, radiusThreshold);
+      stroke(0, 255, 255);
+      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    }
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
   }
@@ -318,8 +323,8 @@ class Creature {
   }
 
   update() {
-    // this.seekMouse(0.001);
-    this.align(.02);
+    this.seekMouse(0.0001);
+    this.align(.1);
     this.clump(.001);
     this.seperate(.01);
 
@@ -331,11 +336,13 @@ class Creature {
     this.debugDisplay();
   }
   debugDisplay() {
-    stroke(0);
-    fill(255, 255, 255, 50);
-    ellipse(this.x, this.y, this.size);
-    stroke(0, 0, 0, 0);
-    line(this.x, this.y, this.x + this.velocity.x, this.y + this.velocity.y);
+    if (debugDisplay === true){
+      stroke(0);
+      fill(255, 255, 255, 50);
+      ellipse(this.x, this.y, this.size);
+      stroke(0, 0, 0, 0);
+      line(this.x, this.y, this.x + this.velocity.x, this.y + this.velocity.y);
+    }
   }
 
 }
