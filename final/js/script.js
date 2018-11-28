@@ -1,12 +1,16 @@
 let creature = [];
 'use strict'
 function setup(){
+  createCanvas(windowWidth,windowHeight);
   for (let i = 0; i < 20; i ++){
     creature[i] = new Creature();
   }
+  createCanvas(windowWidth,windowHeight);
 }
 
 function draw(){
+  createCanvas(windowWidth,windowHeight);
+  background(255,255,230);
   for (let i = 0; i < creature.length; i ++){
     // creature[i].updateNoise();
     creature[i].update();

@@ -53,6 +53,7 @@ class Creature {
       this.sizeElement(this.sliderHorz,this.size,this.sliderHeight,"px");
       this.transformElement(this.sliderHorz,0,(this.sliderHeight*1.5),"px");
       this.sliderHorz.style.transform = "rotate("+0+"deg)";
+      this.sliderHorz.style.display = "none";
 
       //vertical slider
       this.sliderVert.setAttribute("type", "range");
@@ -62,6 +63,7 @@ class Creature {
       this.sizeElement(this.sliderVert,this.size,this.sliderHeight,"px");
       this.transformElement(this.sliderVert,0,(this.sliderHeight*1.5),"px");
       this.sliderVert.style.transform = "rotate("+90+"deg)";
+      this.sliderVert.style.display = "none";
 
       //name (text input)
       this.name.setAttribute("type", "text");
@@ -71,11 +73,13 @@ class Creature {
       this.transformElement(this.name,this.nameSize/2,-this.size/1.8,"px");
       this.name.style.fontSize = this.fontSize+"px";
       this.name.style.textAlign = "center";
+      this.name.style.display = "none";
 
       //aliveRadio divider
       this.radioAliveContainer.style.width = "auto";
       this.radioAliveContainer.style.height = "auto";
       this.transformElement(this.radioAliveContainer,this.size,-this.size/6,"px");
+      this.radioAliveContainer.style.display = "none";
 
         //radioALive
         this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
@@ -85,12 +89,13 @@ class Creature {
         this.radioAlive.checked = true;
         this.transformElement(this.radioAlive,-this.fontSize*4,-this.fontSize,"px");
         this.sizeElement(this.radioAlive,this.radioRadius*2,this.radioRadius*2,"px");
-        this.radioAlive.style.border = "2px dotted";
+        this.radioAlive.style.display = "none";
 
       //RadioDeadContianer
       this.radioDeadContainer.style.width = "auto";
       this.radioDeadContainer.style.height = "auto";
       this.transformElement(this.radioDeadContainer,this.size,this.size/2.8,"px");
+      this.radioDeadContainer.style.display = "none";
 
         //radioDead
         this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
@@ -101,6 +106,7 @@ class Creature {
         this.radioDead.checked = false;
         this.transformElement(this.radioDead,-this.fontSize*4,-this.fontSize/2,"px");
         this.sizeElement(this.radioDead,this.radioRadius*2,this.radioRadius*2,"px");
+        this.radioDead.style.display = "none";
 
   }
 
@@ -181,8 +187,9 @@ let vectorToAllCreatures = createVector(0,0);
         vectorToAllCreatures.add(vectorToCreature);
       }
     }
+    stroke(0,255,255)
     vectorToAllCreatures.div(creature.length);
-
+    line(this.x,this.y,this.x+vectorToAllCreatures.x,this.y+vectorToAllCreatures.y);
 
     let vectorToTarget = vectorToAllCreatures;
 
@@ -220,7 +227,7 @@ let vectorToAllCreatures = createVector(0,0);
   updatePositionOfElements(){
     let xOffset = this.size/1.7;
     let yOffset = this.size/4;
-    this.transformElement(this.div, this.x, this.y, "px");
+    this.transformElement(this.div, this.x-this.size/2, this.y-this.sliderHeight*2, "px");
   }
 
   update(){
@@ -230,6 +237,14 @@ let vectorToAllCreatures = createVector(0,0);
     this.screenWrap();
     this.updatePositionOfElements();
     this.updateSliders();
+    this.debugDisplay();
+  }
+  debugDisplay(){
+    stroke(0);
+    fill(255,255,255,50);
+    ellipse(this.x,this.y,this.size);
+    stroke(255,0,255);
+    line(this.x,this.y,this.x+this.velocity.x,this.y+this.velocity.y);
   }
 
 }
