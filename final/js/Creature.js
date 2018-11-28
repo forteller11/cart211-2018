@@ -154,30 +154,32 @@ class Creature {
     }
   }
 
-  seek(){ //travel towards point
+  seekMouse(weight){ //travel towards point
     const targetX = mouseX;
     const targetY = mouseY;
     let vectorToTarget = createVector(targetX-this.x,targetY-this.y);
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+
     // console.log(desiredChangeInVelocity);
     const distToTarget = vectorToTarget.mag();
     // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
     // this.velocityWeight = constrain(this.velocityWeight,0,.01);
-    this.velocityWeight = .001;
+    this.velocityWeight = .0001;
     // console.log(this.velocityWeight);
     // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
-    let addToVelocity = desiredChangeInVelocity.mult(this.velocityWeight); //
+    let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(255,0,255);
+    line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
     // addToVelocity.mult(this.velocityWeight);
     // console.log(addToVelocity);
     this.velocity.add(addToVelocity);
   }
 
-  maintainDistance(distToBeMaintained){
-
-let vectorToAllCreatures = createVector(0,0);
+  maintainDistance(weight,distToBeMaintained){
+    let vectorToAllCreatures = createVector(0,0);
     for (let i = 0; i < creature.length; i ++){
       //summ of velocities from all creatures, then deivide by creature length
       const vectorToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
@@ -187,9 +189,9 @@ let vectorToAllCreatures = createVector(0,0);
         vectorToAllCreatures.add(vectorToCreature);
       }
     }
-    stroke(0,255,255)
+
     vectorToAllCreatures.div(creature.length);
-    line(this.x,this.y,this.x+vectorToAllCreatures.x,this.y+vectorToAllCreatures.y);
+
 
     let vectorToTarget = vectorToAllCreatures;
 
@@ -197,24 +199,36 @@ let vectorToAllCreatures = createVector(0,0);
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
 
     const distToTarget = vectorToTarget.mag();
-    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
-    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
-    this.velocityWeight = .01;
-    // console.log(this.velocityWeight);
-    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
-    let addToVelocity = desiredChangeInVelocity.mult(this.velocityWeight); //
-    // addToVelocity.mult(this.velocityWeight);
-    // console.log(addToVelocity);
+    let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    stroke(0,255,255);
+    line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
+
     this.velocity.add(addToVelocity);
+  }
 
-    this.sliderHorz.value += addToVelocity.x;
-    this.sliderVert.value += addToVelocity.y;
+  align(weight){
+    //align velocities with nearby velocities of others
+    let vectorToTarget = createVector(0,0);
+
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
+
+    const distToTarget = vectorToTarget.mag();
+
+    let addToVelocity = desiredChangeInVelocity.mult(weight); //
+
+    this.velocity.add(addToVelocity);
+  }
+  clump(){
+//away from neighby x/y positions
+  }
+  seperate(){
+    //away from nearby x/y positions
   }
 
   addVelocityToPosition(){
     this.velocity.limit(this.velocityMax);
-
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
@@ -231,8 +245,12 @@ let vectorToAllCreatures = createVector(0,0);
   }
 
   update(){
-    // this.seek();
-    this.maintainDistance(this.distToMaintain);
+    this.seekMouse(0.001);
+    // this.align(1);
+    this.clump(1);
+    this.seperate(1);
+
+    this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
     this.updatePositionOfElements();
@@ -243,7 +261,7 @@ let vectorToAllCreatures = createVector(0,0);
     stroke(0);
     fill(255,255,255,50);
     ellipse(this.x,this.y,this.size);
-    stroke(255,0,255);
+    stroke(0,0,0,0);
     line(this.x,this.y,this.x+this.velocity.x,this.y+this.velocity.y);
   }
 
