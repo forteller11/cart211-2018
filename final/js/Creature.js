@@ -221,19 +221,21 @@ class Creature {
     this.velocity.add(addToVelocity);
   }
   seperate(weight){
-    let vectorToCurrentClosest = createVector(100000000000000,100000000000000);
+    let sumDistToCreatures = createVector(0,0);
+    let creaturesWithinRadius = 0;
+    const seperationThreshold = this.size*3;
     for (let i = 0; i < creature.length; i ++){
-      const vectorToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
-      //if make sure vectoToClosest is always actually the closest && not self
-      const distToCreature = vectorToCreature.mag();
-      const distToClosestCreature = vectorToCreature.mag();
-        if ((vectorToCreature.mag() < vectorToCurrentClosest.mag()) && (vectorToCreature.mag() > 1) ) {
-        vectorToCurrentClosest = vectorToCreature;
+      const distToCreature = createVector(this.x-creature[i].x,this.y-creature[i].y);
+      if (distToCreature.mag() < seperationThreshold){ //if within radius, record it, add to summ
+        creaturesWithinRadius++;
+        const magBasedOnDist = map(distToCreature.mag(),0,seperationThreshold,100,0);
+        distToCreature.normalize();
+        const addToSum = distToCreature.mult(magBasedOnDist);
+        sumDistToCreatures.add(distToCreature);
       }
     }
-
-
-    let vectorToTarget = vectorToCurrentClosest;
+    let avgDistToCreatures = sumDistToCreatures.div(creaturesWithinRadius);
+    let vectorToTarget = avgDistToCreatures;
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget,this.velocity);
@@ -241,7 +243,7 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    stroke(0,255,255);
+    stroke(0,0,255);
     line(this.x,this.y,this.x+addToVelocity.x,this.y+addToVelocity.y);
 
     this.velocity.add(addToVelocity);
@@ -258,7 +260,7 @@ class Creature {
         sumDistToCreatures.add(distToCreature);
       }
     }
-    const avgDistToCreatures = sumDistToCreatures.div(1);
+    const avgDistToCreatures = sumDistToCreatures.div(creaturesWithinRadius);
     let vectorToTarget = avgDistToCreatures;
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
@@ -295,7 +297,7 @@ class Creature {
     // this.seekMouse(0.001);
     // this.align(1);
     this.clump(.1);
-    // this.seperate(1);
+    this.seperate(.2);
 
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
