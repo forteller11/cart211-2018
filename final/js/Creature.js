@@ -11,8 +11,8 @@ class Creature {
     this.nameID = random(1);
     this.radioAliveDead = random(1);
     this.distToMaintain = random(100, 250);
-    this.velocity = createVector(0, 0); //vector to be used as velocity.
     this.velocityMax = this.size / 20; //max mag of velocity vec
+    this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
 
@@ -208,17 +208,19 @@ class Creature {
   }
 
   align(weight) { //calc all nearby velocities, add them up, avg them.
-    let sumDistToCreatures = createVector(0, 0);
+    let sumVelocityOfNeighbors = createVector(0, 0);
     let creaturesWithinRadius = 0;
+    const radiusThreshold = this.size*2;
     for (let i = 0; i < creature.length; i++) {
       const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
-      if (distToCreature.mag() < this.size * 4) { //if within radius, record it, add to summ
+      if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
+        const velocityOfNeighbor = creature[i].velocity;
         creaturesWithinRadius++;
-        sumDistToCreatures.add(distToCreature);
+        sumVelocityOfNeighbors.add(velocityOfNeighbor);
       }
     }
-    const avgDistToCreatures = sumDistToCreatures.div(creaturesWithinRadius);
-    let vectorToTarget = avgDistToCreatures;
+    const avgVelocityOfNeighbors = sumVelocityOfNeighbors.div(creaturesWithinRadius);
+    let vectorToTarget = avgVelocityOfNeighbors;
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
@@ -228,9 +230,9 @@ class Creature {
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
     stroke(255, 50, 50, 40);
     noFill();
-    ellipse(this.x, this.y, this.size * 4);
+    ellipse(this.x, this.y, radiusThreshold);
     stroke(255, 50, 50);
-    line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    line(this.x, this.y, this.x + addToVelocity.x*100, this.y + addToVelocity.y*100);
 
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
@@ -260,7 +262,7 @@ class Creature {
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
     stroke(0, 0, 255, 40);
     noFill();
-    ellipse(this.x, this.y, this.size * 2);
+    ellipse(this.x, this.y, seperationThreshold);
     stroke(0, 0, 255);
     line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
 
@@ -271,9 +273,10 @@ class Creature {
   clump(weight) {
     let sumDistToCreatures = createVector(0, 0);
     let creaturesWithinRadius = 0;
+    const radiusThreshold = this.size*4;
     for (let i = 0; i < creature.length; i++) {
       const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
-      if (distToCreature.mag() < this.size * 4) { //if within radius, record it, add to summ
+      if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
         creaturesWithinRadius++;
         sumDistToCreatures.add(distToCreature);
       }
@@ -289,7 +292,7 @@ class Creature {
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
     stroke(0, 255, 255, 40);
     noFill();
-    ellipse(this.x, this.y, this.size * 4);
+    ellipse(this.x, this.y, radiusThreshold);
     stroke(0, 255, 255);
     line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
 
@@ -316,9 +319,9 @@ class Creature {
 
   update() {
     // this.seekMouse(0.001);
-    this.align(.5);
-    this.clump(.1);
-    this.seperate(.2);
+    this.align(.02);
+    this.clump(.001);
+    this.seperate(.01);
 
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
