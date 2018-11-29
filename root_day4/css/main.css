@@ -19,7 +19,7 @@ header {
 #s1 {
   text-align:center;
   color:white;
-  background:url(/images/portrait_1.jpg) no-repeat center center fixed;
+  background:url(../images/portrait_1.jpg) no-repeat center center fixed;
   background-size:contain;
   /*  ../ goes out of file directory, fixed does not scroll, center keeps center visble, cover = tries to fill canvas*/
   width:100%;
