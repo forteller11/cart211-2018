@@ -2,17 +2,22 @@
 	margin:0;
 	padding: 0;
 	box-sizing:border-box;
-	height:auto;
-
-}
-video{
+	height:100%;
 	width:100%;
-	transition: width 1s;
+
 }
-video:active{
-	width:200%;
+a{
+	color:black;
+	opacity:1;
+	transition:opacity .5s;
+}
+a:link{
+	color:black;
+}
+a:visited{
+	color:red;
 }
 
-#videoContainer{
-	position:absolute;
+a:hover{
+	opacity:0;
 }
