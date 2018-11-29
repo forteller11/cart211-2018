@@ -4,7 +4,7 @@ class Head {
     this.y = random(windowHeight);
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
-    this.size = 60;
+    this.size = 100;
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
 
     let bodyPointer = document.getElementById("bodyID")
@@ -137,7 +137,7 @@ class Head {
   }
 
   update() {
-    // ellipse(this.x,this.y,20);
+    // ellipse(this.x,this.y,this.size);
     // this.seekMouse(0.0001);
     // this.align(.1);
     // this.clump(.001);

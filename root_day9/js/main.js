@@ -2,7 +2,7 @@ let heads = [];
 
 function setup(){
   createCanvas(windowWidth,windowHeight);
-  for (let i = 0; i < 200; i ++){
+  for (let i = 0; i < 100; i ++){
   heads[i] = new Head;
   }
 }
