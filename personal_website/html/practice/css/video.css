@@ -8,31 +8,29 @@
 }
 div{
 	text-align:center;
-	width:200px;
-	height:200px;
-	transition:width .5s, height .5s;
+	width:120px;
+	height:120px;
+	transition:background-color .2s;
 	background-color:black;
 
 }
 
 div:hover{
-	width:250px;
-	height:250px;
+	background-color:darkgrey;
 }
 a{
 	text-decoration:none;
 	width:100%;
 	height:100%;
 	font-size: 24px;
-	color:black;
-	opacity:1;
+	color:white;
 	transition:color .4s;
 }
 a:link{
-	color:black;
+	color:white;
 }
 a:visited{
-	color:lightgrey;
+	color:darkgrey;
 }
 
 a:hover{

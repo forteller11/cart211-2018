@@ -1,0 +1,25 @@
+* {
+	margin:0;
+	padding: 0;
+	box-sizing:border-box;
+	height:100%;
+	width:100%;
+
+}
+a{
+	text-align:right;
+	font-size: 24px;
+	color:black;
+	opacity:1;
+	transition:font-size .5s;
+}
+a:link{
+	color:black;
+}
+a:visited{
+	color:red;
+}
+
+a:hover{
+	font-size:32px;
+}

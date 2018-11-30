@@ -4,7 +4,7 @@ class Head {
     this.y = random(windowHeight);
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
-    this.size = 150;
+    this.size = 100;
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
 
     let bodyPointer = document.getElementById("bodyID")
@@ -132,7 +132,7 @@ class Head {
   }
 
     wander(weight) { //use 2d perlin noise to create random point within unit circle
-        const noiseIncrement = .01;
+        const noiseIncrement = .002;
         this.wanderXIndex += noiseIncrement;
         this.wanderYIndex += noiseIncrement;
         let xTarget = ((noise(this.wanderXIndex)*2)-1)*this.size;
@@ -195,11 +195,11 @@ class Head {
   }
 
   update() {
-    ellipse(this.x,this.y,this.size);
-    this.seekMouse(.0001);
+    // ellipse(this.x,this.y,this.size);
+    this.seekMouse(.00008);
     // this.clump(.0001);
     this.seperate(.05);
-    this.wander(.1);
+    this.wander(.2);
 
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
