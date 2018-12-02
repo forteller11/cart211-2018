@@ -12,7 +12,7 @@ function setup(){
 
 function draw(){
   createCanvas(windowWidth,windowHeight);
-  background(255,255,230);
+  background(255,255,255);
   for (let i = 0; i < creature.length; i ++){
     // creature[i].updateNoise();
     creature[i].update();

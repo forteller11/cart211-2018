@@ -17,7 +17,7 @@ class Head {
     this.href.setAttribute("target","_blank");
     this.transformElement(this.href, 0, 0, "px");
     this.href.innerHTML = linkName;
-    console.log(this.href);
+    // console.log(this.href);
 
 
   }
@@ -199,7 +199,7 @@ class Head {
     this.seekMouse(.00008);
     // this.clump(.0001);
     this.seperate(.05);
-    this.wander(.2);
+    this.wander(.14);
 
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
