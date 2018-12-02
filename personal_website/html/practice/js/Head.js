@@ -5,7 +5,7 @@ class Head {
     this.y = random(windowHeight/2-explosionAmount,windowHeight/2+explosionAmount);
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
-    this.size = 100;
+    this.size = 80;
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
 
     let bodyPointer = document.getElementById("bodyID")
@@ -18,7 +18,7 @@ class Head {
     this.href.setAttribute("target","_blank");
     this.transformElement(this.href, 0, 0, "px");
     this.href.innerHTML = linkName;
-    // console.log(this.href);
+    console.log(this.href);
 
 
   }
@@ -149,8 +149,8 @@ class Head {
         let addToVelocity = desiredChangeInVelocity.mult(weight*.01);
 
 
-          stroke(0, 0, 255);
-          line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+          // stroke(0, 0, 255);
+          // line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
 
 
         this.velocity.add(addToVelocity);
@@ -174,8 +174,8 @@ class Head {
           // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
           let addToVelocity = desiredChangeInVelocity.mult(weight); //
-          stroke(255, 0, 255);
-          line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+          // stroke(255, 0, 255);
+          // line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
           // addToVelocity.mult(this.velocityWeight);
           // console.log(addToVelocity);
           this.velocity.add(addToVelocity);
@@ -183,9 +183,9 @@ class Head {
   updatePositionOfElements() {
     let xOffset = this.size / 1.7;
     let yOffset = this.size / 4;
-    this.transformElement(this.hrefContainer, this.x-this.size/2, this.y-this.size/2, "px");
+    this.transformElement(this.hrefContainer, this.x-this.size/2, this.y, "px");
 
-    this.transformElement(this.href, 0, this.size/2, "px");
+    this.transformElement(this.href, 0, 0, "px");
 
   }
 

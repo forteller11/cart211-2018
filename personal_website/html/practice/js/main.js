@@ -1,7 +1,7 @@
 let heads = [];
 
 function setup(){
-  createCanvas(windowWidth,windowHeight);
+  // createCanvas(windowWidth,windowHeight);
   heads[0] = new Head("exercises/class2/index.html","class 2");
   heads[1] = new Head("exercises/class3/index.html","class 3");
   heads[2] = new Head("exercises/class4/index.html","class 4");
@@ -13,10 +13,24 @@ function setup(){
   heads[7] = new Head("../../index.html", "home");
   heads[8] = new Head("../readings.html","readings");
   heads[9] = new Head("../../final_proposal/html/research.html","midterm proposal");
-}
-function draw(){
-background(255);
+  const xSpacing = 200;
+  const xOrigin = windowWidth/2;
+  const yOrigin = windowHeight/2;
+  heads[7].x = xOrigin-xSpacing;
+  heads[8].x = xOrigin;
+  heads[9].x = xOrigin+xSpacing;
+
+  heads[7].y = yOrigin;
+  heads[8].y = yOrigin;
+  heads[9].y = yOrigin;
   for (let i = 0; i < heads.length; i ++){
   heads[i].update();
   }
+}
+function draw(){
+// background(255);
+  for (let i = 0; i < heads.length-3; i ++){
+  heads[i].update();
+  }
+
 }
