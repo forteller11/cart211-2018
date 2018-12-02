@@ -12,7 +12,7 @@ function setup(){
 
   heads[7] = new Head("../../index.html", "home");
   heads[8] = new Head("../readings.html","readings");
-  heads[9] = new Head("../../final_proposal/html/research.html","final proposal");
+  heads[9] = new Head("../../final_proposal/html/research.html","midterm proposal");
 }
 function draw(){
 background(255);
