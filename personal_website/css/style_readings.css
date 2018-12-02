@@ -231,6 +231,45 @@ a.week8:hover {
   background-position: center;
 }
 
+a.week9 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #696dcc;
+}
+
+a.week9:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week9.png);
+  background-size: cover;
+  background-position: center;
+}
+a.week10 {
+  font-size: 50px;
+  text-decoration: none;
+  color: var(--background_color);
+  width: 100%;
+  transition-duration: .2s;
+  transition-property: height;
+  transition-timing-function: ease-in-out;
+  background-color: #9f68cc;
+}
+
+a.week10:hover {
+  color: rgba(0, 0, 0, 0);
+  text-shadow: none;
+  height: 300px;
+  background-image: url(../png/week10.png);
+  background-size: cover;
+  background-position: center;
+}
+
 .p5 {
   flex-grow: 1;
   width: 20%;

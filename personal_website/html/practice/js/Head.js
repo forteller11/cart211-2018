@@ -1,7 +1,8 @@
 class Head {
   constructor(link,linkName){
-    this.x = random(windowWidth);
-    this.y = random(windowHeight);
+    const explosionAmount = 100; //lower values = more initial explosion
+    this.x = random(windowWidth/2-explosionAmount,windowWidth/2+explosionAmount);
+    this.y = random(windowHeight/2-explosionAmount,windowHeight/2+explosionAmount);
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
     this.size = 100;
@@ -121,11 +122,11 @@ class Head {
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
 
-      stroke(0, 255, 255, 40);
-      noFill();
-      ellipse(this.x, this.y, radiusThreshold);
-      stroke(0, 255, 255);
-      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      // stroke(0, 255, 255, 40);
+      // noFill();
+      // ellipse(this.x, this.y, radiusThreshold);
+      // stroke(0, 255, 255);
+      // line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
 
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
@@ -156,9 +157,9 @@ class Head {
         //away from neighby x/y positions
       }
 
-      seekMouse(weight) { //travel towards point
-          const targetX = mouseX;
-          const targetY = mouseY;
+      seekCenter(weight) { //travel towards point
+          const targetX = windowWidth/2;
+          const targetY = windowHeight/2;
           let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
 
           //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
@@ -196,7 +197,7 @@ class Head {
 
   update() {
     // ellipse(this.x,this.y,this.size);
-    this.seekMouse(.00008);
+    this.seekCenter(.0003);
     // this.clump(.0001);
     this.seperate(.05);
     this.wander(.14);
