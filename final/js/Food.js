@@ -12,7 +12,7 @@ class Food {
     this.radio.setAttribute("name", radioGroupID);
     this.radio.setAttribute("id", radioID);
     if (radioID > .5) {this.radio.checked = true;}
-    this.transformElement(this.radio, this.x, this.y, "px");
+    this.transformElement(this.radio, this.x-this.size/2, this.y-this.size/2, "px");
     this.sizeElement(this.radio, this.size, this.size, "px");
     if (style === false) {
       this.radio.style.display = "none";

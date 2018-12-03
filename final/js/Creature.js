@@ -12,7 +12,7 @@ class Creature {
     this.nameID = random(1);
     this.radioAliveDead = random(1);
     this.distToMaintain = random(100, 250);
-    this.velocityMax = 200/this.size; //max mag of velocity vec
+    this.velocityMax = random(100/this.size,1000/this.size); //max mag of velocity vec
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
@@ -163,74 +163,66 @@ class Creature {
   }
 
   seekMouse(weight) { //travel towards point
-    const targetX = mouseX;
-    const targetY = mouseY;
-    let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
+    if (mouseIsPressed){
+      const targetX = mouseX;
+      const targetY = mouseY;
+      let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
+      const distToTarget = vectorToTarget.mag();
 
-    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
-    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
+      vectorToTarget.div(sq(distToTarget)/1000);
+      vectorToTarget.limit(7);
+      //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+      let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
 
-    // console.log(desiredChangeInVelocity);
-    const distToTarget = vectorToTarget.mag();
-    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
-    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
-    this.velocityWeight = .0001;
-    // console.log(this.velocityWeight);
-    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
-    let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    if (debugDisplay){
-    stroke(255, 0, 255);
-    line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      let addToVelocity = desiredChangeInVelocity.mult(weight); //
+      if (debugDisplay){
+      stroke(255, 0, 255);
+      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      }
+
+      this.velocity.add(addToVelocity);
     }
-
-    this.velocity.add(addToVelocity);
   }
 
   seekFood(weight) { //travel towards point
-    let targetX;
-    let targetY;
     if (food.length > 0){
-      //find closest food, as target, if there is no food, return force of 0,0
-      let closestFoodDist = Infinity;
-      let closestFood;
-      let closestFoodIndex;
-      //itterate through food array to find closest food to player
-      for (let i = 0; i < food.length; i ++){
-        const distToCurrentFood = sqrt(sq(food[i].x-this.x)+sq(food[i].y-this.y));
-        if (distToCurrentFood < closestFoodDist){ //if curretn dist to food is closer than stored dist to closest food..
-          closestFood = food[i];
-          closestFoodIndex = i;
-          closestFoodDist = distToCurrentFood;
+        //find closest food, as target, if there is no food, return force of 0,0
+        let closestFoodDist = Infinity;
+        let closestFood;
+        let closestFoodIndex;
+        //itterate through food array to find closest food to player
+        for (let i = 0; i < food.length; i ++){
+          const distToCurrentFood = sqrt(sq(food[i].x-this.x)+sq(food[i].y-this.y));
+          if (distToCurrentFood < closestFoodDist){ //if curretn dist to food is closer than stored dist to closest food..
+            closestFood = food[i];
+            closestFoodIndex = i;
+            closestFoodDist = distToCurrentFood;
+          }
         }
+        this.eatFood(closestFood,closestFoodIndex); //if overlapping food, eat it (splice it from array)
+        let targetX = closestFood.x;
+        let targetY = closestFood.y;
+
+      let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
+      //make sure as the creature gets closer it doesn't get too slow
+      if (vectorToTarget.mag() < 10){
+        vectorToTarget.setMag(10);
       }
-      this.eatFood(closestFood,closestFoodIndex); //if overlapping food, eat it (splice it from array)
-      targetX = closestFood.x;
-      targetY = closestFood.y;
-    } else{
-      targetX = this.x;
-      targetY = this.y;
+
+      //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+      let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
+
+      const distToTarget = vectorToTarget.mag();
+
+      let addToVelocity = desiredChangeInVelocity.mult(weight); //
+      if (debugDisplay){
+      stroke(255, 0, 255);
+      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      }
+
+      this.velocity.add(addToVelocity);
     }
-    let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
-
-    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
-    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
-
-    // console.log(desiredChangeInVelocity);
-    const distToTarget = vectorToTarget.mag();
-    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
-    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
-    this.velocityWeight = .0001;
-    // console.log(this.velocityWeight);
-    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
-
-    let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    if (debugDisplay){
-    stroke(255, 0, 255);
-    line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
-    }
-
-    this.velocity.add(addToVelocity);
   }
   eatFood(foodPointer,foodIndex){
     // if circle collsion true
@@ -404,12 +396,12 @@ class Creature {
 
   update() {
 
-    this.seekMouse(0.001);
+    this.seekMouse(1);
     // this.align(.1);
     this.clump(.001);
     this.seperate(.3);
     this.wander(2);
-    this.seekFood(.01);
+    this.seekFood(.001);
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
