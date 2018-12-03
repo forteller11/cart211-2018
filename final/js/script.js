@@ -1,7 +1,7 @@
 let creature = [];
-let creaturePop = 20;
-let style = false;
-let debugDisplay = true;
+let creaturePop = 10;
+let style = true;
+let debugDisplay = false;
 let food = [];
 'use strict'
 function setup(){
@@ -11,7 +11,7 @@ function setup(){
     creature[i] = new Creature();
   }
 
-  for (let i = 0; i < creaturePop*3; i ++){
+  for (let i = 0; i < creaturePop*6; i ++){
     food[i] = new Food();
   }
 }

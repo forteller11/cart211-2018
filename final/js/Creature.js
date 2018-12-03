@@ -234,17 +234,17 @@ class Creature {
   }
   eatFood(foodPointer,foodIndex){
     // if circle collsion true
-    const sz = this.size/2;
-    if ((foodPointer.x < this.x+sz) && (foodPointer.x > this.x-sz)) {
-      if ((foodPointer.y < this.y+sz) && (foodPointer.y > this.y-sz)){
+    const eatSz = this.size/3;
+    if ((foodPointer.x < this.x+eatSz) && (foodPointer.x > this.x-eatSz)) {
+      if ((foodPointer.y < this.y+eatSz) && (foodPointer.y > this.y-eatSz)){
         // fill(0);
         // ellipse(foodPointer.x,foodPointer.y,100);
         // noFill();
           foodPointer.radio.style.display = "none";
-            // food.splice(foodIndex,1);
-            fill(255,0,0);
-            ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
-            noFill();
+            food.splice(foodIndex,1);
+            // fill(255,0,0);
+            // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
+            // noFill();
       }
     }
 
@@ -404,12 +404,12 @@ class Creature {
 
   update() {
 
-    // this.seekMouse(0.001);
-    // // this.align(.1);
-    // this.clump(.001);
-    // this.seperate(.3);
-    // this.wander(2);
-    this.seekFood(.1);
+    this.seekMouse(0.001);
+    // this.align(.1);
+    this.clump(.001);
+    this.seperate(.3);
+    this.wander(2);
+    this.seekFood(.01);
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
