@@ -1,11 +1,11 @@
 let creature = [];
 let creaturePop = 20;
-let style = true;
-let debugDisplay = false;
+let style = false;
+let debugDisplay = true;
 let food = [];
 'use strict'
 function setup(){
-  if (debugDisplay){createCanvas(windowHeight,windowWidth);}
+  if (debugDisplay){createCanvas(windowWidth,windowHeight);}
 
   for (let i = 0; i < creaturePop; i ++){
     creature[i] = new Creature();
@@ -25,7 +25,6 @@ function draw(){
     // creature[i].updateVectors();
     // creature[i].updatePositionBasedOnVectors();
     // creature[i].display();
-    // console.log("hey");
   }
 
   for (let i = 0; i < food.length; i ++){

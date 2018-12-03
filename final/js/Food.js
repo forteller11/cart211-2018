@@ -53,6 +53,7 @@ class Food {
 
   update(){
     // console.log("hello");
+    stroke(0,255,0);
     ellipse(this.x,this.y,this.size);
   }
 }

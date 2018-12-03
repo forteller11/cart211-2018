@@ -188,9 +188,29 @@ class Creature {
   }
 
   seekFood(weight) { //travel towards point
-    //find closest food, as target, if there is no food, return force of 0,0
-    const targetX = mouseX;
-    const targetY = mouseY;
+    let targetX;
+    let targetY;
+    if (food.length > 0){
+      //find closest food, as target, if there is no food, return force of 0,0
+      let closestFoodDist = Infinity;
+      let closestFood;
+      let closestFoodIndex;
+      //itterate through food array to find closest food to player
+      for (let i = 0; i < food.length; i ++){
+        const distToCurrentFood = sqrt(sq(food[i].x-this.x)+sq(food[i].y-this.y));
+        if (distToCurrentFood < closestFoodDist){ //if curretn dist to food is closer than stored dist to closest food..
+          closestFood = food[i];
+          closestFoodIndex = i;
+          closestFoodDist = distToCurrentFood;
+        }
+      }
+      this.eatFood(closestFood,closestFoodIndex); //if overlapping food, eat it (splice it from array)
+      targetX = closestFood.x;
+      targetY = closestFood.y;
+    } else{
+      targetX = this.x;
+      targetY = this.y;
+    }
     let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
@@ -211,6 +231,25 @@ class Creature {
     }
 
     this.velocity.add(addToVelocity);
+  }
+  eatFood(foodPointer,foodIndex){
+    // if circle collsion true
+    const sz = this.size/2;
+    if ((foodPointer.x < this.x+sz) && (foodPointer.x > this.x-sz)) {
+      if ((foodPointer.y < this.y+sz) && (foodPointer.y > this.y-sz)){
+        // fill(0);
+        // ellipse(foodPointer.x,foodPointer.y,100);
+        // noFill();
+          foodPointer.radio.style.display = "none";
+            // food.splice(foodIndex,1);
+            fill(255,0,0);
+            ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
+            noFill();
+      }
+    }
+
+    // splice
+
   }
 
   align(weight) { //calc all nearby velocities, add them up, avg them.
@@ -364,12 +403,13 @@ class Creature {
   }
 
   update() {
-    this.seekMouse(0.001);
-    // this.align(.1);
-    this.clump(.001);
-    this.seperate(.3);
-    this.wander(2);
-    // this.seekFood(.1);
+
+    // this.seekMouse(0.001);
+    // // this.align(.1);
+    // this.clump(.001);
+    // this.seperate(.3);
+    // this.wander(2);
+    this.seekFood(.1);
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
