@@ -12,7 +12,7 @@ class Creature {
     this.nameID = random(1);
     this.radioAliveDead = random(1);
     this.distToMaintain = random(100, 250);
-    this.velocityMax = this.size / 20; //max mag of velocity vec
+    this.velocityMax = 200/this.size; //max mag of velocity vec
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
@@ -179,38 +179,36 @@ class Creature {
     // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
+    if (debugDisplay){
     stroke(255, 0, 255);
     line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
-    // addToVelocity.mult(this.velocityWeight);
-    // console.log(addToVelocity);
+    }
+
     this.velocity.add(addToVelocity);
   }
 
-  maintainDistance(weight, distToBeMaintained) {
-    let vectorToAllCreatures = createVector(0, 0);
-    for (let i = 0; i < creature.length; i++) {
-      //summ of velocities from all creatures, then deivide by creature length
-      const vectorToCreature = createVector(this.x - creature[i].x, this.y - creature[i].y);
-      if (vectorToCreature.mag() < 600) {
-        const weight = map(vectorToCreature.mag(), 0, distToBeMaintained, 1, 0);
-        vectorToCreature.mult(weight)
-        vectorToAllCreatures.add(vectorToCreature);
-      }
-    }
-
-    vectorToAllCreatures.div(creature.length);
-
-
-    let vectorToTarget = vectorToAllCreatures;
+  seekFood(weight) { //travel towards point
+    //find closest food, as target, if there is no food, return force of 0,0
+    const targetX = mouseX;
+    const targetY = mouseY;
+    let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
 
     //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
     let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
 
+    // console.log(desiredChangeInVelocity);
     const distToTarget = vectorToTarget.mag();
+    // this.velocityWeight = map(distToTarget,0,windowWidth,0,.01);
+    // this.velocityWeight = constrain(this.velocityWeight,0,.01);
+    this.velocityWeight = .0001;
+    // console.log(this.velocityWeight);
+    // this.velocityWeight = this.velocityWeight * this.velocityWeightConstant;
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    stroke(0, 255, 255);
+    if (debugDisplay){
+    stroke(255, 0, 255);
     line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    }
 
     this.velocity.add(addToVelocity);
   }
@@ -329,10 +327,10 @@ class Creature {
 
         let addToVelocity = desiredChangeInVelocity.mult(weight*.01);
 
-
-          stroke(0, 0, 255);
-          line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
-
+          if (debugDisplay){
+            stroke(0, 0, 255);
+            line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+          }
 
         this.velocity.add(addToVelocity);
         //away from neighby x/y positions
@@ -369,9 +367,9 @@ class Creature {
     this.seekMouse(0.001);
     // this.align(.1);
     this.clump(.001);
-    this.seperate(.03);
+    this.seperate(.3);
     this.wander(2);
-
+    // this.seekFood(.1);
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
     this.screenWrap();
