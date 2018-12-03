@@ -3,16 +3,14 @@ let style = true;
 let debugDisplay = false;
 'use strict'
 function setup(){
-  createCanvas(windowWidth,windowHeight);
   for (let i = 0; i < 20; i ++){
     creature[i] = new Creature();
   }
-  createCanvas(windowWidth,windowHeight);
 }
 
 function draw(){
-  createCanvas(windowWidth,windowHeight);
-  background(255,255,255);
+  if (debugDisplay){createCanvas(windowWidth,windowHeight);
+  background(255,255,255);}
   for (let i = 0; i < creature.length; i ++){
     // creature[i].updateNoise();
     creature[i].update();
@@ -23,3 +21,26 @@ function draw(){
     // console.log("hey");
   }
 }
+
+let names = 	[
+"Olivia",
+"Oliver",
+"Amelia",
+"Harry",
+"Isla",
+"Jack",
+"Emily",
+"George",
+"Ava",
+"Noah",
+"Lily",
+"Charlie",
+"Mia",
+"Jacob",
+"Sophia",
+"Alfie",
+"Isabella",
+"Freddie",
+"Grace",
+"Oscar"
+]

@@ -1,8 +1,9 @@
 class Creature {
   constructor() {
+    this.wanderXIndex = random(100000);
+    this.wanderYIndex = random(100000);
     this.x = random(windowWidth);
     this.y = random(windowHeight);
-
     this.minMaxRange = 10;
     this.size = random(60, 100);
     this.sliderHeight = this.size / 10;
@@ -15,7 +16,8 @@ class Creature {
     this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
-
+    this.sliderIndex = random(TWO_PI); //where the slider is in its osscilattions
+    this.sliderIndexIncrementConstant = random(.5,1.5);
     const divID = random(1); //set random divID
     const nameID = random(1);
     const sliderHorzID = random(1);
@@ -45,30 +47,32 @@ class Creature {
     this.div.style.height = "auto";
     this.transformElement(this.div, 0, 0, "px");
 
+
+    const sliderSize = this.size;
     //horizontal slider
     this.sliderHorz.setAttribute("type", "range");
-    this.sliderHorz.setAttribute("min", -this.velocityMax);
-    this.sliderHorz.setAttribute("max", this.velocityMax);
-    this.sliderHorz.setAttribute("step", 2 / this.size);
-    this.sizeElement(this.sliderHorz, this.size, this.sliderHeight, "px");
+    this.sliderHorz.setAttribute("min", -1);
+    this.sliderHorz.setAttribute("max", 1);
+    this.sliderHorz.setAttribute("step", 1 / this.size);
+    this.sizeElement(this.sliderHorz, sliderSize, this.sliderHeight, "px");
     this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
     this.sliderHorz.style.transform = "rotate(" + 0 + "deg)";
     if (style === false){this.sliderHorz.style.display = "none";}
-
     //vertical slider
     this.sliderVert.setAttribute("type", "range");
-    this.sliderVert.setAttribute("min", -this.velocityMax);
-    this.sliderVert.setAttribute("max", this.velocityMax);
-    this.sliderVert.setAttribute("step", 2 / this.size);
-    this.sizeElement(this.sliderVert, this.size, this.sliderHeight, "px");
+    this.sliderVert.setAttribute("min", -1);
+    this.sliderVert.setAttribute("max",1);
+    this.sliderVert.setAttribute("step", 1 / this.size);
+    this.sizeElement(this.sliderVert, sliderSize, this.sliderHeight, "px");
     this.transformElement(this.sliderVert, 0, (this.sliderHeight * 1.5), "px");
-    this.sliderVert.style.transform = "rotate(" + 90 + "deg)";
+    this.sliderVert.style.transform = "rotate(" + 180 + "deg)";
     if (style === false){this.sliderVert.style.display = "none";}
 
     //name (text input)
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
-    this.name.setAttribute("value", "bobby");
+    const randomName = floor(random(names.length));
+    this.name.setAttribute("value", names[randomName]);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 2, -this.size / 1.8, "px");
     this.name.style.fontSize = this.fontSize + "px";
@@ -80,6 +84,7 @@ class Creature {
     this.radioAliveContainer.style.height = "auto";
     this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
     if (style === false){this.radioAliveContainer.style.display = "none";}
+
 
     //radioALive
     this.radioAlive = this.createElement("INPUT", radioAliveID, this.radioAliveContainer);
@@ -107,7 +112,10 @@ class Creature {
     this.transformElement(this.radioDead, -this.fontSize * 4, -this.fontSize / 2, "px");
     this.sizeElement(this.radioDead, this.radioRadius * 2, this.radioRadius * 2, "px");
     if (style === false) {this.radioDead.style.display = "none";}
-
+    this.radioAlive.style.display = "none";
+    this.radioDead.style.display = "none";
+    this.radioAliveContainer.style.display = "none";
+    this.radioDeadContainer.style.display = "none";
   }
 
   createElement(typeOfElement, id, pointerOfParent) {
@@ -305,6 +313,31 @@ class Creature {
     //away from neighby x/y positions
   }
 
+  wander(weight) { //use 2d perlin noise to create random point within unit circle
+        const noiseIncrement = .002;
+        this.wanderXIndex += noiseIncrement;
+        this.wanderYIndex += noiseIncrement;
+        let xTarget = ((noise(this.wanderXIndex)*2)-1)*this.size;
+        let yTarget = ((noise(this.wanderYIndex)*2)-1)*this.size;
+        // ellipse(this.x+xTarget,this.y+yTarget,5);
+        let vectorToTarget = createVector(xTarget,yTarget);
+
+        //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+        let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
+
+        const distToTarget = vectorToTarget.mag();
+
+        let addToVelocity = desiredChangeInVelocity.mult(weight*.01);
+
+
+          stroke(0, 0, 255);
+          line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+
+
+        this.velocity.add(addToVelocity);
+        //away from neighby x/y positions
+      }
+
   addVelocityToPosition() {
     this.velocity.limit(this.velocityMax);
     this.x += this.velocity.x;
@@ -312,8 +345,18 @@ class Creature {
   }
 
   updateSliders() {
-    this.sliderHorz.value = this.velocity.x;
-    this.sliderVert.value = this.velocity.y;
+    //add slider index
+    this.sliderIndex += this.velocity.mag()/this.size*3*this.sliderIndexIncrementConstant;
+    this.sliderHorz.value = sin(this.sliderIndex);
+    this.sliderVert.value = sin(this.sliderIndex+PI);
+    const currentAngle = atan2(this.velocity.y,this.velocity.x);
+    let currentDegrees = currentAngle /PI * 180;
+    currentDegrees += 90;
+    // currentRadians = 0;
+    // console.log(currentDegrees);
+// this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
+    this.sliderHorz.style.transform = "rotate(" + currentDegrees +270+ "deg)";
+    this.sliderVert.style.transform = "rotate(" + currentDegrees+0 + "deg)"; //right
   }
 
   updatePositionOfElements() {
@@ -323,10 +366,11 @@ class Creature {
   }
 
   update() {
-    this.seekMouse(0.0001);
-    this.align(.1);
+    this.seekMouse(0.001);
+    // this.align(.1);
     this.clump(.001);
-    this.seperate(.01);
+    this.seperate(.03);
+    this.wander(2);
 
     // this.maintainDistance(.01,this.distToMaintain);
     this.addVelocityToPosition();
