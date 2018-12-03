@@ -3,14 +3,15 @@ let style = true;
 let debugDisplay = false;
 'use strict'
 function setup(){
+  if (debugDisplay){createCanvas(windowHeight,windowWidth);}
+
   for (let i = 0; i < 20; i ++){
     creature[i] = new Creature();
   }
 }
 
 function draw(){
-  if (debugDisplay){createCanvas(windowWidth,windowHeight);
-  background(255,255,255);}
+  if (debugDisplay){background(255,255,255);}
   for (let i = 0; i < creature.length; i ++){
     // creature[i].updateNoise();
     creature[i].update();

@@ -8,7 +8,7 @@ class Creature {
     this.size = random(60, 100);
     this.sliderHeight = this.size / 10;
     this.radioRadius = this.size / 6;
-    this.nameSize = this.size / 2;
+    this.nameSize = this.size / 1.5;
     this.nameID = random(1);
     this.radioAliveDead = random(1);
     this.distToMaintain = random(100, 250);
@@ -74,7 +74,7 @@ class Creature {
     const randomName = floor(random(names.length));
     this.name.setAttribute("value", names[randomName]);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
-    this.transformElement(this.name, this.nameSize / 2, -this.size / 1.8, "px");
+    this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
     this.name.style.textAlign = "center";
     if (style === false){this.name.style.display = "none";}
