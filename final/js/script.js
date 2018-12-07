@@ -1,5 +1,5 @@
 let creature = [];
-let creaturePop = 0;
+let creaturePop = 2;
 let style = true;
 let debugDisplay = false;
 let food = [];
@@ -41,7 +41,7 @@ function draw(){
   }
 }
 
-function mousePressed(){ //spawn creature at mouse position on mouse click
+function keyTyped(){ //spawn creature at mouse position on mouse click
   let newCreature = new Creature(random(40, 80),0);
   newCreature.x = mouseX;
   newCreature.y = mouseY;

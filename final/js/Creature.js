@@ -32,7 +32,7 @@ class Creature {
     this.minMaxRange = 10;
 
     this.sliderHeight = this.size / 10;
-    this.radioRadius = this.size / 6;
+    this.radioRadius = this.size / 12;
     this.nameSize = this.size / 1.5;
     this.nameID = random(1);
     this.radioAliveDead = random(1);
@@ -47,6 +47,7 @@ class Creature {
     const nameID = random(1);
     const sliderHorzID = random(1);
     const sliderVertID = random(1);
+    const checkboxID = random(1);
     const radioGroupID = random(1);
     const radioAliveContainerID = random(1);
     const radioAliveID = random(1);
@@ -59,12 +60,18 @@ class Creature {
     this.sliderHorz = this.createElement("INPUT", sliderHorzID, this.div);
     this.sliderVert = this.createElement("INPUT", sliderHorzID, this.div);
     this.name = this.createElement("INPUT", nameID, this.div);
+    // this.checkbox = this.createElement("INPUT", checkboxID, this.div);
     this.radioAliveContainer = this.createElement("div", divID, this.div);
     // this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
-    this.radioAliveContainer.innerHTML = "alive";
+    this.radioAliveContainer.style.fontSize = this.radioRadius*1.4 + "px";
+    this.radioAliveContainer.style.color = "darkgrey";
+    this.radioAliveContainer.innerHTML = "Herbavore";
     this.radioDeadContainer = this.createElement("div", divID, this.div);
     // this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
-    this.radioDeadContainer.innerHTML = "dead";
+    this.radioDeadContainer.style.color = "darkgrey";
+    this.radioDeadContainer.style.fontSize = this.radioRadius*1.4 + "px";
+    this.radioDeadContainer.innerHTML = "Predator";
+
 
     // this is basically styling those html elements in css using js
     //divider containing all entity elements
@@ -109,10 +116,12 @@ class Creature {
       this.name.style.display = "none";
     }
 
+
     //aliveRadio divider
     this.radioAliveContainer.style.width = "auto";
     this.radioAliveContainer.style.height = "auto";
-    this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
+    // this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
+    this.transformElement(this.radioAliveContainer, this.nameSize*2, -this.nameSize / 1.1, "px");
     if (style === false) {
       this.radioAliveContainer.style.display = "none";
     }
@@ -133,7 +142,8 @@ class Creature {
     //RadioDeadContianer
     this.radioDeadContainer.style.width = "auto";
     this.radioDeadContainer.style.height = "auto";
-    this.transformElement(this.radioDeadContainer, this.size, this.size / 2.8, "px");
+    // this.transformElement(this.radioDeadContainer, this.size, this.size / 2.8, "px");
+      this.transformElement(this.radioDeadContainer,  this.nameSize*2, -this.nameSize / 1.8, "px");
     if (style === false) {
       this.radioDeadContainer.style.display = "none";
     }
@@ -150,10 +160,10 @@ class Creature {
     if (style === false) {
       this.radioDead.style.display = "none";
     }
-    this.radioAlive.style.display = "none";
-    this.radioDead.style.display = "none";
-    this.radioAliveContainer.style.display = "none";
-    this.radioDeadContainer.style.display = "none";
+    // this.radioAlive.style.display = "none";
+    // this.radioDead.style.display = "none";
+    // this.radioAliveContainer.style.display = "none";
+    // this.radioDeadContainer.style.display = "none";
   }
 
   createElement(typeOfElement, id, pointerOfParent) {
@@ -405,7 +415,7 @@ class Creature {
   }
 
   addVelocityToPosition() {
-    this.velocity.div(this.velocity.mag()/3);
+    this.velocity.div(this.velocity.mag()/1.3);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
