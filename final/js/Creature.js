@@ -1,19 +1,36 @@
 class Creature {
-  constructor(size) {
+  constructor(size,nameGen) {
     this.seekMouseWeight = 1;
-    this.clumpWeight = 0.01;
+    this.clumpWeight = random(-0.1, 0.1);
+    this.clumpMutationRate = random(-0.03, 0.03);
+
+    this.clumpRadius = random(1,6);
+    this.clumpRadiusMutationRate = random(-.3,.3);
+    if (this.clumpRadius < 1){this.clumpRadius = 1;}
     this.seperateWeight = 0.3;
-    this.wanderWeight = 2;
-    this.seekFoodWeight = 0.01;
+
+    this.wanderWeight = random(1);
+    this.wanderMutationRate = random(-0.1, 0.1);
+
+    this.seekFoodWeight = random(-0.01, 0.01);
+    this.seekFoodMutationRate = random(-0.01, 0.01);
+
+    this.size = size;
+    this.sizeMutationRate = random(-5,5);
+    if (this.size < 20){this.size = 20;}
+
     this.food = 1;
-    this.hungerRate = 0.003;
+    this.hungerRate = 0.005;
+    const randomName = floor(random(names.length));
+    this.nameValue = names[randomName];
+    this.nameValueGeneration = nameGen; //generation of creature
 
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
     this.x = random(windowWidth);
     this.y = random(windowHeight);
     this.minMaxRange = 10;
-    this.size = size;
+
     this.sliderHeight = this.size / 10;
     this.radioRadius = this.size / 6;
     this.nameSize = this.size / 1.5;
@@ -83,9 +100,7 @@ class Creature {
     //name (text input)
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
-    const randomName = floor(random(names.length));
-    this.nameValue = names[randomName];
-    this.name.setAttribute("value", this.nameValue);
+    this.name.setAttribute("value",this.nameValue+""+this.nameValueGeneration);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
@@ -337,7 +352,7 @@ class Creature {
   clump(weight) {
     let sumDistToCreatures = createVector(0, 0);
     let creaturesWithinRadius = 0;
-    const radiusThreshold = this.size * 4;
+    const radiusThreshold = this.size * this.clumpRadius;
     for (let i = 0; i < creature.length; i++) {
       const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
       if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
@@ -390,7 +405,7 @@ class Creature {
   }
 
   addVelocityToPosition() {
-    this.velocity.limit(this.velocityMax);
+    this.velocity.div(this.velocity.mag()/3);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
@@ -419,16 +434,17 @@ class Creature {
   hungerUpdate() {
     this.food -= this.hungerRate;
       if (this.food > 4) { //if food is over threshold, spawn bby with similar attrbutes
-        let newCreature = new Creature(this.size);
+        let newCreature = new Creature(this.size,this.nameValueGeneration+1);
         newCreature.x = this.x;
         newCreature.y = this.y;
         newCreature.size = this.size;
         newCreature.seekMouseWeight = this.seekMouseWeight;
-        newCreature.clumpWeight = this.clumpWeight;
-        newCreature.seperateWeight = this.seperateWeight;
-        newCreature.wanderWeight = this.wanderWeight;
-        newCreature.seekFoodWeight = this.seekFoodWeight;
-        newCreature.name.setAttribute("value",this.nameValue);
+        newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
+        newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
+        // newCreature.seperateWeight = this.seperateWeight;
+        newCreature.wanderWeight = this.wanderWeight + this.wanderMutationRate;
+        newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
+        newCreature.name.setAttribute("value",this.nameValue+""+this.nameValueGeneration);
         creature.push(newCreature);
         this.food = this.food/2;
         //spawn bby with same genes and name
@@ -440,7 +456,7 @@ class Creature {
     // this.align(.1);
 
     this.clump(this.clumpWeight);
-    this.seperate(this.seperateWeight);
+    // this.seperate(this.seperateWeight);
     this.wander(this.wanderWeight);
     this.seekFood(this.seekFoodWeight);
 

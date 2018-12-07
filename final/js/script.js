@@ -3,17 +3,18 @@ let creaturePop = 20;
 let style = true;
 let debugDisplay = false;
 let food = [];
-const foodSpawnRate = 20; //every __ frames spawn food
+const foodSpawnRate = 5; //every __ frames spawn food
 let foodSpawnCounter = 0;
 'use strict'
 function setup(){
   if (debugDisplay){createCanvas(windowWidth,windowHeight);}
 
   for (let i = 0; i < creaturePop; i ++){
-    creature[i] = new Creature(random(60, 100));
+    creature[i] = new Creature(random(40, 80),0);
+    console.log(creature[i]);
   }
 
-  for (let i = 0; i < creaturePop*6; i ++){
+  for (let i = 0; i < creaturePop*2; i ++){
     food[i] = new Food();
   }
 }
