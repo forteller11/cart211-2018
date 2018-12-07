@@ -1,14 +1,16 @@
 let creature = [];
 let creaturePop = 10;
 let style = true;
-let debugDisplay = false;
+let debugDisplay = true;
 let food = [];
+const foodSpawnRate = 60; //every __ frames spawn food
+let foodSpawnCounter = 0;
 'use strict'
 function setup(){
   if (debugDisplay){createCanvas(windowWidth,windowHeight);}
 
   for (let i = 0; i < creaturePop; i ++){
-    creature[i] = new Creature();
+    creature[i] = new Creature(i);
   }
 
   for (let i = 0; i < creaturePop*6; i ++){
@@ -18,13 +20,19 @@ function setup(){
 
 function draw(){
   if (debugDisplay){background(255,255,255);}
+  //spawn new food
+  foodSpawnCounter++;
+  if (foodSpawnCounter >= foodSpawnRate){
+    food[food.length] = new Food();
+    foodSpawnCounter = 0;
+  }
+
   for (let i = 0; i < creature.length; i ++){
-    // creature[i].updateNoise();
     creature[i].update();
-    // creature[i].updateTarget();
-    // creature[i].updateVectors();
-    // creature[i].updatePositionBasedOnVectors();
-    // creature[i].display();
+    if (creature[i].food < 0) {
+      creature[i].div.style.display = "none";
+      creature.splice(i,1);
+    }
   }
 
   for (let i = 0; i < food.length; i ++){

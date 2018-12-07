@@ -1,5 +1,14 @@
 class Creature {
-  constructor() {
+  constructor(index) {
+    this.seekMouseWeight = 1;
+    this.clumpWeight = 0.01;
+    this.seperateWeight = 0.3;
+    this.wanderWeight = 2;
+    this.seekFoodWeight = 0.01;
+    this.index = index;
+    this.food = 1;
+    this.hungerRate = 0.05;
+
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
     this.x = random(windowWidth);
@@ -12,12 +21,12 @@ class Creature {
     this.nameID = random(1);
     this.radioAliveDead = random(1);
     this.distToMaintain = random(100, 250);
-    this.velocityMax = random(100/this.size,1000/this.size); //max mag of velocity vec
-    this.velocity = createVector(random(-this.velocityMax,this.velocityMax), random(-this.velocityMax,this.velocityMax)); //vector to be used as velocity.
+    this.velocityMax = random(100 / this.size, 1000 / this.size); //max mag of velocity vec
+    this.velocity = createVector(random(-this.velocityMax, this.velocityMax), random(-this.velocityMax, this.velocityMax)); //vector to be used as velocity.
     this.velocityWeight;
     this.velocityWeightConstant = 1; //dna of weight
     this.sliderIndex = random(TWO_PI); //where the slider is in its osscilattions
-    this.sliderIndexIncrementConstant = random(.5,1.5);
+    this.sliderIndexIncrementConstant = random(.5, 1.5);
     const divID = random(1); //set random divID
     const nameID = random(1);
     const sliderHorzID = random(1);
@@ -57,16 +66,20 @@ class Creature {
     this.sizeElement(this.sliderHorz, sliderSize, this.sliderHeight, "px");
     this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
     this.sliderHorz.style.transform = "rotate(" + 0 + "deg)";
-    if (style === false){this.sliderHorz.style.display = "none";}
+    if (style === false) {
+      this.sliderHorz.style.display = "none";
+    }
     //vertical slider
     this.sliderVert.setAttribute("type", "range");
     this.sliderVert.setAttribute("min", -1);
-    this.sliderVert.setAttribute("max",1);
+    this.sliderVert.setAttribute("max", 1);
     this.sliderVert.setAttribute("step", 1 / this.size);
     this.sizeElement(this.sliderVert, sliderSize, this.sliderHeight, "px");
     this.transformElement(this.sliderVert, 0, (this.sliderHeight * 1.5), "px");
     this.sliderVert.style.transform = "rotate(" + 180 + "deg)";
-    if (style === false){this.sliderVert.style.display = "none";}
+    if (style === false) {
+      this.sliderVert.style.display = "none";
+    }
 
     //name (text input)
     this.name.setAttribute("type", "text");
@@ -77,13 +90,17 @@ class Creature {
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
     this.name.style.textAlign = "center";
-    if (style === false){this.name.style.display = "none";}
+    if (style === false) {
+      this.name.style.display = "none";
+    }
 
     //aliveRadio divider
     this.radioAliveContainer.style.width = "auto";
     this.radioAliveContainer.style.height = "auto";
     this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
-    if (style === false){this.radioAliveContainer.style.display = "none";}
+    if (style === false) {
+      this.radioAliveContainer.style.display = "none";
+    }
 
 
     //radioALive
@@ -94,13 +111,17 @@ class Creature {
     this.radioAlive.checked = true;
     this.transformElement(this.radioAlive, -this.fontSize * 4, -this.fontSize, "px");
     this.sizeElement(this.radioAlive, this.radioRadius * 2, this.radioRadius * 2, "px");
-    if (style === false){this.radioAlive.style.display = "none";}
+    if (style === false) {
+      this.radioAlive.style.display = "none";
+    }
 
     //RadioDeadContianer
     this.radioDeadContainer.style.width = "auto";
     this.radioDeadContainer.style.height = "auto";
     this.transformElement(this.radioDeadContainer, this.size, this.size / 2.8, "px");
-    if (style === false){this.radioDeadContainer.style.display = "none";}
+    if (style === false) {
+      this.radioDeadContainer.style.display = "none";
+    }
 
     //radioDead
     this.radioDead = this.createElement("INPUT", radioAliveID, this.radioDeadContainer);
@@ -111,7 +132,9 @@ class Creature {
     this.radioDead.checked = false;
     this.transformElement(this.radioDead, -this.fontSize * 4, -this.fontSize / 2, "px");
     this.sizeElement(this.radioDead, this.radioRadius * 2, this.radioRadius * 2, "px");
-    if (style === false) {this.radioDead.style.display = "none";}
+    if (style === false) {
+      this.radioDead.style.display = "none";
+    }
     this.radioAlive.style.display = "none";
     this.radioDead.style.display = "none";
     this.radioAliveContainer.style.display = "none";
@@ -163,22 +186,22 @@ class Creature {
   }
 
   seekMouse(weight) { //travel towards point
-    if (mouseIsPressed){
+    if (mouseIsPressed) {
       const targetX = mouseX;
       const targetY = mouseY;
       let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
       const distToTarget = vectorToTarget.mag();
 
-      vectorToTarget.div(sq(distToTarget)/1000);
+      vectorToTarget.div(sq(distToTarget) / 1000);
       vectorToTarget.limit(7);
       //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
       let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
 
 
       let addToVelocity = desiredChangeInVelocity.mult(weight); //
-      if (debugDisplay){
-      stroke(255, 0, 255);
-      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      if (debugDisplay) {
+        stroke(255, 0, 255);
+        line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
       }
 
       this.velocity.add(addToVelocity);
@@ -186,27 +209,27 @@ class Creature {
   }
 
   seekFood(weight) { //travel towards point
-    if (food.length > 0){
-        //find closest food, as target, if there is no food, return force of 0,0
-        let closestFoodDist = Infinity;
-        let closestFood;
-        let closestFoodIndex;
-        //itterate through food array to find closest food to player
-        for (let i = 0; i < food.length; i ++){
-          const distToCurrentFood = sqrt(sq(food[i].x-this.x)+sq(food[i].y-this.y));
-          if (distToCurrentFood < closestFoodDist){ //if curretn dist to food is closer than stored dist to closest food..
-            closestFood = food[i];
-            closestFoodIndex = i;
-            closestFoodDist = distToCurrentFood;
-          }
+    if (food.length > 0) {
+      //find closest food, as target, if there is no food, return force of 0,0
+      let closestFoodDist = Infinity;
+      let closestFood;
+      let closestFoodIndex;
+      //itterate through food array to find closest food to player
+      for (let i = 0; i < food.length; i++) {
+        const distToCurrentFood = sqrt(sq(food[i].x - this.x) + sq(food[i].y - this.y));
+        if (distToCurrentFood < closestFoodDist) { //if curretn dist to food is closer than stored dist to closest food..
+          closestFood = food[i];
+          closestFoodIndex = i;
+          closestFoodDist = distToCurrentFood;
         }
-        this.eatFood(closestFood,closestFoodIndex); //if overlapping food, eat it (splice it from array)
-        let targetX = closestFood.x;
-        let targetY = closestFood.y;
+      }
+      this.eatFood(closestFood, closestFoodIndex); //if overlapping food, eat it (splice it from array)
+      let targetX = closestFood.x;
+      let targetY = closestFood.y;
 
       let vectorToTarget = createVector(targetX - this.x, targetY - this.y);
       //make sure as the creature gets closer it doesn't get too slow
-      if (vectorToTarget.mag() < 10){
+      if (vectorToTarget.mag() < 10) {
         vectorToTarget.setMag(10);
       }
 
@@ -216,27 +239,28 @@ class Creature {
       const distToTarget = vectorToTarget.mag();
 
       let addToVelocity = desiredChangeInVelocity.mult(weight); //
-      if (debugDisplay){
-      stroke(255, 0, 255);
-      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+      if (debugDisplay) {
+        stroke(255, 0, 255);
+        line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
       }
 
       this.velocity.add(addToVelocity);
     }
   }
-  eatFood(foodPointer,foodIndex){
+  eatFood(foodPointer, foodIndex) {
     // if circle collsion true
-    const eatSz = this.size/3;
-    if ((foodPointer.x < this.x+eatSz) && (foodPointer.x > this.x-eatSz)) {
-      if ((foodPointer.y < this.y+eatSz) && (foodPointer.y > this.y-eatSz)){
+    const eatSz = this.size / 3;
+    if ((foodPointer.x < this.x + eatSz) && (foodPointer.x > this.x - eatSz)) {
+      if ((foodPointer.y < this.y + eatSz) && (foodPointer.y > this.y - eatSz)) {
         // fill(0);
         // ellipse(foodPointer.x,foodPointer.y,100);
         // noFill();
-          foodPointer.radio.style.display = "none";
-            food.splice(foodIndex,1);
-            // fill(255,0,0);
-            // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
-            // noFill();
+        foodPointer.radio.style.display = "none";
+        food.splice(foodIndex, 1);
+        this.food += 1;
+        // fill(255,0,0);
+        // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
+        // noFill();
       }
     }
 
@@ -247,7 +271,7 @@ class Creature {
   align(weight) { //calc all nearby velocities, add them up, avg them.
     let sumVelocityOfNeighbors = createVector(0, 0);
     let creaturesWithinRadius = 0;
-    const radiusThreshold = this.size*2;
+    const radiusThreshold = this.size * 2;
     for (let i = 0; i < creature.length; i++) {
       const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
       if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
@@ -265,12 +289,12 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight);
-    if (debugDisplay === true){
+    if (debugDisplay === true) {
       stroke(255, 50, 50, 40);
       noFill();
       ellipse(this.x, this.y, radiusThreshold);
       stroke(255, 50, 50);
-      line(this.x, this.y, this.x + addToVelocity.x*100, this.y + addToVelocity.y*100);
+      line(this.x, this.y, this.x + addToVelocity.x * 100, this.y + addToVelocity.y * 100);
     }
 
     this.velocity.add(addToVelocity);
@@ -299,7 +323,7 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight);
-    if (debugDisplay === true){
+    if (debugDisplay === true) {
       stroke(0, 0, 255, 40);
       noFill();
       ellipse(this.x, this.y, seperationThreshold);
@@ -310,11 +334,10 @@ class Creature {
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
   }
-
   clump(weight) {
     let sumDistToCreatures = createVector(0, 0);
     let creaturesWithinRadius = 0;
-    const radiusThreshold = this.size*4;
+    const radiusThreshold = this.size * 4;
     for (let i = 0; i < creature.length; i++) {
       const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
       if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
@@ -331,7 +354,7 @@ class Creature {
     const distToTarget = vectorToTarget.mag();
 
     let addToVelocity = desiredChangeInVelocity.mult(weight); //
-    if (debugDisplay === true){
+    if (debugDisplay === true) {
       stroke(0, 255, 255, 40);
       noFill();
       ellipse(this.x, this.y, radiusThreshold);
@@ -341,31 +364,30 @@ class Creature {
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
   }
-
   wander(weight) { //use 2d perlin noise to create random point within unit circle
-        const noiseIncrement = .002;
-        this.wanderXIndex += noiseIncrement;
-        this.wanderYIndex += noiseIncrement;
-        let xTarget = ((noise(this.wanderXIndex)*2)-1)*this.size;
-        let yTarget = ((noise(this.wanderYIndex)*2)-1)*this.size;
-        // ellipse(this.x+xTarget,this.y+yTarget,5);
-        let vectorToTarget = createVector(xTarget,yTarget);
+    const noiseIncrement = .002;
+    this.wanderXIndex += noiseIncrement;
+    this.wanderYIndex += noiseIncrement;
+    let xTarget = ((noise(this.wanderXIndex) * 2) - 1) * this.size;
+    let yTarget = ((noise(this.wanderYIndex) * 2) - 1) * this.size;
+    // ellipse(this.x+xTarget,this.y+yTarget,5);
+    let vectorToTarget = createVector(xTarget, yTarget);
 
-        //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
-        let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
+    //VectorToTarget - this.velocity (finds differences in two vectors, or vector which takes velocityvector to vecToTarget)
+    let desiredChangeInVelocity = p5.Vector.sub(vectorToTarget, this.velocity);
 
-        const distToTarget = vectorToTarget.mag();
+    const distToTarget = vectorToTarget.mag();
 
-        let addToVelocity = desiredChangeInVelocity.mult(weight*.01);
+    let addToVelocity = desiredChangeInVelocity.mult(weight * .01);
 
-          if (debugDisplay){
-            stroke(0, 0, 255);
-            line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
-          }
+    if (debugDisplay) {
+      stroke(0, 0, 255);
+      line(this.x, this.y, this.x + addToVelocity.x, this.y + addToVelocity.y);
+    }
 
-        this.velocity.add(addToVelocity);
-        //away from neighby x/y positions
-      }
+    this.velocity.add(addToVelocity);
+    //away from neighby x/y positions
+  }
 
   addVelocityToPosition() {
     this.velocity.limit(this.velocityMax);
@@ -375,17 +397,17 @@ class Creature {
 
   updateSliders() {
     //add slider index
-    this.sliderIndex += this.velocity.mag()/this.size*3*this.sliderIndexIncrementConstant;
+    this.sliderIndex += this.velocity.mag() / this.size * 3 * this.sliderIndexIncrementConstant;
     this.sliderHorz.value = sin(this.sliderIndex);
-    this.sliderVert.value = sin(this.sliderIndex+PI);
-    const currentAngle = atan2(this.velocity.y,this.velocity.x);
-    let currentDegrees = currentAngle /PI * 180;
+    this.sliderVert.value = sin(this.sliderIndex + PI);
+    const currentAngle = atan2(this.velocity.y, this.velocity.x);
+    let currentDegrees = currentAngle / PI * 180;
     currentDegrees += 90;
     // currentRadians = 0;
     // console.log(currentDegrees);
-// this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
-    this.sliderHorz.style.transform = "rotate(" + currentDegrees +270+ "deg)";
-    this.sliderVert.style.transform = "rotate(" + currentDegrees+0 + "deg)"; //right
+    // this.transformElement(this.sliderHorz, 0, (this.sliderHeight * 1.5), "px");
+    this.sliderHorz.style.transform = "rotate(" + currentDegrees + 270 + "deg)";
+    this.sliderVert.style.transform = "rotate(" + currentDegrees + 0 + "deg)"; //right
   }
 
   updatePositionOfElements() {
@@ -394,15 +416,22 @@ class Creature {
     this.transformElement(this.div, this.x - this.size / 2, this.y - this.sliderHeight * 2, "px");
   }
 
+  hungerUpdate() {
+    this.food -= this.hungerRate;
+      if (this.food > 4) {
+        //spawn bby with same genes and name
+      }
+  }
   update() {
-
-    this.seekMouse(1);
+    this.hungerUpdate();
+    this.seekMouse(this.seekMouseWeight);
     // this.align(.1);
-    this.clump(.001);
-    this.seperate(.3);
-    this.wander(2);
-    this.seekFood(.001);
-    // this.maintainDistance(.01,this.distToMaintain);
+
+    this.clump(this.clumpWeight);
+    this.seperate(this.seperateWeight);
+    this.wander(this.wanderWeight);
+    this.seekFood(this.seekFoodWeight);
+
     this.addVelocityToPosition();
     this.screenWrap();
     this.updatePositionOfElements();
@@ -410,7 +439,8 @@ class Creature {
     this.debugDisplay();
   }
   debugDisplay() {
-    if (debugDisplay === true){
+    if (debugDisplay === true) {
+      text(this.food, this.x,this.y-this.size);
       stroke(0);
       fill(255, 255, 255, 50);
       ellipse(this.x, this.y, this.size);
