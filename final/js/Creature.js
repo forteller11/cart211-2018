@@ -1,19 +1,19 @@
 class Creature {
   constructor(size,nameGen) {
     this.seekMouseWeight = 1;
-    this.clumpWeight = random(-0.1, 0.1);
-    this.clumpMutationRate = random(-0.03, 0.03);
+    this.clumpWeight = random(-0.05, 0.05);
+    this.clumpMutationRate = random(-0.02, 0.02);
 
     this.clumpRadius = random(1,6);
     this.clumpRadiusMutationRate = random(-.3,.3);
-    if (this.clumpRadius < 1){this.clumpRadius = 1;}
+    this.clumpRadius = constrain(this.clumpRadius,1,100);
     this.seperateWeight = 0.3;
 
     this.wanderWeight = random(1);
     this.wanderMutationRate = random(-0.1, 0.1);
 
-    this.seekFoodWeight = random(-0.01, 0.01);
-    this.seekFoodMutationRate = random(-0.01, 0.01);
+    this.seekFoodWeight = random(-0.001, 0.001);
+    this.seekFoodMutationRate = random(-0.0005, 0.0005);
 
     this.size = size;
     this.sizeMutationRate = random(-5,5);
@@ -100,7 +100,7 @@ class Creature {
     //name (text input)
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
-    this.name.setAttribute("value",this.nameValue+""+this.nameValueGeneration);
+    this.name.setAttribute("value",this.nameValue+"_"+this.nameValueGeneration);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
@@ -444,7 +444,7 @@ class Creature {
         // newCreature.seperateWeight = this.seperateWeight;
         newCreature.wanderWeight = this.wanderWeight + this.wanderMutationRate;
         newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
-        newCreature.name.setAttribute("value",this.nameValue+""+this.nameValueGeneration);
+        newCreature.name.setAttribute("value",this.nameValue+"_"+newCreature.nameValueGeneration);
         creature.push(newCreature);
         this.food = this.food/2;
         //spawn bby with same genes and name
@@ -452,7 +452,7 @@ class Creature {
   }
   update() {
     this.hungerUpdate();
-    this.seekMouse(this.seekMouseWeight);
+    // this.seekMouse(this.seekMouseWeight);
     // this.align(.1);
 
     this.clump(this.clumpWeight);
