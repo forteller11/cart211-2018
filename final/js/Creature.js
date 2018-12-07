@@ -1,20 +1,19 @@
 class Creature {
-  constructor(index) {
+  constructor(size) {
     this.seekMouseWeight = 1;
     this.clumpWeight = 0.01;
     this.seperateWeight = 0.3;
     this.wanderWeight = 2;
     this.seekFoodWeight = 0.01;
-    this.index = index;
     this.food = 1;
-    this.hungerRate = 0.05;
+    this.hungerRate = 0.003;
 
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
     this.x = random(windowWidth);
     this.y = random(windowHeight);
     this.minMaxRange = 10;
-    this.size = random(60, 100);
+    this.size = size;
     this.sliderHeight = this.size / 10;
     this.radioRadius = this.size / 6;
     this.nameSize = this.size / 1.5;
@@ -85,7 +84,8 @@ class Creature {
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
     const randomName = floor(random(names.length));
-    this.name.setAttribute("value", names[randomName]);
+    this.nameValue = names[randomName];
+    this.name.setAttribute("value", this.nameValue);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
@@ -418,7 +418,19 @@ class Creature {
 
   hungerUpdate() {
     this.food -= this.hungerRate;
-      if (this.food > 4) {
+      if (this.food > 4) { //if food is over threshold, spawn bby with similar attrbutes
+        let newCreature = new Creature(this.size);
+        newCreature.x = this.x;
+        newCreature.y = this.y;
+        newCreature.size = this.size;
+        newCreature.seekMouseWeight = this.seekMouseWeight;
+        newCreature.clumpWeight = this.clumpWeight;
+        newCreature.seperateWeight = this.seperateWeight;
+        newCreature.wanderWeight = this.wanderWeight;
+        newCreature.seekFoodWeight = this.seekFoodWeight;
+        newCreature.name.setAttribute("value",this.nameValue);
+        creature.push(newCreature);
+        this.food = this.food/2;
         //spawn bby with same genes and name
       }
   }

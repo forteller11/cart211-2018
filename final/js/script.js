@@ -1,16 +1,16 @@
 let creature = [];
-let creaturePop = 10;
+let creaturePop = 20;
 let style = true;
-let debugDisplay = true;
+let debugDisplay = false;
 let food = [];
-const foodSpawnRate = 60; //every __ frames spawn food
+const foodSpawnRate = 20; //every __ frames spawn food
 let foodSpawnCounter = 0;
 'use strict'
 function setup(){
   if (debugDisplay){createCanvas(windowWidth,windowHeight);}
 
   for (let i = 0; i < creaturePop; i ++){
-    creature[i] = new Creature(i);
+    creature[i] = new Creature(random(60, 100));
   }
 
   for (let i = 0; i < creaturePop*6; i ++){
