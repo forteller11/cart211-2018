@@ -1,5 +1,5 @@
 class Creature {
-  constructor(size, nameGen, pred) {
+  constructor(size, name, nameGen, pred) {
     this.pred = pred; //true/false
     this.seekMouseWeight = 1;
     this.clumpWeight = random(-0.05, 0.05);
@@ -27,8 +27,7 @@ class Creature {
     if (this.pred) {
       this.hungerRate = this.hungerRate / 8;
     }
-    const randomName = floor(random(names.length));
-    this.nameValue = names[randomName];
+    this.nameValue = name;
     this.nameValueGeneration = nameGen; //generation of creature
 
     this.wanderXIndex = random(100000);
@@ -481,22 +480,24 @@ class Creature {
 
   hungerUpdate() {
     this.food -= this.hungerRate;
+    let predator;
+    if ((random(1) > .98)||(this.predator === true)) {
+      predator = true;
+    } else {
+      predator = false;
+    }
     if (this.food > 5) { //if food is over threshold, spawn bby with similar attrbutes
-      let newCreature = new Creature(this.size, this.nameValueGeneration + 1, this.pred);
+      let newCreature = new Creature(this.size + this.sizeMutationRate, this.name, this.nameValueGeneration + 1, predator);
       newCreature.nameValue = this.nameValue;
-      newCreature.x = this.x;
-      newCreature.y = this.y;
-      newCreature.size = this.size + this.sizeMutationRate;
+      newCreature.x = this.x + random(-10,10);
+      newCreature.y = this.y + random(-10,10);
       newCreature.seekMouseWeight = this.seekMouseWeight;
       newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
       newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
       // newCreature.seperateWeight = this.seperateWeight;
       newCreature.wanderWeight = this.wanderWeight + this.wanderMutationRate;
       newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
-      newCreature.name.setAttribute("value", newCreature.nameValue + "_" + newCreature.nameValueGeneration);
-      if (random(1) > .98) {
-        newCreature.pred = true;
-      }
+
       creature.push(newCreature);
       this.food = this.food / 2;
       //spawn bby with same genes and name

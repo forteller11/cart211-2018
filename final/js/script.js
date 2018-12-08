@@ -25,7 +25,9 @@ function setup() {
     } else {
       pred = false
     }
-    creature[i] = new Creature(random(creatureMinSize, creatureMaxSize), 0, pred);
+    const randomName = floor(random(names.length));
+    let sz = random(creatureMinSize,creatureMaxSize);
+    creature.push(new Creature(sz, names[randomName], 0, pred));
     // console.log(creature[i]);
   }
 
@@ -51,7 +53,9 @@ function draw() {
       if (random(1) > .98) {
         predator = true;
       }
-      creature.push(new Creature((random(creatureMinSize, creatureMaxSize), 0, predator)));
+      const randomName = floor(random(names.length));
+      let sz = random(creatureMinSize,creatureMaxSize);
+      creature.push(new Creature(sz,names[randomName], 0, predator));
       creatureSpawnCounter = 0;
     }
 
@@ -72,32 +76,26 @@ function keyPressed(){
   if (keyCode === SHIFT){
     play = play *-1;
   }
-}
-function keyTyped() { //spawn creature at mouse position on mouse click
-  // let pred;
-  // if (random(1) > .97){
-  //   pred = true;
-  // } else {
-  //   pred = false
-  // }
-  let newCreature = new Creature(random(creatureMinSize, creatureMaxSize), 0, false);
-  newCreature.x = mouseX;
-  newCreature.y = mouseY;
-  creature.push(newCreature);
+
+  if (keyCode === DOWN_ARROW){//spawn creature at mouse position on mouse click
+    const randomName = floor(random(names.length));
+    let sz = random(creatureMinSize,creatureMaxSize);
+    let newCreature = new Creature(sz,names[randomName], 0, true);
+    newCreature.x = mouseX;
+    newCreature.y = mouseY;
+    creature.push(newCreature);
+  }
+
+  if (keyCode === UP_ARROW){//spawn creature at mouse position on mouse click
+    const randomName = floor(random(names.length));
+    let sz = random(creatureMinSize,creatureMaxSize);
+    let newCreature = new Creature(sz,names[randomName], 0, false);
+    newCreature.x = mouseX;
+    newCreature.y = mouseY;
+    creature.push(newCreature);
+  }
 }
 
-function mousePressed() { //spawn creature at mouse position on mouse click
-  let pred;
-  if (random(1) > .9) {
-    pred = true;
-  } else {
-    pred = false
-  }
-  let newCreature = new Creature(random(creatureMinSize, creatureMaxSize), 0, true);
-  newCreature.x = mouseX;
-  newCreature.y = mouseY;
-  creature.push(newCreature);
-}
 
 let names = [
   "Olivia",
