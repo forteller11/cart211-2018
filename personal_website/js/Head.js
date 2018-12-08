@@ -24,8 +24,6 @@ class Creature {
     if (this.pred) {
       this.hungerRate = this.hungerRate / 5;
     }
-    this.nameValue = name;
-    this.nameValueGeneration = nameGen; //generation of creature
 
     this.wanderXIndex = random(100000);
     this.wanderYIndex = random(100000);
@@ -36,7 +34,6 @@ class Creature {
     this.sliderHeight = this.size / 10;
     this.radioRadius = this.size / 12;
     this.nameSize = this.size / 1.5;
-    this.nameID = random(1);
     this.radioHerbDead = random(1);
     this.distToMaintain = random(100, 250);
     this.velocityMax = random(100 / this.size, 1000 / this.size); //max mag of velocity vec
@@ -50,29 +47,14 @@ class Creature {
     const sliderHorzID = random(1);
     const sliderVertID = random(1);
     const checkboxID = random(1);
-    const radioGroupID = random(1);
-    const radioHerbContainerID = random(1);
-    const radioHerbID = random(1);
-    const radioPredContainerID = random(1);
-    const radioPredID = random(1);
-    this.fontSize = this.size / 10;
+    const buttonID = random(1);
+    this.fontSize = this.size /5;
     //this is more or less creating html elements in js
     let bodyPointer = document.getElementById("bod");
     this.div = this.createElement("div", divID, bodyPointer);
     this.sliderHorz = this.createElement("INPUT", sliderHorzID, this.div);
     this.sliderVert = this.createElement("INPUT", sliderHorzID, this.div);
-    this.name = this.createElement("INPUT", nameID, this.div);
-    // this.checkbox = this.createElement("INPUT", checkboxID, this.div);
-    this.radioHerbContainer = this.createElement("div", divID, this.div);
-    // this.radioHerb = this.createElement("INPUT",radioHerbID,this.radioHerbContainer);
-    this.radioHerbContainer.style.fontSize = this.radioRadius * 1.4 + "px";
-    this.radioHerbContainer.style.color = "darkgrey";
-    this.radioHerbContainer.innerHTML = "Herbavore";
-    this.radioPredContainer = this.createElement("div", divID, this.div);
-    // this.radioPred = this.createElement("INPUT",radioHerbID,this.radioPredContainer);
-    this.radioPredContainer.style.color = "darkgrey";
-    this.radioPredContainer.style.fontSize = this.radioRadius * 1.4 + "px";
-    this.radioPredContainer.innerHTML = "Predator";
+    this.button = this.createElement("INPUT", buttonID, this.div);
 
 
     // this is basically styling those html elements in css using js
@@ -109,69 +91,18 @@ class Creature {
     }
 
     //name (text input)
-    this.name.setAttribute("type", "text");
-    this.name.setAttribute("name", nameID);
-    this.name.setAttribute("value", this.nameValue + "_" + this.nameValueGeneration);
-    this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
-    this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
-    this.name.style.fontSize = this.fontSize + "px";
-    this.name.style.textAlign = "center";
-    if (style === false) {
-      this.name.style.display = "none";
-    }
+    this.button.setAttribute("type", "button");
+    this.button.setAttribute("name", buttonID);
+    this.button.setAttribute("value", "FINAL");
+    this.sizeElement(this.button, this.nameSize, this.nameSize / 2.5, "px");
+    this.transformElement(this.button, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
+    this.button.style.fontSize = this.fontSize + "px";
+    this.button.style.textAlign = "center";
 
-
-    //aliveRadio divider
-    this.radioHerbContainer.style.width = "auto";
-    this.radioHerbContainer.style.height = "auto";
-    // this.transformElement(this.radioHerbContainer, this.size, -this.size / 6, "px");
-    this.transformElement(this.radioHerbContainer, this.nameSize * 2, -this.nameSize / 1.1, "px");
-    if (style === false) {
-      this.radioHerbContainer.style.display = "none";
+    this.button.onclick = function(){
+      console.log("ahhh");
+      window.location.href = "../final/index.html";
     }
-
-
-    //radioHerb
-    this.radioHerb = this.createElement("INPUT", radioHerbID, this.radioHerbContainer);
-    this.radioHerb.setAttribute("type", "radio");
-    this.radioHerb.setAttribute("name", radioGroupID);
-    this.radioHerb.setAttribute("id", radioHerbID);
-    this.radioHerb.checked = true;
-    this.transformElement(this.radioHerb, -this.fontSize * 4, -this.fontSize, "px");
-    this.sizeElement(this.radioHerb, this.radioRadius * 2, this.radioRadius * 2, "px");
-    if (style === false) {
-      this.radioHerb.style.display = "none";
-    }
-
-    //radioPredContianer
-    this.radioPredContainer.style.width = "auto";
-    this.radioPredContainer.style.height = "auto";
-    // this.transformElement(this.radioPredContainer, this.size, this.size / 2.8, "px");
-    this.transformElement(this.radioPredContainer, this.nameSize * 2, -this.nameSize / 1.8, "px");
-    if (style === false) {
-      this.radioPredContainer.style.display = "none";
-    }
-
-    //radioPred
-    this.radioPred = this.createElement("INPUT", radioHerbID, this.radioPredContainer);
-    this.radioPred.setAttribute("type", "radio");
-    this.radioPred.setAttribute("name", radioGroupID);
-    this.radioPred.setAttribute("id", radioPredID);
-    // this.radioPred.setAttribute("value", name);
-    if (this.pred) {
-      this.radioPred.checked = true;
-    } else {
-      this.radioPred.checked = false
-    }
-    this.transformElement(this.radioPred, -this.fontSize * 4, -this.fontSize / 2, "px");
-    this.sizeElement(this.radioPred, this.radioRadius * 2, this.radioRadius * 2, "px");
-    if (style === false) {
-      this.radioPred.style.display = "none";
-    }
-    // this.radioHerb.style.display = "none";
-    // this.radioPred.style.display = "none";
-    // this.radioHerbContainer.style.display = "none";
-    // this.radioPredContainer.style.display = "none";
   }
 
   createElement(typeOfElement, id, pointerOfParent) {
