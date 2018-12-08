@@ -113,8 +113,7 @@ class Creature {
     this.button.style.textAlign = "center";
 
     this.button.onclick = function(){
-      console.log("ahhh");
-      window.location.href = "../final/index.html";
+      window.location.href = "../final/final.html";
     }
   }
 

@@ -12,7 +12,51 @@ let creatureMaxSize = 120;
 let play = 1;
 'use strict'
 
+let names = [
+  "Olivia",
+  "Oliver",
+  "Amelia",
+  "Harry",
+  "Isla",
+  "Jack",
+  "Emily",
+  "George",
+  "Ava",
+  "Noah",
+  "Lily",
+  "Charlie",
+  "Mia",
+  "Jacob",
+  "Sophia",
+  "Alfie",
+  "Isabella",
+  "Freddie",
+  "Grace",
+  "Oscar"
+]
+
 function setup() {
+
+  const buttonPred = document.getElementById("spawnPred");//spawns pred on click
+  buttonPred.onclick = function(){
+    const randomName = floor(random(names.length));
+    let sz = random(creatureMinSize,creatureMaxSize);
+    let newCreature = new Creature(sz,names[randomName], 0, true);
+    newCreature.x = random(windowWidth);
+    newCreature.y = random(windowHeight);
+    creature.push(newCreature);
+  }
+
+  const buttonHerb = document.getElementById("spawnHerb"); //spawns herbivore on click
+  buttonHerb.onclick = function() {
+    const randomName = floor(random(names.length));
+    let sz = random(creatureMinSize,creatureMaxSize);
+    let newCreature = new Creature(sz,names[randomName], 0, false);
+    newCreature.x = random(windowWidth);
+    newCreature.y = random(windowHeight);
+    creature.push(newCreature);
+  }
+
   let creaturePop = windowWidth / 100;
   if (debugDisplay) {
     createCanvas(windowWidth, windowHeight);
@@ -66,50 +110,9 @@ function draw() {
     }
   }
 }
+
 function keyPressed(){
   if (keyCode === SHIFT){
     play = play *-1;
   }
-
-  if (keyCode === DOWN_ARROW){//spawn creature at mouse position on mouse click
-    const randomName = floor(random(names.length));
-    let sz = random(creatureMinSize,creatureMaxSize);
-    let newCreature = new Creature(sz,names[randomName], 0, true);
-    newCreature.x = mouseX;
-    newCreature.y = mouseY;
-    creature.push(newCreature);
-  }
-
-  if (keyCode === UP_ARROW){//spawn creature at mouse position on mouse click
-    const randomName = floor(random(names.length));
-    let sz = random(creatureMinSize,creatureMaxSize);
-    let newCreature = new Creature(sz,names[randomName], 0, false);
-    newCreature.x = mouseX;
-    newCreature.y = mouseY;
-    creature.push(newCreature);
-  }
 }
-
-
-let names = [
-  "Olivia",
-  "Oliver",
-  "Amelia",
-  "Harry",
-  "Isla",
-  "Jack",
-  "Emily",
-  "George",
-  "Ava",
-  "Noah",
-  "Lily",
-  "Charlie",
-  "Mia",
-  "Jacob",
-  "Sophia",
-  "Alfie",
-  "Isabella",
-  "Freddie",
-  "Grace",
-  "Oscar"
-]

@@ -11,3 +11,19 @@
   left:50%;
   top:50%;
 }
+
+#foodSpawnRateDiv{
+  z-index: 100;
+  text-align:center;
+  position:absolute;
+  left:20px;
+  top:20px;
+}
+
+.buttons{
+  z-index: 100;
+  text-align:left;
+  position:absolute;
+  left:0px;
+  top:60px;
+}

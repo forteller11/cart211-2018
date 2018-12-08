@@ -70,7 +70,7 @@ class Creature {
     // this.radioHerb = this.createElement("INPUT",radioHerbID,this.radioHerbContainer);
     this.radioHerbContainer.style.fontSize = this.radioRadius * 1.4 + "px";
     this.radioHerbContainer.style.color = "darkgrey";
-    this.radioHerbContainer.innerHTML = "Herbavore";
+    this.radioHerbContainer.innerHTML = "Herbivore";
     this.radioPredContainer = this.createElement("div", divID, this.div);
     // this.radioPred = this.createElement("INPUT",radioHerbID,this.radioPredContainer);
     this.radioPredContainer.style.color = "darkgrey";
