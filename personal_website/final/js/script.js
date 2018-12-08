@@ -3,7 +3,8 @@ let creaturePop;
 let style = true;
 let debugDisplay = false;
 let food = [];
-const foodSpawnRate = 10; //every __ frames spawn food
+let spawnRateSliderPointer;
+let foodSpawnRate; //every __ frames spawn food
 const creatureSpawnRate = 300;
 let creatureSpawnCounter = 0;
 let foodSpawnCounter = 0;
@@ -36,7 +37,7 @@ let names = [
 ]
 
 function setup() {
-
+   spawnRateSliderPointer = document.getElementById("foodSpawnRateRange");
   const buttonPred = document.getElementById("spawnPred");//spawns pred on click
   buttonPred.onclick = function(){
     const randomName = floor(random(names.length));
@@ -75,6 +76,7 @@ function setup() {
 }
 
 function draw() {
+  foodSpawnRate = spawnRateSliderPointer.value;
   if (play > 0){
     if (debugDisplay) {
       background(255, 255, 255);
