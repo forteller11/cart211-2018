@@ -3,9 +3,10 @@ let creaturePop;
 let style = true;
 let debugDisplay = false;
 let food = [];
-let spawnRateSliderPointer;
+let foodSpawnRateSliderPointer;
+let creatureSpawnRateSliderPointer;
 let foodSpawnRate; //every __ frames spawn food
-const creatureSpawnRate = 300;
+let creatureSpawnRate;
 let creatureSpawnCounter = 0;
 let foodSpawnCounter = 0;
 let creatureMinSize = 60;
@@ -37,7 +38,8 @@ let names = [
 ]
 
 function setup() {
-   spawnRateSliderPointer = document.getElementById("foodSpawnRateRange");
+   foodSpawnRateSliderPointer = document.getElementById("foodSpawnRateRange");
+   creatureSpawnRateSliderPointer = document.getElementById("creatureSpawnRateRange");
   const buttonPred = document.getElementById("spawnPred");//spawns pred on click
   buttonPred.onclick = function(){
     const randomName = floor(random(names.length));
@@ -58,7 +60,12 @@ function setup() {
     creature.push(newCreature);
   }
 
-  let creaturePop = windowWidth / 100;
+  const playPause = document.getElementById("play/pause"); //toggle play/pause
+  playPause.onclick = function() {
+    play *= -1;
+  }
+
+  creaturePop = 0;
   if (debugDisplay) {
     createCanvas(windowWidth, windowHeight);
   }
@@ -76,14 +83,14 @@ function setup() {
 }
 
 function draw() {
-  foodSpawnRate = spawnRateSliderPointer.value;
+  foodSpawnRate = foodSpawnRateSliderPointer.value;
+  creatureSpawnRate = creatureSpawnRateSliderPointer.value;
   if (play > 0){
-    if (debugDisplay) {
-      background(255, 255, 255);
-    }
+  background(255, 255, 255);
+
     //spawn new food
     foodSpawnCounter++;
-    if (creature.length < 10){creatureSpawnCounter++;}
+    creatureSpawnCounter++;
     if (foodSpawnCounter >= foodSpawnRate) {
       food.push(new Food());
       foodSpawnCounter = 0;
@@ -110,11 +117,5 @@ function draw() {
     for (let i = 0; i < food.length; i++) {
       food[i].update();
     }
-  }
-}
-
-function keyPressed(){
-  if (keyCode === SHIFT){
-    play = play *-1;
   }
 }
