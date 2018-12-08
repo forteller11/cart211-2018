@@ -4,7 +4,7 @@ let style = true;
 let debugDisplay = false;
 let food = [];
 const foodSpawnRate = 10; //every __ frames spawn food
-const creatureSpawnRate = 200;
+const creatureSpawnRate = 300;
 let creatureSpawnCounter = 0;
 let foodSpawnCounter = 0;
 let creatureMinSize = 60;
@@ -19,15 +19,9 @@ function setup() {
   }
 
   for (let i = 0; i < creaturePop; i++) {
-    let pred;
-    if (random(1) > .9) {
-      pred = true;
-    } else {
-      pred = false
-    }
     const randomName = floor(random(names.length));
     let sz = random(creatureMinSize,creatureMaxSize);
-    creature.push(new Creature(sz, names[randomName], 0, pred));
+    creature.push(new Creature(sz, names[randomName], 0, false));
     // console.log(creature[i]);
   }
 

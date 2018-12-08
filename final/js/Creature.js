@@ -25,7 +25,7 @@ class Creature {
 
     this.hungerRate = 0.002;
     if (this.pred) {
-      this.hungerRate = this.hungerRate / 8;
+      this.hungerRate = this.hungerRate / 5;
     }
     this.nameValue = name;
     this.nameValueGeneration = nameGen; //generation of creature
@@ -416,7 +416,7 @@ class Creature {
     const eatSz = this.size / 2;
     if ((creaturePointer.x < this.x + eatSz) && (creaturePointer.x > this.x - eatSz)) {
       if ((creaturePointer.y < this.y + eatSz) && (creaturePointer.y > this.y - eatSz)) {
-        this.food += 3;
+        this.food += creaturePointer.food;
         creaturePointer.food = 0;
         // fill(255,0,0);
         // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
@@ -481,7 +481,7 @@ class Creature {
   hungerUpdate() {
     this.food -= this.hungerRate;
 
-    if (this.food > 5) { //if food is over threshold, spawn bby with similar attrbutes
+    if (this.food > 6) { //if food is over threshold, spawn bby with similar attrbutes
       let predator;
       if ((random(1) > .98)||(this.predator === true)) {
         predator = true;
@@ -501,7 +501,7 @@ class Creature {
       newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
 
       creature.push(newCreature);
-      this.food = 2;
+      this.food = this.food/3;
       //spawn bby with same genes and name
     }
   }
