@@ -1,12 +1,13 @@
 class Creature {
-  constructor(size,nameGen) {
+  constructor(size, nameGen, pred) {
+    this.pred = pred; //true/false
     this.seekMouseWeight = 1;
     this.clumpWeight = random(-0.05, 0.05);
     this.clumpMutationRate = random(-0.02, 0.02);
 
-    this.clumpRadius = random(1,6);
-    this.clumpRadiusMutationRate = random(-.3,.3);
-    this.clumpRadius = constrain(this.clumpRadius,1,100);
+    this.clumpRadius = random(1, 6);
+    this.clumpRadiusMutationRate = random(-.3, .3);
+    this.clumpRadius = constrain(this.clumpRadius, 2, 100);
     this.seperateWeight = 0.3;
 
     this.wanderWeight = random(1);
@@ -16,11 +17,17 @@ class Creature {
     this.seekFoodMutationRate = random(-0.0005, 0.0005);
 
     this.size = size;
-    this.sizeMutationRate = random(-5,5);
-    if (this.size < 20){this.size = 20;}
+    this.sizeMutationRate = random(-5, 5);
+    if (this.size < 20) {
+      this.size = 20;
+    }
 
     this.food = 1;
-    this.hungerRate = 0.005;
+
+    this.hungerRate = 0.003;
+    if (this.pred) {
+      this.hungerRate = this.hungerRate / 5;
+    }
     const randomName = floor(random(names.length));
     this.nameValue = names[randomName];
     this.nameValueGeneration = nameGen; //generation of creature
@@ -35,7 +42,7 @@ class Creature {
     this.radioRadius = this.size / 12;
     this.nameSize = this.size / 1.5;
     this.nameID = random(1);
-    this.radioAliveDead = random(1);
+    this.radioHerbDead = random(1);
     this.distToMaintain = random(100, 250);
     this.velocityMax = random(100 / this.size, 1000 / this.size); //max mag of velocity vec
     this.velocity = createVector(random(-this.velocityMax, this.velocityMax), random(-this.velocityMax, this.velocityMax)); //vector to be used as velocity.
@@ -49,10 +56,10 @@ class Creature {
     const sliderVertID = random(1);
     const checkboxID = random(1);
     const radioGroupID = random(1);
-    const radioAliveContainerID = random(1);
-    const radioAliveID = random(1);
-    const radioDeadContainerID = random(1);
-    const radioDeadID = random(1);
+    const radioHerbContainerID = random(1);
+    const radioHerbID = random(1);
+    const radioPredContainerID = random(1);
+    const radioPredID = random(1);
     this.fontSize = this.size / 10;
     //this is more or less creating html elements in js
     let bodyPointer = document.getElementById("bod");
@@ -61,16 +68,16 @@ class Creature {
     this.sliderVert = this.createElement("INPUT", sliderHorzID, this.div);
     this.name = this.createElement("INPUT", nameID, this.div);
     // this.checkbox = this.createElement("INPUT", checkboxID, this.div);
-    this.radioAliveContainer = this.createElement("div", divID, this.div);
-    // this.radioAlive = this.createElement("INPUT",radioAliveID,this.radioAliveContainer);
-    this.radioAliveContainer.style.fontSize = this.radioRadius*1.4 + "px";
-    this.radioAliveContainer.style.color = "darkgrey";
-    this.radioAliveContainer.innerHTML = "Herbavore";
-    this.radioDeadContainer = this.createElement("div", divID, this.div);
-    // this.radioDead = this.createElement("INPUT",radioAliveID,this.radioDeadContainer);
-    this.radioDeadContainer.style.color = "darkgrey";
-    this.radioDeadContainer.style.fontSize = this.radioRadius*1.4 + "px";
-    this.radioDeadContainer.innerHTML = "Predator";
+    this.radioHerbContainer = this.createElement("div", divID, this.div);
+    // this.radioHerb = this.createElement("INPUT",radioHerbID,this.radioHerbContainer);
+    this.radioHerbContainer.style.fontSize = this.radioRadius * 1.4 + "px";
+    this.radioHerbContainer.style.color = "darkgrey";
+    this.radioHerbContainer.innerHTML = "Herbavore";
+    this.radioPredContainer = this.createElement("div", divID, this.div);
+    // this.radioPred = this.createElement("INPUT",radioHerbID,this.radioPredContainer);
+    this.radioPredContainer.style.color = "darkgrey";
+    this.radioPredContainer.style.fontSize = this.radioRadius * 1.4 + "px";
+    this.radioPredContainer.innerHTML = "Predator";
 
 
     // this is basically styling those html elements in css using js
@@ -107,7 +114,7 @@ class Creature {
     //name (text input)
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
-    this.name.setAttribute("value",this.nameValue+"_"+this.nameValueGeneration);
+    this.name.setAttribute("value", this.nameValue + "_" + this.nameValueGeneration);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
@@ -118,52 +125,56 @@ class Creature {
 
 
     //aliveRadio divider
-    this.radioAliveContainer.style.width = "auto";
-    this.radioAliveContainer.style.height = "auto";
-    // this.transformElement(this.radioAliveContainer, this.size, -this.size / 6, "px");
-    this.transformElement(this.radioAliveContainer, this.nameSize*2, -this.nameSize / 1.1, "px");
+    this.radioHerbContainer.style.width = "auto";
+    this.radioHerbContainer.style.height = "auto";
+    // this.transformElement(this.radioHerbContainer, this.size, -this.size / 6, "px");
+    this.transformElement(this.radioHerbContainer, this.nameSize * 2, -this.nameSize / 1.1, "px");
     if (style === false) {
-      this.radioAliveContainer.style.display = "none";
+      this.radioHerbContainer.style.display = "none";
     }
 
 
-    //radioALive
-    this.radioAlive = this.createElement("INPUT", radioAliveID, this.radioAliveContainer);
-    this.radioAlive.setAttribute("type", "radio");
-    this.radioAlive.setAttribute("name", radioGroupID);
-    this.radioAlive.setAttribute("id", radioAliveID);
-    this.radioAlive.checked = true;
-    this.transformElement(this.radioAlive, -this.fontSize * 4, -this.fontSize, "px");
-    this.sizeElement(this.radioAlive, this.radioRadius * 2, this.radioRadius * 2, "px");
+    //radioHerb
+    this.radioHerb = this.createElement("INPUT", radioHerbID, this.radioHerbContainer);
+    this.radioHerb.setAttribute("type", "radio");
+    this.radioHerb.setAttribute("name", radioGroupID);
+    this.radioHerb.setAttribute("id", radioHerbID);
+    this.radioHerb.checked = true;
+    this.transformElement(this.radioHerb, -this.fontSize * 4, -this.fontSize, "px");
+    this.sizeElement(this.radioHerb, this.radioRadius * 2, this.radioRadius * 2, "px");
     if (style === false) {
-      this.radioAlive.style.display = "none";
+      this.radioHerb.style.display = "none";
     }
 
-    //RadioDeadContianer
-    this.radioDeadContainer.style.width = "auto";
-    this.radioDeadContainer.style.height = "auto";
-    // this.transformElement(this.radioDeadContainer, this.size, this.size / 2.8, "px");
-      this.transformElement(this.radioDeadContainer,  this.nameSize*2, -this.nameSize / 1.8, "px");
+    //radioPredContianer
+    this.radioPredContainer.style.width = "auto";
+    this.radioPredContainer.style.height = "auto";
+    // this.transformElement(this.radioPredContainer, this.size, this.size / 2.8, "px");
+    this.transformElement(this.radioPredContainer, this.nameSize * 2, -this.nameSize / 1.8, "px");
     if (style === false) {
-      this.radioDeadContainer.style.display = "none";
+      this.radioPredContainer.style.display = "none";
     }
 
-    //radioDead
-    this.radioDead = this.createElement("INPUT", radioAliveID, this.radioDeadContainer);
-    this.radioDead.setAttribute("type", "radio");
-    this.radioDead.setAttribute("name", radioGroupID);
-    this.radioDead.setAttribute("id", radioDeadID);
-    // this.radioDead.setAttribute("value", name);
-    this.radioDead.checked = false;
-    this.transformElement(this.radioDead, -this.fontSize * 4, -this.fontSize / 2, "px");
-    this.sizeElement(this.radioDead, this.radioRadius * 2, this.radioRadius * 2, "px");
-    if (style === false) {
-      this.radioDead.style.display = "none";
+    //radioPred
+    this.radioPred = this.createElement("INPUT", radioHerbID, this.radioPredContainer);
+    this.radioPred.setAttribute("type", "radio");
+    this.radioPred.setAttribute("name", radioGroupID);
+    this.radioPred.setAttribute("id", radioPredID);
+    // this.radioPred.setAttribute("value", name);
+    if (this.pred) {
+      this.radioPred.checked = true;
+    } else {
+      this.radioPred.checked = false
     }
-    // this.radioAlive.style.display = "none";
-    // this.radioDead.style.display = "none";
-    // this.radioAliveContainer.style.display = "none";
-    // this.radioDeadContainer.style.display = "none";
+    this.transformElement(this.radioPred, -this.fontSize * 4, -this.fontSize / 2, "px");
+    this.sizeElement(this.radioPred, this.radioRadius * 2, this.radioRadius * 2, "px");
+    if (style === false) {
+      this.radioPred.style.display = "none";
+    }
+    // this.radioHerb.style.display = "none";
+    // this.radioPred.style.display = "none";
+    // this.radioHerbContainer.style.display = "none";
+    // this.radioPredContainer.style.display = "none";
   }
 
   createElement(typeOfElement, id, pointerOfParent) {
@@ -282,7 +293,11 @@ class Creature {
         // noFill();
         foodPointer.radio.style.display = "none";
         food.splice(foodIndex, 1);
-        this.food += 1;
+        if (this.radioHerb.checked) { //if herbavore, gain food, otherwise lose food
+          this.food++;
+        } else {
+          this.food -= .1;
+        }
         // fill(255,0,0);
         // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
         // noFill();
@@ -361,13 +376,21 @@ class Creature {
   }
   clump(weight) {
     let sumDistToCreatures = createVector(0, 0);
-    let creaturesWithinRadius = 0;
+    let creaturesWithinRadius = 0.1;
     const radiusThreshold = this.size * this.clumpRadius;
     for (let i = 0; i < creature.length; i++) {
-      const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
-      if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
-        creaturesWithinRadius++;
-        sumDistToCreatures.add(distToCreature);
+      if (creature[i].pred === false) { //if not a predator
+        const distToCreature = createVector(creature[i].x - this.x, creature[i].y - this.y);
+        if (distToCreature.mag() < radiusThreshold) { //if within radius, record it, add to summ
+          creaturesWithinRadius++;
+          sumDistToCreatures.add(distToCreature);
+
+          if (this.pred === true) { //check collision if predator and eat
+            if (distToCreature.mag() > 1) { //if not self, check to see if within range adn eat accordingly
+              this.eatCreature(i);
+            }
+          }
+        }
       }
     }
     const avgDistToCreatures = sumDistToCreatures.div(creaturesWithinRadius);
@@ -389,6 +412,22 @@ class Creature {
     this.velocity.add(addToVelocity);
     //away from neighby x/y positions
   }
+  eatCreature(i) {
+    const creaturePointer = creature[i];
+    // if circle collsion true
+    const eatSz = this.size / 2;
+    if ((creaturePointer.x < this.x + eatSz) && (creaturePointer.x > this.x - eatSz)) {
+      if ((creaturePointer.y < this.y + eatSz) && (creaturePointer.y > this.y - eatSz)) {
+        this.food += 3;
+        creaturePointer.food = 0;
+        // fill(255,0,0);
+        // ellipse(foodPointer.x,foodPointer.y,foodPointer.size);
+        // noFill();
+      }
+    }
+
+  }
+
   wander(weight) { //use 2d perlin noise to create random point within unit circle
     const noiseIncrement = .002;
     this.wanderXIndex += noiseIncrement;
@@ -415,7 +454,7 @@ class Creature {
   }
 
   addVelocityToPosition() {
-    this.velocity.div(this.velocity.mag()/1.3);
+    this.velocity.div(this.velocity.mag() / 1.3);
     this.x += this.velocity.x;
     this.y += this.velocity.y;
   }
@@ -443,22 +482,26 @@ class Creature {
 
   hungerUpdate() {
     this.food -= this.hungerRate;
-      if (this.food > 4) { //if food is over threshold, spawn bby with similar attrbutes
-        let newCreature = new Creature(this.size,this.nameValueGeneration+1);
-        newCreature.x = this.x;
-        newCreature.y = this.y;
-        newCreature.size = this.size;
-        newCreature.seekMouseWeight = this.seekMouseWeight;
-        newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
-        newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
-        // newCreature.seperateWeight = this.seperateWeight;
-        newCreature.wanderWeight = this.wanderWeight + this.wanderMutationRate;
-        newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
-        newCreature.name.setAttribute("value",this.nameValue+"_"+newCreature.nameValueGeneration);
-        creature.push(newCreature);
-        this.food = this.food/2;
-        //spawn bby with same genes and name
+    if (this.food > 4) { //if food is over threshold, spawn bby with similar attrbutes
+      let newCreature = new Creature(this.size, this.nameValueGeneration + 1, this.pred);
+      newCreature.nameValue = this.nameValue;
+      newCreature.x = this.x;
+      newCreature.y = this.y;
+      newCreature.size = this.size;
+      newCreature.seekMouseWeight = this.seekMouseWeight;
+      newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
+      newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
+      // newCreature.seperateWeight = this.seperateWeight;
+      newCreature.wanderWeight = this.wanderWeight + this.wanderMutationRate;
+      newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
+      newCreature.name.setAttribute("value", newCreature.nameValue + "_" + newCreature.nameValueGeneration);
+      if (random(1) > .98) {
+        newCreature.pred = true;
       }
+      creature.push(newCreature);
+      this.food = this.food / 2;
+      //spawn bby with same genes and name
+    }
   }
   update() {
     this.hungerUpdate();
@@ -478,7 +521,7 @@ class Creature {
   }
   debugDisplay() {
     if (debugDisplay === true) {
-      text(this.food, this.x,this.y-this.size);
+      text(this.food, this.x, this.y - this.size);
       stroke(0);
       fill(255, 255, 255, 50);
       ellipse(this.x, this.y, this.size);

@@ -2,7 +2,7 @@ class Food {
   constructor() {
     this.x = random(windowWidth);
     this.y = random(windowHeight);
-    this.size = random(10,25);
+    this.size = random(10,15);
 
     const radioID = random(1);
     const radioGroupID = random(1);
