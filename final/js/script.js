@@ -37,7 +37,7 @@ function draw() {
     }
     //spawn new food
     foodSpawnCounter++;
-    creatureSpawnCounter++;
+    if (creature.length < 10){creatureSpawnCounter++;}
     if (foodSpawnCounter >= foodSpawnRate) {
       food.push(new Food());
       foodSpawnCounter = 0;
