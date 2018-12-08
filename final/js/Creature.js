@@ -480,17 +480,19 @@ class Creature {
 
   hungerUpdate() {
     this.food -= this.hungerRate;
-    let predator;
-    if ((random(1) > .98)||(this.predator === true)) {
-      predator = true;
-    } else {
-      predator = false;
-    }
+
     if (this.food > 5) { //if food is over threshold, spawn bby with similar attrbutes
-      let newCreature = new Creature(this.size + this.sizeMutationRate, this.name, this.nameValueGeneration + 1, predator);
+      let predator;
+      if ((random(1) > .98)||(this.predator === true)) {
+        predator = true;
+      } else {
+        predator = false;
+      }
+
+      let newCreature = new Creature(this.size + this.sizeMutationRate, this.nameValue, this.nameValueGeneration + 1, predator);
       newCreature.nameValue = this.nameValue;
-      newCreature.x = this.x + random(-10,10);
-      newCreature.y = this.y + random(-10,10);
+      newCreature.x = this.x + random(-100,100);
+      newCreature.y = this.y + random(-100,100);
       newCreature.seekMouseWeight = this.seekMouseWeight;
       newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
       newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
@@ -499,7 +501,7 @@ class Creature {
       newCreature.seekFoodWeight = this.seekFoodWeight + this.seekFoodMutationRate;
 
       creature.push(newCreature);
-      this.food = this.food / 2;
+      this.food = 2;
       //spawn bby with same genes and name
     }
   }
