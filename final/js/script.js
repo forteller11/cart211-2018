@@ -9,6 +9,7 @@ let creatureSpawnCounter = 0;
 let foodSpawnCounter = 0;
 let creatureMinSize = 60;
 let creatureMaxSize = 120;
+let play = 1;
 'use strict'
 
 function setup() {
@@ -34,38 +35,44 @@ function setup() {
 }
 
 function draw() {
-  if (debugDisplay) {
-    background(255, 255, 255);
-  }
-  //spawn new food
-  foodSpawnCounter++;
-  creatureSpawnCounter++;
-  if (foodSpawnCounter >= foodSpawnRate) {
-    food.push(new Food());
-    foodSpawnCounter = 0;
-  }
-  if (creatureSpawnCounter >= creatureSpawnRate) {
-    let predator = false;
-    if (random(1) > .98) {
-      predator = true;
+  if (play > 0){
+    if (debugDisplay) {
+      background(255, 255, 255);
     }
-    creature.push(new Creature((random(creatureMinSize, creatureMaxSize), 0, predator)));
-    creatureSpawnCounter = 0;
-  }
-
-  for (let i = 0; i < creature.length; i++) {
-    creature[i].update();
-    if (creature[i].food < 0) {
-      creature[i].div.style.display = "none";
-      creature.splice(i, 1);
+    //spawn new food
+    foodSpawnCounter++;
+    creatureSpawnCounter++;
+    if (foodSpawnCounter >= foodSpawnRate) {
+      food.push(new Food());
+      foodSpawnCounter = 0;
     }
-  }
+    if (creatureSpawnCounter >= creatureSpawnRate) {
+      let predator = false;
+      if (random(1) > .98) {
+        predator = true;
+      }
+      creature.push(new Creature((random(creatureMinSize, creatureMaxSize), 0, predator)));
+      creatureSpawnCounter = 0;
+    }
 
-  for (let i = 0; i < food.length; i++) {
-    food[i].update();
+    for (let i = 0; i < creature.length; i++) {
+      creature[i].update();
+      if (creature[i].food < 0) {
+        creature[i].div.style.display = "none";
+        creature.splice(i, 1);
+      }
+    }
+
+    for (let i = 0; i < food.length; i++) {
+      food[i].update();
+    }
   }
 }
-
+function keyPressed(){
+  if (keyCode === SHIFT){
+    play = play *-1;
+  }
+}
 function keyTyped() { //spawn creature at mouse position on mouse click
   // let pred;
   // if (random(1) > .97){
