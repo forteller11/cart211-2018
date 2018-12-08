@@ -12,7 +12,7 @@ function setup(){
 
   heads[7] = new Head("../../index.html", "home");
   heads[8] = new Head("../readings.html","readings");
-  heads[9] = new Head("../../final_proposal/html/research.html","midterm proposal");
+  heads[9] = new Head("../../final_proposal/html/research.html","midterm");
   const xSpacing = 200;
   const xOrigin = windowWidth/2;
   const yOrigin = windowHeight/2;
