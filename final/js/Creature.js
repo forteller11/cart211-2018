@@ -21,12 +21,11 @@ class Creature {
     if (this.size < 20) {
       this.size = 20;
     }
-
     this.food = 1;
 
-    this.hungerRate = 0.003;
+    this.hungerRate = 0.002;
     if (this.pred) {
-      this.hungerRate = this.hungerRate / 5;
+      this.hungerRate = this.hungerRate / 8;
     }
     const randomName = floor(random(names.length));
     this.nameValue = names[randomName];
@@ -482,12 +481,12 @@ class Creature {
 
   hungerUpdate() {
     this.food -= this.hungerRate;
-    if (this.food > 4) { //if food is over threshold, spawn bby with similar attrbutes
+    if (this.food > 5) { //if food is over threshold, spawn bby with similar attrbutes
       let newCreature = new Creature(this.size, this.nameValueGeneration + 1, this.pred);
       newCreature.nameValue = this.nameValue;
       newCreature.x = this.x;
       newCreature.y = this.y;
-      newCreature.size = this.size;
+      newCreature.size = this.size + this.sizeMutationRate;
       newCreature.seekMouseWeight = this.seekMouseWeight;
       newCreature.clumpWeight = this.clumpWeight + this.clumpMutationRate;
       newCreature.clumpRadius = this.clumpRadius + this.clumpRadiusMutationRate;
