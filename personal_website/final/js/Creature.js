@@ -112,7 +112,7 @@ class Creature {
     //name (text input)
     this.name.setAttribute("type", "text");
     this.name.setAttribute("name", nameID);
-    this.name.setAttribute("value", this.nameValue + "_" + this.nameValueGeneration);
+    this.name.setAttribute("value", this.nameValue + " " + this.nameValueGeneration);
     this.sizeElement(this.name, this.nameSize, this.nameSize / 2.5, "px");
     this.transformElement(this.name, this.nameSize / 3.2, -this.nameSize / 1.1, "px");
     this.name.style.fontSize = this.fontSize + "px";
