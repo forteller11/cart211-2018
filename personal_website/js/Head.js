@@ -113,7 +113,7 @@ class Creature {
     this.button.style.textAlign = "center";
 
     this.button.onclick = function(){
-      window.location.href = "../final/final.html";
+      window.location.href = "https://forteller11.github.io/cart211-2018/personal_website/final/final.html";
     }
   }
 
