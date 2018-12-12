@@ -19,7 +19,7 @@ for (let i = 0; i < baseMinRange.length; i ++){
   let stringGrade = (grade[i])
   let stringRange = (newMinRange[i] + "-" + newMaxRange[i]);
   fill(0);
-  let xx = width/2-65;
+  let xx = width/2-95;
   let yy = (vSpacing * i);
   textSize(18);
   text(stringGrade,xx,yy+130);
