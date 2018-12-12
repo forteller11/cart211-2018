@@ -1,5 +1,7 @@
+let fontSize;
 function setup(){
   createCanvas(windowWidth, windowHeight);
+  fontSize = 16;
 }
 let textBox = document.getElementById("text");
 function draw(){
@@ -13,15 +15,15 @@ for (let i = 0; i < baseMinRange.length; i ++){
   ratio = textBox.value/100;
   newMinRange[i] = round(baseMinRange[i]*ratio*10)/10;
   newMaxRange[i] = round(baseMaxRange[i]*ratio*10)/10;
-
-  let vSpacing = 14;
+  let vSpacing = fontSize+fontSize*.3;
   let stringGrade = (grade[i])
   let stringRange = (": " + newMinRange[i] + "-" + newMaxRange[i]);
   fill(0);
-  let xx = width/2;
+  let xx = width/2-65;
   let yy = (vSpacing * i);
-  text(stringGrade,xx,yy);
-  text(stringRange, xx+64, yy);
+  textSize(18);
+  text(stringGrade,xx,yy+130);
+  text(stringRange, xx+64, yy+130);
   //calc new array values based on bases,
   //draw those values to screen
   //aligned
