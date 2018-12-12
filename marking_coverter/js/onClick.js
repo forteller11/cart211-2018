@@ -15,14 +15,15 @@ for (let i = 0; i < baseMinRange.length; i ++){
   ratio = textBox.value/100;
   newMinRange[i] = round(baseMinRange[i]*ratio*10)/10;
   newMaxRange[i] = round(baseMaxRange[i]*ratio*10)/10;
-  let vSpacing = fontSize+fontSize*.3;
+  let vSpacing = fontSize+fontSize*.6;
   let stringGrade = (grade[i])
-  let stringRange = (": " + newMinRange[i] + "-" + newMaxRange[i]);
+  let stringRange = (newMinRange[i] + "-" + newMaxRange[i]);
   fill(0);
   let xx = width/2-65;
   let yy = (vSpacing * i);
   textSize(18);
   text(stringGrade,xx,yy+130);
+  // text(":", xx+32, yy+130);
   text(stringRange, xx+64, yy+130);
   //calc new array values based on bases,
   //draw those values to screen
